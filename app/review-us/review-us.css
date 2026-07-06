@@ -405,21 +405,35 @@
 
   .review-textarea textarea {
     padding-top: 56px;
-    padding-bottom: 92px;
-  }
-
-  .draft-top-controls {
-    left: 12px;
-    right: auto;
+    padding-bottom: 76px;
   }
 
   .draft-meta {
-    bottom: 62px;
+    bottom: 18px;
+    max-width: calc(100% - 118px);
+    line-height: 1.2;
+  }
+
+  .draft-top-controls button {
+    min-height: 32px;
+    padding-inline: 10px;
+    font-size: 0.78rem;
   }
 
   .draft-record-controls {
-    left: 12px;
-    right: auto;
-    bottom: 12px;
+    right: 10px;
+    bottom: 10px;
+    gap: 6px;
+  }
+
+  .draft-mic-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .draft-icon-button {
+    min-height: 34px;
+    padding-inline: 10px;
+    font-size: 0.78rem;
   }
 }
