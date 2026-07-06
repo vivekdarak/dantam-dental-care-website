@@ -1,0 +1,89 @@
+.contact-grid {
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: 34px;
+  align-items: start;
+}
+
+.contact-info {
+  display: grid;
+  gap: 24px;
+}
+
+.visit-card {
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--cream);
+  padding: 28px;
+}
+
+.visit-card h2 {
+  color: var(--primary);
+  font-size: 2rem;
+}
+
+.contact-items {
+  margin-top: 22px;
+  display: grid;
+  gap: 16px;
+}
+
+.contact-items a,
+.contact-items div {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  color: var(--foreground);
+}
+
+.contact-items svg {
+  color: var(--accent);
+  flex: 0 0 auto;
+  margin-top: 0.1rem;
+}
+
+.contact-items span {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.contact-items small {
+  color: var(--muted);
+}
+
+.contact-actions {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.button.whatsapp {
+  background: #25d366;
+  color: #fff;
+}
+
+.map-frame {
+  height: 300px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.map-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 940px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .contact-actions {
+    grid-template-columns: 1fr;
+  }
+}

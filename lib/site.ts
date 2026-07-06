@@ -1,0 +1,279 @@
+import {
+  Award,
+  Baby,
+  GraduationCap,
+  HeartHandshake,
+  Leaf,
+  LucideIcon,
+  ScanLine,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+
+export const site = {
+  name: "Dantam Dental Care",
+  tagline: "Smile for a lifetime",
+  location: "Thane, Maharashtra, India",
+  phones: [
+    { label: "+91 84840 92077", href: "tel:+918484092077" },
+    { label: "022-4516 5841", href: "tel:+912245165841" },
+  ],
+  whatsapp: { label: "WhatsApp us", href: "https://wa.me/918484092077" },
+  email: { label: "dantamsmile@gmail.com", href: "mailto:dantamsmile@gmail.com" },
+  hours: "Mon - Sat: 10:30 AM to 9:30 PM | Sunday Closed",
+  mapLink: "https://maps.app.goo.gl/XVmRwdNM6yts4t626",
+  mapEmbed: "https://www.google.com/maps?q=Dantam+Dental+Care+Thane&output=embed",
+};
+
+export const services = [
+  {
+    slug: "pedodontics",
+    title: "Pedodontics / Child Dentistry",
+    short: "Gentle, playful dentistry designed for little smiles.",
+    image: "/images/service-pedo.jpg",
+  },
+  {
+    slug: "aligners",
+    title: "Aligners Specialist",
+    short: "Clear, removable aligners for a discreet smile transformation.",
+    image: "/images/service-aligners.jpg",
+  },
+  {
+    slug: "braces",
+    title: "Braces Specialist",
+    short: "Traditional and ceramic braces to correct alignment and bite.",
+    image: "/images/service-braces.jpg",
+  },
+  {
+    slug: "dental-implant",
+    title: "Dental Implants",
+    short: "Permanent tooth replacement placed by an experienced implantologist.",
+    image: "/images/service-implant.jpg",
+  },
+  {
+    slug: "wisdom-teeth-removal",
+    title: "Wisdom Teeth Removal",
+    short: "Safe, precise extractions with minimal downtime.",
+    image: "/images/service-wisdom.jpg",
+  },
+  {
+    slug: "single-sitting-root-canal",
+    title: "Single-Sitting Root Canal",
+    short: "Modern RCT completed in one comfortable visit.",
+    image: "/images/service-rct.jpg",
+  },
+  {
+    slug: "zirconia-cap",
+    title: "Zirconia Caps & Crowns",
+    short: "Metal-free, tooth-coloured crowns that look completely natural.",
+    image: "/images/service-zirconia.jpg",
+  },
+  {
+    slug: "dental-3d-scanner",
+    title: "Dental 3D Scanner",
+    short: "Digital impressions in minutes, with no messy trays or gagging.",
+    image: "/images/service-scanner.jpg",
+  },
+] as const;
+
+export type ServiceSlug = (typeof services)[number]["slug"];
+
+export type ServiceContent = {
+  hero: string;
+  what: string;
+  who: string[];
+  steps: { title: string; desc: string }[];
+  benefits: string[];
+  faqs: { q: string; a: string }[];
+};
+
+export const serviceContent: Record<ServiceSlug, ServiceContent> = {
+  pedodontics: {
+    hero: "Your child's first dental home, where visits feel like play, not procedure.",
+    what: "Paediatric dentistry focuses on the oral health of infants, children and adolescents. From the first tooth through the teenage years, our team creates positive experiences that build a lifetime of confident smiles.",
+    who: ["First-tooth checkups (6 months+)", "Cavity prevention and fluoride varnish", "Kid-friendly fillings and crowns", "Habit correction for thumb sucking and tongue thrusting", "Anxious or special-needs children"],
+    steps: [
+      { title: "Welcome and tour", desc: "We show your child around and let them meet the chair and instruments." },
+      { title: "Gentle examination", desc: "A non-invasive check-up with plenty of reassurance." },
+      { title: "Prevention plan", desc: "Personalised brushing, diet and hygiene guidance to take home." },
+    ],
+    benefits: ["Positive lifelong association with dental visits", "Early cavity prevention saves pain and cost later", "Kid-safe materials and short appointments"],
+    faqs: [
+      { q: "What age should my child first visit?", a: "Ideally by the first birthday, or within 6 months of the first tooth erupting." },
+      { q: "Are treatments painful?", a: "We use topical numbing and child-sized instruments. Most preventive treatments are entirely painless." },
+    ],
+  },
+  aligners: {
+    hero: "Straighten your smile discreetly with removable, virtually invisible aligners.",
+    what: "Clear aligners are custom-made transparent trays that gradually move your teeth into place. They are ideal for adults and teens who want to straighten their smile without traditional braces.",
+    who: ["Mild to moderate crowding or spacing", "Professionals wanting a discreet option", "Patients who prefer removable trays for eating and brushing"],
+    steps: [
+      { title: "3D digital scan", desc: "A quick digital scan captures your teeth without messy impressions." },
+      { title: "Treatment simulation", desc: "Preview your final smile before you begin." },
+      { title: "Aligner series", desc: "Wear each set 20-22 hours a day and change every 1-2 weeks." },
+    ],
+    benefits: ["Virtually invisible", "Removable for meals and photos", "Fewer clinic visits than braces", "Predictable, planned results"],
+    faqs: [
+      { q: "How long does treatment take?", a: "Most cases finish in 6-18 months depending on complexity." },
+      { q: "Will it affect my speech?", a: "There is a brief adjustment period of 1-3 days. Almost no one notices after the first week." },
+    ],
+  },
+  braces: {
+    hero: "Time-tested precision to correct alignment, bite and jaw issues.",
+    what: "Traditional and ceramic braces remain the gold standard for correcting complex orthodontic cases. We offer metal, ceramic tooth-coloured, and self-ligating options.",
+    who: ["Moderate to severe crowding", "Bite corrections including overbite, underbite and crossbite", "Teens and adults alike"],
+    steps: [
+      { title: "Orthodontic evaluation", desc: "Photographs, X-rays and a full bite analysis." },
+      { title: "Bracket placement", desc: "Painless bonding of brackets and archwire in one visit." },
+      { title: "Monthly adjustments", desc: "Short visits every 4-6 weeks to keep progress on track." },
+    ],
+    benefits: ["Works for the most complex cases", "Ceramic option is discreet", "Predictable long-term stability"],
+    faqs: [
+      { q: "Does putting on braces hurt?", a: "Placement is painless. Mild soreness for 2-3 days after each adjustment is normal." },
+      { q: "How long is treatment?", a: "Typically 12-24 months." },
+    ],
+  },
+  "dental-implant": {
+    hero: "Permanent tooth replacement that looks, feels and functions like your own.",
+    what: "A dental implant is a small titanium post placed in the jawbone that acts as an artificial root, supporting a crown, bridge or full denture. Dr. Krushnakumar Modi has placed thousands of implants since 2014.",
+    who: ["Missing single or multiple teeth", "Loose or ill-fitting dentures", "Failing bridges or long-term tooth loss"],
+    steps: [
+      { title: "3D CBCT planning", desc: "Digital planning ensures precise and safe placement." },
+      { title: "Implant placement", desc: "A single visit procedure, with same-day discharge." },
+      { title: "Healing", desc: "Bone fuses with the implant over roughly 3-4 months." },
+      { title: "Crown fitting", desc: "Your custom tooth-coloured crown is placed." },
+    ],
+    benefits: ["Long-term solution with proper care", "Preserves jaw bone and facial structure", "No damage to adjacent teeth"],
+    faqs: [
+      { q: "Am I too old for implants?", a: "Age is rarely a barrier. Health matters more than age, and implants can work well for older patients." },
+      { q: "Is the procedure painful?", a: "Placement is done under local anaesthesia and most patients say it was easier than expected." },
+    ],
+  },
+  "wisdom-teeth-removal": {
+    hero: "Safe, precise wisdom teeth removal with minimal downtime.",
+    what: "Wisdom teeth often erupt at awkward angles, causing pain, infection or crowding. Timely removal by an oral-surgery-trained team helps prevent long-term problems.",
+    who: ["Impacted or partially erupted wisdom teeth", "Recurring gum infection", "Pressure or pain from third molars"],
+    steps: [
+      { title: "Digital X-ray", desc: "We assess the tooth position and root anatomy." },
+      { title: "Local anaesthesia", desc: "Full numbing before the procedure begins." },
+      { title: "Precise surgical removal", desc: "Most removals take 20-45 minutes per tooth." },
+      { title: "Recovery guidance", desc: "Personalised aftercare, medication and diet guidance." },
+    ],
+    benefits: ["Prevents crowding of front teeth", "Eliminates recurring infections", "Same-day discharge"],
+    faqs: [
+      { q: "Can all four be removed together?", a: "Yes, if it suits your case. This can shorten overall recovery time." },
+      { q: "How long is the swelling?", a: "Mild swelling peaks around 48 hours and settles within 5-7 days." },
+    ],
+  },
+  "single-sitting-root-canal": {
+    hero: "Modern root canal treatment completed in a single visit.",
+    what: "With rotary endodontics and apex locators, we complete most root canals in one comfortable visit rather than 3-4 traditional appointments. Dr. Blanch Gonsalves Modi is our resident single-sitting RCT expert.",
+    who: ["Deep decay reaching the tooth pulp", "Persistent sensitivity or throbbing pain", "Cracked teeth needing structural preservation"],
+    steps: [
+      { title: "Digital diagnosis", desc: "X-ray and pulp testing confirm the need for RCT." },
+      { title: "Anaesthesia and isolation", desc: "Complete numbing with a rubber dam for cleanliness." },
+      { title: "Cleaning and shaping", desc: "Rotary instruments clean the canal precisely." },
+      { title: "Filling and sealing", desc: "Canals are sealed and the tooth restored in one visit." },
+    ],
+    benefits: ["One appointment instead of three", "Painless with modern anaesthesia", "Saves the natural tooth for decades"],
+    faqs: [
+      { q: "Will I need a crown afterwards?", a: "Most back teeth benefit from a zirconia crown to protect the treated tooth long-term." },
+      { q: "How long does the visit take?", a: "Typically 60-90 minutes." },
+    ],
+  },
+  "zirconia-cap": {
+    hero: "Metal-free crowns that mirror the translucency of natural teeth.",
+    what: "Zirconia crowns are made from a strong, biocompatible ceramic that blends with your natural smile. They are ideal after a root canal, for cosmetic makeovers, or on implants.",
+    who: ["After root canal treatment", "Chipped, worn or discoloured teeth", "Implant crowns and full-mouth rehabilitation"],
+    steps: [
+      { title: "Digital 3D scan", desc: "No goopy impressions." },
+      { title: "Precise preparation", desc: "Minimally invasive tooth preparation." },
+      { title: "Lab-crafted crown", desc: "Custom milled and layered for a natural look." },
+      { title: "Final fitting", desc: "Bonded permanently after fit and shade checks." },
+    ],
+    benefits: ["Completely metal-free", "Highly biocompatible", "Exceptional strength and longevity"],
+    faqs: [
+      { q: "How long do zirconia crowns last?", a: "15+ years with proper hygiene, and many last longer." },
+      { q: "Are they stronger than porcelain?", a: "Yes. Zirconia is ideal for back teeth that handle heavy chewing." },
+    ],
+  },
+  "dental-3d-scanner": {
+    hero: "Digital impressions in minutes, with no messy trays and no gagging.",
+    what: "Our intraoral 3D scanner captures a precise digital model of your teeth in under 5 minutes. It supports aligners, crowns, smile simulations and treatment planning.",
+    who: ["Aligner and orthodontic planning", "Crowns, veneers and bridges", "Implant surgical guides", "Patients with strong gag reflex"],
+    steps: [
+      { title: "Comfortable scan", desc: "A small wand glides over your teeth for 3-5 minutes." },
+      { title: "Instant 3D model", desc: "Your teeth appear live on screen for review." },
+      { title: "Precision workflow", desc: "The model is sent to the lab or planning software." },
+    ],
+    benefits: ["No goop or gagging", "Higher accuracy than physical impressions", "Faster turnaround for lab work", "Visual treatment planning"],
+    faqs: [
+      { q: "Is scanning safe?", a: "Yes. It uses harmless light, not radiation." },
+      { q: "Can I keep a copy?", a: "Yes, we can share your 3D scan on request." },
+    ],
+  },
+};
+
+export const stats = [
+  { value: "12+", label: "Years of practice" },
+  { value: "5,000+", label: "Implants placed" },
+  { value: "20,000+", label: "Happy patients" },
+  { value: "1 visit", label: "Single-sitting RCT" },
+];
+
+export const pillars: { icon: LucideIcon; title: string; desc: string }[] = [
+  { icon: HeartHandshake, title: "Patient-first care", desc: "Every treatment plan begins with listening. No pressure, no upselling." },
+  { icon: ScanLine, title: "Digital dentistry", desc: "3D intraoral scanning, digital X-rays and computerised planning." },
+  { icon: ShieldCheck, title: "Sterilisation you can see", desc: "Autoclave-sterilised instruments, single-use kits and clean workflows." },
+  { icon: Award, title: "Experienced hands", desc: "12+ years of practice, thousands of implants and single-sitting RCTs completed." },
+  { icon: Leaf, title: "Calm environment", desc: "Warm, homelike interiors designed to reduce dental anxiety." },
+  { icon: Sparkles, title: "Aesthetic focus", desc: "From smile design to full-mouth rehab, dentistry that looks like nature." },
+];
+
+export const team = [
+  {
+    name: "Dr. Krushnakumar Modi",
+    role: "Dental Surgeon & Implantologist",
+    credentials: "BDS (MUHS) A-21550",
+    bio: "Practising implants since 2014 with thousands placed across ages 17 to 88. Specialises in full-mouth rehabilitation and complex prosthetic restoration.",
+    special: ["Dental Implants", "Full-mouth rehabilitation", "Oral and maxillofacial surgery"],
+    icon: Award,
+  },
+  {
+    name: "Dr. Blanch Gonsalves Modi",
+    role: "Cosmetic & Aesthetic Dentist",
+    credentials: "BDS (MUHS) A-21379",
+    bio: "Expert in single-sitting root canals and cosmetic smile makeovers. Known for gentle diagnosis and multi-polar treatment planning trusted by patients for over a decade.",
+    special: ["Single-Sitting RCT", "Cosmetic dentistry", "Smile makeovers"],
+    icon: Sparkles,
+  },
+];
+
+export const consultants = [
+  {
+    name: "Dr. Prasad Bhange",
+    role: "Oral & Maxillofacial Surgeon (Visiting)",
+    credentials: "KEM Hospital, Parel | 20+ years",
+    bio: "A visiting oral and maxillofacial surgeon associated with King Edward Memorial Hospital, Parel, supporting Dantam on complex surgical cases.",
+    icon: GraduationCap,
+  },
+];
+
+export const testimonials = [
+  { name: "Anjali M.", city: "Thane West", service: "Root Canal", quote: "I got my root canal done in one sitting and it was completely painless. The clinic feels calm, nothing like the dentists I visited as a child." },
+  { name: "Rahul S.", city: "Ghodbunder", service: "Implants", quote: "Dr. Modi placed three implants for my 74-year-old father. Wonderful hands and an even better bedside manner. Highly recommend." },
+  { name: "Priya D.", city: "Kolshet", service: "Kids Dentistry", quote: "Took my 6-year-old here terrified of dentists. She now asks when we're going back. Grateful to the whole team." },
+  { name: "Neha K.", city: "Thane", service: "Aligners", quote: "Started my aligner journey with Dr. Blanch. The 3D scan preview convinced me, and my smile today matches what she showed me." },
+  { name: "Vikas T.", city: "Naupada", service: "Zirconia Cap", quote: "Got two zirconia crowns and honestly cannot tell them apart from my natural teeth. Fantastic work." },
+  { name: "Sneha R.", city: "Vartak Nagar", service: "Braces", quote: "24 months of braces done. The team was patient, transparent about timelines, and my bite is perfect now." },
+  { name: "Amit P.", city: "Thane East", service: "Wisdom Teeth", quote: "Had all four wisdom teeth removed in one go. Very little swelling and I was back to office in 2 days." },
+  { name: "Meera J.", city: "Manpada", service: "Implants", quote: "After years of a shaky bridge, my implant crown feels rock solid. The digital planning made everything predictable." },
+  { name: "Rohan G.", city: "Thane", service: "Root Canal", quote: "Walked in at 8pm with a killer toothache and walked out at 9:30pm with a sealed root canal. Life-savers." },
+];
+
+export const whyChoose = [
+  { icon: ScanLine, title: "Digital 3D scanning", desc: "Precise, gag-free impressions and predictable outcomes." },
+  { icon: ShieldCheck, title: "Single-sitting RCT", desc: "Root canals done comfortably in one visit." },
+  { icon: Award, title: "Implantology since 2014", desc: "Thousands of implants placed across a wide age range." },
+  { icon: Baby, title: "Gentle, family-first", desc: "From toddlers to grandparents, care that feels calm." },
+];

@@ -1,0 +1,243 @@
+.service-hero {
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+}
+
+.service-hero-grid {
+  padding-block: 68px;
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 46px;
+  align-items: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.service-hero h1 {
+  margin-top: 18px;
+  color: var(--primary);
+  font-size: clamp(2.8rem, 6vw, 5.6rem);
+}
+
+.service-hero p {
+  margin-top: 18px;
+}
+
+.service-hero-image {
+  position: relative;
+  min-height: 440px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.service-hero-image img {
+  object-fit: cover;
+}
+
+.service-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 54px;
+  align-items: start;
+}
+
+.service-main {
+  display: grid;
+  gap: 48px;
+}
+
+.service-main h2 {
+  color: var(--primary);
+  font-size: 2.3rem;
+}
+
+.service-main section > p,
+.step-list p,
+.faq-list p {
+  margin-top: 14px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.check-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.check-list li,
+.benefit-grid div {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  color: var(--muted);
+}
+
+.check-list svg,
+.benefit-grid svg {
+  color: var(--accent);
+  flex: 0 0 auto;
+  margin-top: 0.12rem;
+}
+
+.step-list {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 18px;
+}
+
+.step-list li {
+  display: flex;
+  gap: 18px;
+}
+
+.step-list li > span {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--gold);
+  font: 700 1.25rem "Cormorant Garamond", serif;
+}
+
+.step-list h3 {
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+
+.benefit-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.benefit-grid div {
+  border-radius: 14px;
+  background: var(--primary-soft);
+  padding: 16px;
+  color: var(--foreground);
+}
+
+.faq-list {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.faq-list details {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  padding: 16px 18px;
+}
+
+.faq-list summary {
+  color: var(--primary);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.service-aside {
+  position: sticky;
+  top: 116px;
+  display: grid;
+  gap: 26px;
+}
+
+.aside-card {
+  border-radius: 22px;
+  padding: 28px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+}
+
+.aside-card h3 {
+  font-size: 2rem;
+}
+
+.aside-card p {
+  margin-top: 10px;
+  color: rgb(255 255 255 / 78%);
+  line-height: 1.65;
+}
+
+.aside-card .button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.aside-card > a:not(.button) {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  color: rgb(255 255 255 / 78%);
+  font-size: 0.84rem;
+}
+
+.other-services h4 {
+  margin-bottom: 14px;
+  color: var(--accent);
+  font-size: 0.82rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.other-services {
+  display: grid;
+  gap: 10px;
+}
+
+.other-services a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.other-services a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .service-hero-grid,
+  .service-body {
+    grid-template-columns: 1fr;
+  }
+
+  .service-aside {
+    position: static;
+  }
+}
+
+@media (max-width: 620px) {
+  .service-hero-grid {
+    padding-block: 48px;
+  }
+
+  .service-hero-image {
+    min-height: 300px;
+  }
+
+  .benefit-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,139 @@
+.dentists-photo-section {
+  padding-bottom: 36px;
+}
+
+.dentists-photo {
+  position: relative;
+  max-width: 860px;
+  aspect-ratio: 1955 / 1881;
+  min-height: 0;
+  margin-inline: auto;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.dentists-photo img {
+  object-fit: contain;
+}
+
+.dentist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+  padding-bottom: 84px;
+}
+
+.dentist-card {
+  padding: 32px;
+}
+
+.dentist-card svg,
+.consultant-card svg {
+  color: var(--gold);
+  background: var(--primary);
+  width: 54px;
+  height: 54px;
+  padding: 12px;
+  border-radius: 16px;
+  flex: 0 0 auto;
+}
+
+.dentist-card h2 {
+  margin-top: 20px;
+  color: var(--primary);
+  font-size: 2.25rem;
+}
+
+.dentist-card strong,
+.consultant-card strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--accent);
+}
+
+.dentist-card span,
+.consultant-card span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.dentist-card p,
+.consultant-card p {
+  margin-top: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.dentist-card div {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.dentist-card em {
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.consultant-grid {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.consultant-card {
+  padding: 26px;
+  display: flex;
+  gap: 18px;
+}
+
+.consultant-card h3 {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.dentist-cta {
+  max-width: 680px;
+  text-align: center;
+}
+
+.dentist-cta h2 {
+  color: var(--primary);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+}
+
+.dentist-cta p {
+  margin: 14px auto 0;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.7;
+}
+
+.dentist-cta .button {
+  margin-top: 24px;
+}
+
+@media (max-width: 820px) {
+  .dentist-grid,
+  .consultant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dentists-photo {
+    max-width: 100%;
+  }
+}
