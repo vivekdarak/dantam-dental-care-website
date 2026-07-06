@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, CheckCircle2, Clipboard, Copy, ExternalLink, Loader2, Mic, Pencil, Send, Square, Star } from "lucide-react";
+import { CheckCircle2, Clipboard, Copy, ExternalLink, Loader2, Mic, Send, Square, Star, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./review-us.css";
@@ -45,17 +45,16 @@ export function ReviewUsClient() {
   const [language, setLanguage] = useState("");
   const [attempts, setAttempts] = useState(0);
   const [recordingState, setRecordingState] = useState<RecordingState>("idle");
-  const [secondsLeft, setSecondsLeft] = useState(MAX_RECORDING_SECONDS);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [isEditingDraft, setIsEditingDraft] = useState(true);
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
   const timerRef = useRef<number | null>(null);
-  const reviewTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const discardRecordingRef = useRef(false);
 
   const attemptsLeft = Math.max(0, MAX_ATTEMPTS - attempts);
   const canRecord = attemptsLeft > 0 && recordingState === "idle";
@@ -125,6 +124,13 @@ export function ReviewUsClient() {
       recorder.onstop = () => {
         stopTimer();
         stopStream();
+        if (discardRecordingRef.current) {
+          discardRecordingRef.current = false;
+          chunksRef.current = [];
+          setRecordingState("idle");
+          setRecordingSeconds(0);
+          return;
+        }
         const audioBlob = new Blob(chunksRef.current, { type: "audio/webm" });
         if (audioBlob.size > 0) {
           void sendAudioForTranslation(audioBlob);
@@ -134,17 +140,19 @@ export function ReviewUsClient() {
         }
       };
 
-      setSecondsLeft(MAX_RECORDING_SECONDS);
+      discardRecordingRef.current = false;
+      setRecordingSeconds(0);
       setRecordingState("recording");
       recorder.start();
 
       timerRef.current = window.setInterval(() => {
-        setSecondsLeft((current) => {
-          if (current <= 1) {
+        setRecordingSeconds((current) => {
+          const next = current + 1;
+          if (next >= MAX_RECORDING_SECONDS) {
             stopRecording();
-            return 0;
+            return MAX_RECORDING_SECONDS;
           }
-          return current - 1;
+          return next;
         });
       }, 1000);
     } catch (err) {
@@ -158,6 +166,11 @@ export function ReviewUsClient() {
     if (recorderRef.current && recorderRef.current.state !== "inactive") {
       recorderRef.current.stop();
     }
+  }
+
+  function deleteRecording() {
+    discardRecordingRef.current = true;
+    stopRecording();
   }
 
   async function sendAudioForTranslation(audioBlob: Blob) {
@@ -182,14 +195,13 @@ export function ReviewUsClient() {
       const data = (await response.json()) as { text?: string; language?: string };
       setReviewText(data.text?.trim() || "");
       setLanguage(data.language || "");
-      setIsEditingDraft(!data.text?.trim());
       setError(data.text ? "" : "The audio was received, but no text came back. You can type your review below.");
     } catch (err) {
       console.error(err);
       setError("We could not convert the voice note right now. You can type or edit your review below.");
     } finally {
       setRecordingState("idle");
-      setSecondsLeft(MAX_RECORDING_SECONDS);
+      setRecordingSeconds(0);
     }
   }
 
@@ -225,16 +237,6 @@ export function ReviewUsClient() {
     } catch {
       setError("We could not copy the text automatically. Please select and copy it manually.");
     }
-  }
-
-  function toggleDraftEditing() {
-    if (isEditingDraft) {
-      setIsEditingDraft(false);
-      return;
-    }
-
-    setIsEditingDraft(true);
-    reviewTextareaRef.current?.focus();
   }
 
   async function submitPrivateFeedback() {
@@ -367,55 +369,6 @@ export function ReviewUsClient() {
             )}
           </div>
 
-          <div className="tool-heading spaced">
-            <span>Step 2</span>
-            <h2>Record your review</h2>
-            <p>
-              Talk about your treatment, comfort, doctors, staff, cleanliness, or anything that stood out.
-              We will convert your voice into editable English text.
-            </p>
-          </div>
-
-          <div className="recorder-card">
-            <button
-              type="button"
-              className={`record-button ${recordingState}`}
-              onClick={recordingState === "recording" ? stopRecording : startRecording}
-              disabled={recordingState === "uploading" || attemptsLeft === 0}
-            >
-              {recordingState === "uploading" ? (
-                <Loader2 size={38} />
-              ) : recordingState === "recording" ? (
-                <Square size={36} fill="currentColor" />
-              ) : (
-                <Mic size={42} />
-              )}
-            </button>
-
-            <div className="recording-copy">
-              {recordingState === "recording" && (
-                <>
-                  <strong>Recording... {formatTime(secondsLeft)} remaining</strong>
-                  <span>Tap stop when you finish. Recording auto-stops at 2 minutes.</span>
-                </>
-              )}
-              {recordingState === "uploading" && (
-                <>
-                  <strong>Converting your voice to text...</strong>
-                  <span>Please keep this page open.</span>
-                </>
-              )}
-              {recordingState === "idle" && (
-                <>
-                  <strong>{attemptsLeft > 0 ? "Tap the mic to record" : "Recording attempts used"}</strong>
-                  <span>
-                    Attempts left: {attemptsLeft} of {MAX_ATTEMPTS}. Maximum recording length is 120 seconds.
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-
           {attemptsLeft === 0 && (
             <div className="notice">
               You have used all recording attempts. You can still type or edit your review below.
@@ -425,23 +378,48 @@ export function ReviewUsClient() {
           <label className="review-textarea">
             Your Google review draft
             <span className="draft-box">
-              <textarea
-                ref={reviewTextareaRef}
-                value={reviewText}
-                onChange={(event) => setReviewText(event.target.value)}
-                readOnly={reviewText.trim().length > 0 && !isEditingDraft}
-                rows={7}
-                placeholder="Your English review draft will appear here. Edit it before posting, or type your feedback manually."
-              />
-              <span className="draft-controls" aria-label="Review draft controls">
-                <button type="button" onClick={toggleDraftEditing} aria-label={isEditingDraft ? "Save review draft" : "Edit review draft"}>
-                  {isEditingDraft ? <Check size={16} /> : <Pencil size={16} />}
-                  {isEditingDraft ? "Save" : "Edit"}
-                </button>
+              <span className="draft-top-controls">
                 <button type="button" onClick={copyDraft} aria-label="Copy review draft">
                   <Copy size={16} />
                   Copy
                 </button>
+              </span>
+              <textarea
+                value={reviewText}
+                onChange={(event) => setReviewText(event.target.value)}
+                rows={9}
+                placeholder="Record your experience or type it here. Talk about your treatment, comfort, doctors, staff, cleanliness, or anything that stood out."
+              />
+              <span className="draft-meta">
+                {recordingState === "recording"
+                  ? formatTime(recordingSeconds)
+                  : recordingState === "uploading"
+                    ? "Converting voice to text..."
+                    : `Usage Count: ${attempts}/${MAX_ATTEMPTS}`}
+              </span>
+              <span className="draft-record-controls" aria-label="Recording controls">
+                {recordingState === "recording" ? (
+                  <>
+                    <button className="draft-icon-button danger" type="button" onClick={deleteRecording} aria-label="Delete recording">
+                      <Trash2 size={17} />
+                      Delete
+                    </button>
+                    <button className="draft-icon-button stop" type="button" onClick={stopRecording} aria-label="Stop recording">
+                      <Square size={16} fill="currentColor" />
+                      Stop
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className={`draft-mic-button ${recordingState}`}
+                    type="button"
+                    onClick={startRecording}
+                    disabled={recordingState === "uploading" || attemptsLeft === 0}
+                    aria-label="Record voice review"
+                  >
+                    {recordingState === "uploading" ? <Loader2 size={22} /> : <Mic size={24} />}
+                  </button>
+                )}
               </span>
             </span>
           </label>
