@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Clipboard, Loader2, Mic, Square, Star } from "lucide-react";
+import { Check, CheckCircle2, Clipboard, Copy, ExternalLink, Loader2, Mic, Pencil, Send, Square, Star } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./review-us.css";
@@ -49,11 +49,13 @@ export function ReviewUsClient() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isEditingDraft, setIsEditingDraft] = useState(true);
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
   const timerRef = useRef<number | null>(null);
+  const reviewTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const attemptsLeft = Math.max(0, MAX_ATTEMPTS - attempts);
   const canRecord = attemptsLeft > 0 && recordingState === "idle";
@@ -180,6 +182,7 @@ export function ReviewUsClient() {
       const data = (await response.json()) as { text?: string; language?: string };
       setReviewText(data.text?.trim() || "");
       setLanguage(data.language || "");
+      setIsEditingDraft(!data.text?.trim());
       setError(data.text ? "" : "The audio was received, but no text came back. You can type your review below.");
     } catch (err) {
       console.error(err);
@@ -193,10 +196,6 @@ export function ReviewUsClient() {
   async function copyAndContinue() {
     setError("");
     const text = reviewText.trim();
-    if (rating < 4) {
-      setError("Please submit private feedback for ratings below 4 stars.");
-      return;
-    }
     if (!text) {
       setError("Please add your review text before continuing to Google Reviews.");
       return;
@@ -210,6 +209,32 @@ export function ReviewUsClient() {
     }
 
     window.location.href = GOOGLE_REVIEW_URL;
+  }
+
+  async function copyDraft() {
+    setError("");
+    const text = reviewText.trim();
+    if (!text) {
+      setError("Please add your review text before copying.");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+    } catch {
+      setError("We could not copy the text automatically. Please select and copy it manually.");
+    }
+  }
+
+  function toggleDraftEditing() {
+    if (isEditingDraft) {
+      setIsEditingDraft(false);
+      return;
+    }
+
+    setIsEditingDraft(true);
+    reviewTextareaRef.current?.focus();
   }
 
   async function submitPrivateFeedback() {
@@ -260,16 +285,24 @@ export function ReviewUsClient() {
     }
   }
 
+  function continueToGoogleReview() {
+    window.location.href = GOOGLE_REVIEW_URL;
+  }
+
   if (submitted) {
     return (
       <section className="review-page review-success">
         <div className="container review-success-card">
           <CheckCircle2 size={54} />
-          <h1>Thank you for telling us.</h1>
+          <h1>Thank you for helping us improve.</h1>
           <p>
-            Your feedback has reached the Dantam Dental Care team. We read every concern carefully
-            and use it to make the next visit better.
+            Your feedback has been sent directly to the doctors and clinic management.
+            We read every concern carefully and use it to make the next visit better.
           </p>
+          <button className="button outline" type="button" onClick={continueToGoogleReview}>
+            Continue to Google Review
+            <ExternalLink size={17} />
+          </button>
         </div>
       </section>
     );
@@ -278,26 +311,37 @@ export function ReviewUsClient() {
   return (
     <section className="review-page">
       <div className="container review-grid">
-        <div className="review-image">
-          <Image
-            src="/images/doctors-image.jpeg"
-            alt="Doctors at Dantam Dental Care"
-            fill
-            priority
-            sizes="(max-width: 900px) 100vw, 44vw"
-          />
+        <div className="review-intro">
+          <div className="intro-image">
+            <Image
+              src="/images/doctors-image.jpeg"
+              alt="Doctors at Dantam Dental Care"
+              fill
+              priority
+              sizes="(max-width: 900px) 100vw, 34vw"
+            />
+          </div>
+          <div className="intro-card">
+            <div className="eyebrow">Google Review Helper</div>
+            <h1>Say it in your words. We will help you write it.</h1>
+            <p>
+              Speak naturally in English, Hindi, Marathi, or any language you are comfortable with.
+              Our tool converts your voice into clear English review text that you can edit, copy,
+              and post on Google.
+            </p>
+            <div className="privacy-note">
+              We use your audio only to create your review draft.
+            </div>
+          </div>
         </div>
 
         <div className="review-panel">
-          <div className="eyebrow">Patient Feedback</div>
-          <h1>Review Dantam Dental Care</h1>
-          <p className="lead">
-            Your words help us care with more attention. Share what your visit felt like,
-            and we will help turn your voice into review-ready text.
-          </p>
+          <div className="tool-heading">
+            <span>Step 1</span>
+            <h2>How was your experience?</h2>
+          </div>
 
           <div className="rating-block" aria-label="Select a star rating">
-            <span>Your rating</span>
             <div className="star-row">
               {[1, 2, 3, 4, 5].map((value) => (
                 <button
@@ -314,6 +358,22 @@ export function ReviewUsClient() {
                 </button>
               ))}
             </div>
+            {rating > 0 && (
+              <p>
+                {rating >= 4
+                  ? "Great. We will help you prepare a Google review draft."
+                  : "We are sorry it was not a 5-star experience. You can send feedback directly to clinic management, and you may still continue to Google Review."}
+              </p>
+            )}
+          </div>
+
+          <div className="tool-heading spaced">
+            <span>Step 2</span>
+            <h2>Record your review</h2>
+            <p>
+              Talk about your treatment, comfort, doctors, staff, cleanliness, or anything that stood out.
+              We will convert your voice into editable English text.
+            </p>
           </div>
 
           <div className="recorder-card">
@@ -347,9 +407,9 @@ export function ReviewUsClient() {
               )}
               {recordingState === "idle" && (
                 <>
-                  <strong>{attemptsLeft > 0 ? "Tap the mic to record your review" : "Recording attempts used"}</strong>
+                  <strong>{attemptsLeft > 0 ? "Tap the mic to record" : "Recording attempts used"}</strong>
                   <span>
-                    Attempts left: {attemptsLeft}. Maximum recording length is 120 seconds.
+                    Attempts left: {attemptsLeft} of {MAX_ATTEMPTS}. Maximum recording length is 120 seconds.
                   </span>
                 </>
               )}
@@ -363,18 +423,32 @@ export function ReviewUsClient() {
           )}
 
           <label className="review-textarea">
-            Your review text
-            <textarea
-              value={reviewText}
-              onChange={(event) => setReviewText(event.target.value)}
-              rows={7}
-              placeholder="Your transcribed review will appear here. You can also type your feedback manually."
-            />
+            Your Google review draft
+            <span className="draft-box">
+              <textarea
+                ref={reviewTextareaRef}
+                value={reviewText}
+                onChange={(event) => setReviewText(event.target.value)}
+                readOnly={reviewText.trim().length > 0 && !isEditingDraft}
+                rows={7}
+                placeholder="Your English review draft will appear here. Edit it before posting, or type your feedback manually."
+              />
+              <span className="draft-controls" aria-label="Review draft controls">
+                <button type="button" onClick={toggleDraftEditing} aria-label={isEditingDraft ? "Save review draft" : "Edit review draft"}>
+                  {isEditingDraft ? <Check size={16} /> : <Pencil size={16} />}
+                  {isEditingDraft ? "Save" : "Edit"}
+                </button>
+                <button type="button" onClick={copyDraft} aria-label="Copy review draft">
+                  <Copy size={16} />
+                  Copy
+                </button>
+              </span>
+            </span>
           </label>
+          <div className="textarea-help">Edit this before copying. The final words should feel like yours.</div>
 
-          {language && <div className="language-note">Detected language: {language}</div>}
           {error && <div className="review-error">{error}</div>}
-          {copied && <div className="notice">Review copied. Opening Google Reviews...</div>}
+          {copied && <div className="notice">Review copied.</div>}
 
           <div className="review-actions">
             {rating >= 4 ? (
@@ -383,9 +457,24 @@ export function ReviewUsClient() {
                 Copy & Continue to Google Review
               </button>
             ) : (
-              <button className="button primary" type="button" onClick={submitPrivateFeedback}>
-                Submit private feedback
-              </button>
+              <>
+                <div className="low-rating-note">
+                  <strong>Give us an option to improve.</strong>
+                  <span>
+                    This feedback is personally delivered to the doctors and clinic management.
+                  </span>
+                </div>
+                <div className="review-button-row">
+                  <button className="button primary" type="button" onClick={submitPrivateFeedback}>
+                    <Send size={18} />
+                    Send feedback privately
+                  </button>
+                  <button className="button outline" type="button" onClick={copyAndContinue}>
+                    <Clipboard size={18} />
+                    Copy & Continue to Google Review
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>

@@ -1,66 +1,111 @@
 .review-page {
   min-height: calc(100vh - 86px);
-  padding-block: 64px;
+  padding-block: 56px;
   background:
-    linear-gradient(135deg, rgb(251 250 244 / 88%), rgb(231 241 235 / 82%)),
+    linear-gradient(135deg, rgb(251 250 244 / 94%), rgb(231 241 235 / 9%)),
     url("/images/photo4-cropped.JPG") center / cover;
 }
 
 .review-grid {
   display: grid;
-  grid-template-columns: 0.84fr 1.16fr;
-  gap: 36px;
-  align-items: stretch;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 28px;
+  align-items: start;
 }
 
-.review-image {
+.review-intro {
+  display: grid;
+  gap: 18px;
+}
+
+.intro-image {
   position: relative;
-  min-height: 680px;
-  border-radius: 28px;
+  min-height: 360px;
+  border-radius: 26px;
   overflow: hidden;
   background: #fff;
   box-shadow: var(--shadow);
 }
 
-.review-image img {
+.intro-image img {
   object-fit: cover;
   object-position: center;
 }
 
+.intro-card,
 .review-panel,
 .review-success-card {
-  border: 1px solid rgb(219 230 221 / 82%);
-  border-radius: 28px;
-  background: rgb(255 255 255 / 94%);
+  border: 1px solid rgb(219 230 221 / 84%);
+  border-radius: 26px;
+  background: rgb(255 255 255 / 95%);
   box-shadow: var(--shadow);
 }
 
-.review-panel {
-  padding: clamp(28px, 4vw, 46px);
+.intro-card {
+  padding: 30px;
 }
 
-.review-panel h1 {
+.intro-card h1 {
   margin-top: 12px;
   color: var(--primary);
-  font-size: clamp(3rem, 6vw, 5.7rem);
+  font-size: clamp(2.7rem, 5vw, 4.8rem);
 }
 
-.review-panel .lead {
+.intro-card p {
   margin-top: 18px;
-  max-width: 720px;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.privacy-note {
+  margin-top: 18px;
+  border-radius: 16px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  padding: 13px 15px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.review-panel {
+  padding: clamp(26px, 4vw, 40px);
+}
+
+.tool-heading {
+  display: grid;
+  gap: 7px;
+}
+
+.tool-heading.spaced {
+  margin-top: 30px;
+}
+
+.tool-heading span {
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.tool-heading h2 {
+  color: var(--primary);
+  font-size: clamp(2rem, 4vw, 3.15rem);
+}
+
+.tool-heading p,
+.rating-block p,
+.recording-copy span,
+.textarea-help {
+  color: var(--muted);
+  line-height: 1.65;
 }
 
 .rating-block {
-  margin-top: 32px;
+  margin-top: 16px;
   display: grid;
   gap: 12px;
-}
-
-.rating-block > span,
-.review-textarea {
-  color: var(--primary);
-  font-size: 0.9rem;
-  font-weight: 700;
 }
 
 .star-row {
@@ -69,10 +114,10 @@
 }
 
 .star-row button {
-  width: 50px;
-  height: 50px;
+  width: 52px;
+  height: 52px;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 15px;
   display: grid;
   place-items: center;
   background: #fff;
@@ -89,20 +134,20 @@
 }
 
 .recorder-card {
-  margin-top: 30px;
+  margin-top: 18px;
   display: flex;
   gap: 18px;
   align-items: center;
   border: 1px solid var(--border);
   border-radius: 22px;
-  background: var(--primary-soft);
+  background: linear-gradient(135deg, var(--primary-soft), #fff);
   padding: 20px;
 }
 
 .record-button {
-  width: 94px;
-  height: 94px;
-  flex: 0 0 94px;
+  width: 98px;
+  height: 98px;
+  flex: 0 0 98px;
   border: 0;
   border-radius: 50%;
   display: grid;
@@ -142,15 +187,13 @@
   font-size: 1.02rem;
 }
 
-.recording-copy span {
-  color: var(--muted);
-  line-height: 1.55;
-}
-
 .review-textarea {
   margin-top: 24px;
   display: grid;
   gap: 9px;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .review-textarea textarea {
@@ -165,12 +208,55 @@
   outline: none;
 }
 
+.draft-box {
+  position: relative;
+  display: block;
+}
+
+.draft-box textarea {
+  padding-bottom: 58px;
+}
+
+.draft-controls {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  gap: 8px;
+}
+
+.draft-controls button {
+  min-height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgb(255 255 255 / 94%);
+  color: var(--primary);
+  padding: 0 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgb(23 51 42 / 9%);
+}
+
+.draft-controls button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .review-textarea textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 4px rgb(13 122 95 / 12%);
 }
 
-.language-note,
+.textarea-help {
+  margin-top: 8px;
+  font-size: 0.88rem;
+}
+
 .notice,
 .review-error {
   margin-top: 14px;
@@ -180,7 +266,6 @@
   line-height: 1.5;
 }
 
-.language-note,
 .notice {
   background: var(--primary-soft);
   color: var(--primary);
@@ -193,6 +278,38 @@
 
 .review-actions {
   margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.low-rating-note {
+  flex: 1 0 100%;
+  display: grid;
+  gap: 4px;
+  border: 1px solid rgb(199 163 74 / 30%);
+  border-radius: 16px;
+  background: #fff8e7;
+  padding: 14px 16px;
+}
+
+.low-rating-note strong {
+  color: var(--primary);
+}
+
+.low-rating-note span {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.review-button-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
 }
 
 .review-success {
@@ -201,7 +318,7 @@
 }
 
 .review-success-card {
-  max-width: 680px;
+  max-width: 700px;
   padding: clamp(32px, 5vw, 58px);
   text-align: center;
 }
@@ -213,7 +330,7 @@
 .review-success-card h1 {
   margin-top: 18px;
   color: var(--primary);
-  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-size: clamp(2.7rem, 6vw, 5rem);
 }
 
 .review-success-card p {
@@ -221,6 +338,10 @@
   color: var(--muted);
   font-size: 1.08rem;
   line-height: 1.75;
+}
+
+.review-success-card .button {
+  margin-top: 24px;
 }
 
 @keyframes pulse-record {
@@ -245,8 +366,8 @@
     grid-template-columns: 1fr;
   }
 
-  .review-image {
-    min-height: 420px;
+  .intro-image {
+    min-height: 390px;
   }
 }
 
@@ -255,13 +376,14 @@
     padding-block: 28px;
   }
 
+  .intro-card,
   .review-panel {
     padding: 22px;
     border-radius: 22px;
   }
 
-  .review-image {
-    min-height: 330px;
+  .intro-image {
+    min-height: 300px;
     border-radius: 22px;
   }
 
@@ -271,9 +393,9 @@
   }
 
   .record-button {
-    width: 86px;
-    height: 86px;
-    flex-basis: 86px;
+    width: 88px;
+    height: 88px;
+    flex-basis: 88px;
   }
 
   .star-row {
