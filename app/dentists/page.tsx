@@ -7,7 +7,7 @@ import "./dentists.css";
 
 export const metadata: Metadata = {
   title: "Our Dentists",
-  description: "Meet Dr. Krushnakumar Modi and Dr. Blanch Gonsalves Modi at Dantam Dental Care, Thane.",
+  description: "Meet the resident dentists and visiting consultants at Dantam Dental Care, Thane.",
 };
 
 export default function DentistsPage() {
@@ -15,46 +15,61 @@ export default function DentistsPage() {
     <>
       <PageHero
         eyebrow="Meet the Team"
-        title="Two dentists. One shared philosophy."
-        subtitle="A husband-and-wife team combining implantology and cosmetic dentistry expertise, supported by trusted visiting consultants."
+        title="Experienced doctors for complete dental care."
+        subtitle="Meet the resident dentists and trusted visiting consultants who support treatment planning, surgery and specialist care at Dantam Dental Care."
       />
 
-      <section className="section dentists-photo-section">
-        <div className="container dentists-photo">
-          <Image src="/images/doctors-image.jpeg" alt="Dr. Blanch Gonsalves Modi and Dr. Krushnakumar Modi at Dantam Dental Care" fill sizes="100vw" />
-        </div>
-      </section>
-
-      <section className="container dentist-grid">
-        {team.map((doctor) => (
-          <article className="card dentist-card" key={doctor.name}>
-            <doctor.icon size={30} />
-            <h2>{doctor.name}</h2>
-            <strong>{doctor.role}</strong>
-            <span>{doctor.credentials}</span>
-            <p>{doctor.bio}</p>
+      <section className="section doctors-section">
+        <div className="container">
+          <div className="section-heading doctors-heading">
             <div>
-              {doctor.special.map((item) => (
-                <em key={item}>{item}</em>
-              ))}
+              <div className="eyebrow">Resident Dentists</div>
+              <h2 className="section-title compact">Your primary care team at the clinic.</h2>
             </div>
-          </article>
-        ))}
+          </div>
+          <div className="doctor-grid">
+            {team.map((doctor) => (
+              <article className="card doctor-card" key={doctor.name}>
+                <div className="doctor-portrait">
+                  <Image src={doctor.image} alt={`${doctor.name} at Dantam Dental Care`} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                </div>
+                <div className="doctor-card-body">
+                  <h3>{doctor.name}</h3>
+                  <strong>{doctor.role}</strong>
+                  <span>{doctor.credentials}</span>
+                  <p>{doctor.bio}</p>
+                  <div className="doctor-tags">
+                    {doctor.special.map((item) => (
+                      <em key={item}>{item}</em>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="section section-muted">
         <div className="container">
           <div className="eyebrow">Visiting consultants</div>
           <h2 className="section-title compact">Specialists who join us for complex cases.</h2>
-          <div className="consultant-grid">
+          <div className="doctor-grid visiting-doctor-grid">
             {consultants.map((doctor) => (
-              <article className="card consultant-card" key={doctor.name}>
-                <doctor.icon size={28} />
-                <div>
+              <article className="card doctor-card" key={doctor.name}>
+                <div className="doctor-portrait">
+                  <Image src={doctor.image} alt={`${doctor.name} at Dantam Dental Care`} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                </div>
+                <div className="doctor-card-body">
                   <h3>{doctor.name}</h3>
                   <strong>{doctor.role}</strong>
                   <span>{doctor.credentials}</span>
                   <p>{doctor.bio}</p>
+                  <div className="doctor-tags">
+                    {doctor.special.map((item) => (
+                      <em key={item}>{item}</em>
+                    ))}
+                  </div>
                 </div>
               </article>
             ))}

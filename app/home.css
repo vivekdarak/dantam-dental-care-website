@@ -62,8 +62,7 @@
 }
 
 .hero-media img,
-.doctor-visual img,
-.service-card-image img {
+.doctor-visual img {
   object-fit: cover;
 }
 
@@ -141,47 +140,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-}
-
-.service-card {
-  display: block;
-  transition: 180ms ease;
-}
-
-.service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-}
-
-.service-card-image {
-  position: relative;
-  aspect-ratio: 4 / 3;
-}
-
-.service-card-body {
-  padding: 22px;
-}
-
-.service-card h3 {
-  color: var(--primary);
-  font-size: 1.45rem;
-}
-
-.service-card p {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
-.service-card span {
-  margin-top: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  color: var(--accent);
-  font-size: 0.88rem;
-  font-weight: 700;
 }
 
 .split-section {

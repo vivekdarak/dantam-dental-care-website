@@ -27,52 +27,70 @@ export const site = {
 
 export const services = [
   {
-    slug: "pedodontics",
-    title: "Pedodontics / Child Dentistry",
+    slug: "child-dental-care",
+    title: "Child Dental Care",
     short: "Gentle, playful dentistry designed for little smiles.",
     image: "/images/service-pedo.jpg",
   },
   {
     slug: "aligners",
-    title: "Aligners Specialist",
+    title: "Aligners",
     short: "Clear, removable aligners for a discreet smile transformation.",
     image: "/images/service-aligners.jpg",
   },
   {
     slug: "braces",
-    title: "Braces Specialist",
+    title: "Braces",
     short: "Traditional and ceramic braces to correct alignment and bite.",
     image: "/images/service-braces.jpg",
   },
   {
-    slug: "dental-implant",
-    title: "Dental Implants",
+    slug: "implants",
+    title: "Implants",
     short: "Permanent tooth replacement placed by an experienced implantologist.",
     image: "/images/service-implant.jpg",
   },
   {
-    slug: "wisdom-teeth-removal",
-    title: "Wisdom Teeth Removal",
-    short: "Safe, precise extractions with minimal downtime.",
+    slug: "tooth-extraction",
+    title: "Tooth Extraction",
+    short: "Safe, precise tooth removal with minimal downtime.",
     image: "/images/service-wisdom.jpg",
   },
   {
-    slug: "single-sitting-root-canal",
-    title: "Single-Sitting Root Canal",
-    short: "Modern RCT completed in one comfortable visit.",
+    slug: "root-canal-treatments",
+    title: "Root Canal Treatments",
+    short: "Modern root canal care, including single-sitting RCT where suitable.",
     image: "/images/service-rct.jpg",
   },
   {
-    slug: "zirconia-cap",
-    title: "Zirconia Caps & Crowns",
-    short: "Metal-free, tooth-coloured crowns that look completely natural.",
-    image: "/images/service-zirconia.jpg",
-  },
-  {
-    slug: "dental-3d-scanner",
-    title: "Dental 3D Scanner",
+    slug: "intraoral-scanner",
+    title: "Intraoral Scanner",
     short: "Digital impressions in minutes, with no messy trays or gagging.",
     image: "/images/service-scanner.jpg",
+  },
+  {
+    slug: "smile-designing",
+    title: "Smile Designing",
+    short: "Aesthetic planning for a natural, confident smile makeover.",
+    image: "/images/service-smile-designing-new.jpg",
+  },
+  {
+    slug: "periodontal-gum-surgery",
+    title: "Periodontal Gum Surgery",
+    short: "Focused gum treatment for healthier foundations and cleaner smiles.",
+    image: "/images/service-periodontal-gum-surgery-new.jpg",
+  },
+  {
+    slug: "teeth-whitening",
+    title: "Teeth Whitening",
+    short: "Professional teeth bleaching to brighten stains safely.",
+    image: "/images/service-teeth-whitening-new.jpg",
+  },
+  {
+    slug: "dentures",
+    title: "Dentures",
+    short: "Comfortable removable teeth replacement for daily function.",
+    image: "/images/service-dentures-new.jpg",
   },
 ] as const;
 
@@ -88,7 +106,7 @@ export type ServiceContent = {
 };
 
 export const serviceContent: Record<ServiceSlug, ServiceContent> = {
-  pedodontics: {
+  "child-dental-care": {
     hero: "Your child's first dental home, where visits feel like play, not procedure.",
     what: "Paediatric dentistry focuses on the oral health of infants, children and adolescents. From the first tooth through the teenage years, our team creates positive experiences that build a lifetime of confident smiles.",
     who: ["First-tooth checkups (6 months+)", "Cavity prevention and fluoride varnish", "Kid-friendly fillings and crowns", "Habit correction for thumb sucking and tongue thrusting", "Anxious or special-needs children"],
@@ -133,7 +151,7 @@ export const serviceContent: Record<ServiceSlug, ServiceContent> = {
       { q: "How long is treatment?", a: "Typically 12-24 months." },
     ],
   },
-  "dental-implant": {
+  implants: {
     hero: "Permanent tooth replacement that looks, feels and functions like your own.",
     what: "A dental implant is a small titanium post placed in the jawbone that acts as an artificial root, supporting a crown, bridge or full denture. Dr. Krushnakumar Modi has placed thousands of implants since 2014.",
     who: ["Missing single or multiple teeth", "Loose or ill-fitting dentures", "Failing bridges or long-term tooth loss"],
@@ -149,9 +167,9 @@ export const serviceContent: Record<ServiceSlug, ServiceContent> = {
       { q: "Is the procedure painful?", a: "Placement is done under local anaesthesia and most patients say it was easier than expected." },
     ],
   },
-  "wisdom-teeth-removal": {
-    hero: "Safe, precise wisdom teeth removal with minimal downtime.",
-    what: "Wisdom teeth often erupt at awkward angles, causing pain, infection or crowding. Timely removal by an oral-surgery-trained team helps prevent long-term problems.",
+  "tooth-extraction": {
+    hero: "Safe, precise tooth extraction with minimal downtime.",
+    what: "Tooth extraction removes a badly damaged, infected, loose or impacted tooth when saving it is not the best long-term option. This includes wisdom teeth removal and surgical extraction when needed.",
     who: ["Impacted or partially erupted wisdom teeth", "Recurring gum infection", "Pressure or pain from third molars"],
     steps: [
       { title: "Digital X-ray", desc: "We assess the tooth position and root anatomy." },
@@ -165,8 +183,8 @@ export const serviceContent: Record<ServiceSlug, ServiceContent> = {
       { q: "How long is the swelling?", a: "Mild swelling peaks around 48 hours and settles within 5-7 days." },
     ],
   },
-  "single-sitting-root-canal": {
-    hero: "Modern root canal treatment completed in a single visit.",
+  "root-canal-treatments": {
+    hero: "Modern root canal treatments, including single-sitting RCT where suitable.",
     what: "With rotary endodontics and apex locators, we complete most root canals in one comfortable visit rather than 3-4 traditional appointments. Dr. Blanch Gonsalves Modi is our resident single-sitting RCT expert.",
     who: ["Deep decay reaching the tooth pulp", "Persistent sensitivity or throbbing pain", "Cracked teeth needing structural preservation"],
     steps: [
@@ -181,23 +199,7 @@ export const serviceContent: Record<ServiceSlug, ServiceContent> = {
       { q: "How long does the visit take?", a: "Typically 60-90 minutes." },
     ],
   },
-  "zirconia-cap": {
-    hero: "Metal-free crowns that mirror the translucency of natural teeth.",
-    what: "Zirconia crowns are made from a strong, biocompatible ceramic that blends with your natural smile. They are ideal after a root canal, for cosmetic makeovers, or on implants.",
-    who: ["After root canal treatment", "Chipped, worn or discoloured teeth", "Implant crowns and full-mouth rehabilitation"],
-    steps: [
-      { title: "Digital 3D scan", desc: "No goopy impressions." },
-      { title: "Precise preparation", desc: "Minimally invasive tooth preparation." },
-      { title: "Lab-crafted crown", desc: "Custom milled and layered for a natural look." },
-      { title: "Final fitting", desc: "Bonded permanently after fit and shade checks." },
-    ],
-    benefits: ["Completely metal-free", "Highly biocompatible", "Exceptional strength and longevity"],
-    faqs: [
-      { q: "How long do zirconia crowns last?", a: "15+ years with proper hygiene, and many last longer." },
-      { q: "Are they stronger than porcelain?", a: "Yes. Zirconia is ideal for back teeth that handle heavy chewing." },
-    ],
-  },
-  "dental-3d-scanner": {
+  "intraoral-scanner": {
     hero: "Digital impressions in minutes, with no messy trays and no gagging.",
     what: "Our intraoral 3D scanner captures a precise digital model of your teeth in under 5 minutes. It supports aligners, crowns, smile simulations and treatment planning.",
     who: ["Aligner and orthodontic planning", "Crowns, veneers and bridges", "Implant surgical guides", "Patients with strong gag reflex"],
@@ -210,6 +212,70 @@ export const serviceContent: Record<ServiceSlug, ServiceContent> = {
     faqs: [
       { q: "Is scanning safe?", a: "Yes. It uses harmless light, not radiation." },
       { q: "Can I keep a copy?", a: "Yes, we can share your 3D scan on request." },
+    ],
+  },
+  "smile-designing": {
+    hero: "Plan a smile that looks natural, balanced and truly yours.",
+    what: "Smile designing combines cosmetic dentistry, digital planning and careful shade, shape and alignment decisions to improve the way your smile looks while keeping it functional and natural.",
+    who: ["Uneven, chipped or worn teeth", "Gaps, stains or minor shape concerns", "Patients planning a smile makeover", "Before weddings, events or professional milestones"],
+    steps: [
+      { title: "Smile assessment", desc: "We study your face, teeth, bite, photographs and expectations." },
+      { title: "Digital planning", desc: "Your options are planned around tooth shape, shade, gum line and smile symmetry." },
+      { title: "Treatment selection", desc: "We recommend the right mix of whitening, bonding, veneers, crowns or aligners." },
+      { title: "Final finishing", desc: "Small refinements help the final smile look polished and natural." },
+    ],
+    benefits: ["Personalised smile makeover planning", "Improves colour, shape and proportion", "Can combine cosmetic and restorative dentistry", "Natural-looking aesthetic results"],
+    faqs: [
+      { q: "Is smile designing only cosmetic?", a: "No. A good smile design also considers bite, tooth health and long-term function." },
+      { q: "Will my smile look artificial?", a: "Our goal is a natural smile that suits your face, not an overdone or one-size-fits-all result." },
+    ],
+  },
+  "periodontal-gum-surgery": {
+    hero: "Specialised gum care for healthier teeth and stronger foundations.",
+    what: "Periodontal gum surgery treats gum disease, deep infection, gum pockets and supporting tissue problems when regular cleaning is not enough. The aim is to control disease, protect teeth and restore healthier gums.",
+    who: ["Bleeding or swollen gums", "Loose teeth due to gum disease", "Deep gum pockets or tartar below the gum line", "Patients advised advanced periodontal treatment"],
+    steps: [
+      { title: "Gum evaluation", desc: "We check gum pockets, mobility, bone support and oral hygiene patterns." },
+      { title: "Deep cleaning", desc: "Scaling and root surface cleaning remove deposits around and below the gum line." },
+      { title: "Surgical correction", desc: "When required, gum surgery allows better access to clean infected areas and reshape tissues." },
+      { title: "Maintenance plan", desc: "Follow-up cleanings and home-care guidance reduce the risk of recurrence." },
+    ],
+    benefits: ["Controls gum infection", "Helps protect natural teeth", "Improves gum health and hygiene access", "Supports long-term dental stability"],
+    faqs: [
+      { q: "Is gum surgery always required for gum disease?", a: "No. Many cases improve with deep cleaning and home care. Surgery is considered when disease is deeper or more advanced." },
+      { q: "Will my gums heal completely?", a: "Healing depends on the severity of gum disease and maintenance. Regular follow-up is essential." },
+    ],
+  },
+  "teeth-whitening": {
+    hero: "Brighten your smile safely with professional teeth whitening.",
+    what: "Teeth whitening, also called teeth bleaching, lightens external stains and natural tooth discolouration using dentist-supervised materials designed for safer, more predictable results than over-the-counter products.",
+    who: ["Tea, coffee or tobacco stains", "Dull or yellow-looking teeth", "Patients preparing for events or photographs", "Smile makeover patients needing shade improvement"],
+    steps: [
+      { title: "Shade check", desc: "We record your current shade and check that whitening is suitable for your teeth." },
+      { title: "Cleaning if needed", desc: "Surface deposits are removed so whitening can work more evenly." },
+      { title: "Whitening session", desc: "Professional bleaching material is applied under controlled conditions." },
+      { title: "Aftercare advice", desc: "We guide you on sensitivity care and stain control to maintain brightness." },
+    ],
+    benefits: ["Brighter smile without drilling", "Dentist-supervised bleaching", "Useful before cosmetic work", "Quick aesthetic improvement"],
+    faqs: [
+      { q: "Does whitening damage teeth?", a: "When done correctly under dental supervision, whitening is safe for suitable teeth." },
+      { q: "How long does whitening last?", a: "Results vary with diet and habits, but good oral hygiene and stain control help maintain the shade longer." },
+    ],
+  },
+  dentures: {
+    hero: "Replace missing teeth with comfortable, practical dentures.",
+    what: "Dentures are removable teeth replacements used when several or all teeth are missing. They help restore chewing, speech and facial support, and can be made as complete dentures, partial dentures or implant-supported options.",
+    who: ["Missing many or all teeth", "Patients needing removable teeth replacement", "Loose old dentures needing replacement", "Patients exploring affordable tooth replacement"],
+    steps: [
+      { title: "Oral assessment", desc: "We check gum health, bone support, bite and the number of teeth to replace." },
+      { title: "Impressions and records", desc: "Measurements help create dentures that fit your mouth and bite." },
+      { title: "Trial fitting", desc: "Shape, bite, comfort and appearance are checked before final finishing." },
+      { title: "Final fit and adjustments", desc: "We fine-tune sore spots and guide you through eating and cleaning." },
+    ],
+    benefits: ["Restores missing teeth", "Supports speech and chewing", "Can improve facial fullness", "Removable and cleanable"],
+    faqs: [
+      { q: "Will dentures feel natural immediately?", a: "There is an adjustment period. Most patients adapt with practice and small fit corrections." },
+      { q: "Can dentures be fixed with implants?", a: "Yes. Implant-supported dentures can improve stability for suitable patients." },
     ],
   },
 };
@@ -233,28 +299,59 @@ export const pillars: { icon: LucideIcon; title: string; desc: string }[] = [
 export const team = [
   {
     name: "Dr. Krushnakumar Modi",
-    role: "Dental Surgeon & Implantologist",
+    role: "General Dentist & Expert Implantologist",
     credentials: "BDS (MUHS) A-21550",
-    bio: "Practising implants since 2014 with thousands placed across ages 17 to 88. Specialises in full-mouth rehabilitation and complex prosthetic restoration.",
-    special: ["Dental Implants", "Full-mouth rehabilitation", "Oral and maxillofacial surgery"],
+    image: "/images/dr-krushnakumar-modi.jpeg",
+    bio: "Specializing in advanced implantology since 2014, Dr. Krushnakumar has successfully placed thousands of dental implants for patients ranging from young adults to seniors, ages 17 to 88. With extensive experience performing and assisting in major oral and maxillofacial surgeries, he specializes in full-mouth prosthetic restorations, bringing back complete function and natural aesthetics to your smile.",
+    special: ["Advanced implantology", "Full-mouth prosthetic restorations", "Oral and maxillofacial surgery"],
     icon: Award,
   },
   {
     name: "Dr. Blanch Gonsalves Modi",
-    role: "Cosmetic & Aesthetic Dentist",
+    role: "General, Cosmetic & Aesthetic Dentist",
     credentials: "BDS (MUHS) A-21379",
-    bio: "Expert in single-sitting root canals and cosmetic smile makeovers. Known for gentle diagnosis and multi-polar treatment planning trusted by patients for over a decade.",
-    special: ["Single-Sitting RCT", "Cosmetic dentistry", "Smile makeovers"],
+    image: "/images/dr-blanch-gonsalves.jpeg",
+    bio: "Dr. Blanch is dedicated to changing the way you experience dental care. Renowned for her expertise in single-sitting root canal treatments and full-mouth rehabilitations, she takes the fear out of complex procedures. Patients widely admire her for her comprehensive, multipolar diagnosis, ensuring that every unique dental issue is met with a clear, personalized, and long-term recovery plan.",
+    special: ["Single-sitting root canals", "Full-mouth rehabilitation", "Cosmetic and aesthetic dentistry"],
     icon: Sparkles,
   },
 ];
 
 export const consultants = [
   {
+    name: "Dr. Sanika Palan",
+    role: "Children Dental & Preventive Dentistry Specialist",
+    credentials: "M.D.S (Pedodontist)",
+    image: "/images/dr-sanika-palan.jpeg",
+    bio: "A visiting pedodontist specialising in children's dental care and preventive dentistry, helping young patients build healthy habits and comfortable dental experiences.",
+    special: ["Children's dentistry", "Preventive dentistry", "Pedodontics"],
+    icon: GraduationCap,
+  },
+  {
     name: "Dr. Prasad Bhange",
     role: "Oral & Maxillofacial Surgeon (Visiting)",
     credentials: "KEM Hospital, Parel | 20+ years",
+    image: "/images/dr-prasad-bhange.jpg",
     bio: "A visiting oral and maxillofacial surgeon associated with King Edward Memorial Hospital, Parel, supporting Dantam on complex surgical cases.",
+    special: ["Oral surgery", "Maxillofacial surgery", "Complex surgical cases"],
+    icon: GraduationCap,
+  },
+  {
+    name: "Dr. Arpit Chanchad",
+    role: "Visiting Consultant",
+    credentials: "Consultant Doctor",
+    image: "/images/dr-arpit-chanchad.jpg",
+    bio: "A visiting consultant supporting Dantam Dental Care with specialist-led treatment planning and clinical care.",
+    special: ["Specialist consultation", "Treatment planning", "Clinical care"],
+    icon: GraduationCap,
+  },
+  {
+    name: "Dr. Danesh Nair",
+    role: "Visiting Consultant",
+    credentials: "Consultant Doctor",
+    image: "/images/dr-danesh-nair.jpg",
+    bio: "A visiting consultant supporting Dantam Dental Care with specialist-led treatment planning and clinical care.",
+    special: ["Specialist consultation", "Treatment planning", "Clinical care"],
     icon: GraduationCap,
   },
 ];

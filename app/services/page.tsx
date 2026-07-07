@@ -6,7 +6,7 @@ import "./services.css";
 
 export const metadata: Metadata = {
   title: "Dental Services in Thane",
-  description: "Explore dental implants, single-sitting RCT, aligners, braces, paediatric dentistry, zirconia caps, wisdom teeth removal and 3D scanning.",
+  description: "Explore tooth extraction, root canal treatments, braces, aligners, implants, intraoral scanning, smile designing, child dental care, gum surgery, teeth whitening and dentures.",
 };
 
 export default function ServicesPage() {
@@ -15,7 +15,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Our Services"
         title="Modern dentistry, delivered gently."
-        subtitle="Eight core treatments, each performed with current technology and a calm, patient-first approach."
+        subtitle="Eleven core treatments, each performed with current technology and a calm, patient-first approach."
       />
       <section className="section">
         <div className="container services-list">
