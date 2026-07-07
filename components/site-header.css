@@ -99,10 +99,16 @@
   display: none;
 }
 
+@media (max-width: 1180px) {
+  .header-actions .book-link {
+    display: none;
+  }
+}
+
 @media (max-width: 1060px) {
   .desktop-nav,
-  .phone-link,
-  .book-link {
+  .header-actions .phone-link,
+  .header-actions .book-link {
     display: none;
   }
 
