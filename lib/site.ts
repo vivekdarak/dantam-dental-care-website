@@ -25,6 +25,39 @@ export const site = {
   mapEmbed: "https://www.google.com/maps?q=Dantam+Dental+Care+Thane&output=embed",
 };
 
+export const locations = [
+  {
+    area: "Majiwada",
+    name: "Dantam Dental Care",
+    address:
+      "Office No. 3, 2nd floor (P3), I Wing Retail, Rustomjee Azziano, above Wellness Forever Medical, near Rustomjee Cambridge School, Rustomjee Urbania, Majiwada, Thane (W) - 400 601.",
+    shortAddress: "Rustomjee Urbania, Majiwada, Thane West",
+    phone: { label: "84840 92077", href: "tel:+918484092077" },
+    mapLink: "https://maps.app.goo.gl/XVmRwdNM6yts4t626",
+    mapEmbed: "https://www.google.com/maps?q=Dantam+Dental+Care+Majiwada+Thane&output=embed",
+  },
+  {
+    area: "Shreenagar",
+    name: "Modi Dental Clinic",
+    address:
+      "Shop no. 31, Shreenagar Market Complex, below TJSB Bank, Ashram Road, Shreenagar, Wagle Estate, Thane (W) - 400 604.",
+    shortAddress: "Shreenagar Market Complex, Wagle Estate, Thane West",
+    phone: { label: "95949 07908", href: "tel:+919594907908" },
+    mapLink: "https://maps.app.goo.gl/b3V331zvNXHi83SC9",
+    mapEmbed: "https://www.google.com/maps?q=Modi+Dental+Clinic+Shreenagar+Thane&output=embed",
+  },
+  {
+    area: "Nalasopara",
+    name: "Gonsalves Dental Care",
+    address:
+      "Shop no. 6, Omkar Niwas, Samelpada, in front of Little Flower High School, Nalasopara (W) - 401 203.",
+    shortAddress: "Samelpada, near Little Flower High School, Nalasopara West",
+    phone: { label: "83900 79324", href: "tel:+918390079324" },
+    mapLink: "https://maps.app.goo.gl/DfGco8rQLrkFNNK49",
+    mapEmbed: "https://www.google.com/maps?q=Gonsalves+Dental+Care+Nalasopara+West&output=embed",
+  },
+] as const;
+
 export const services = [
   {
     slug: "child-dental-care",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, Mail, MessageCircle, Phone } from "lucide-react";
+import { ClinicLocationCards } from "@/components/clinic-location-cards";
 import { ContactForm } from "@/components/contact-form";
 import { PageHero } from "@/components/page-hero";
 import { site } from "@/lib/site";
@@ -16,57 +17,43 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Get in Touch"
         title="Book your visit."
-        subtitle="Fill the form, call, or WhatsApp. We usually reply within an hour during clinic hours."
+        subtitle="Choose the clinic closest to you, then call, WhatsApp, or fill the form. We usually reply within an hour during clinic hours."
       />
 
       <section className="section">
-        <div className="container contact-grid">
-          <div className="contact-info">
-            <div className="visit-card">
-              <h2>Visit the clinic</h2>
-              <div className="contact-items">
-                <a href={site.mapLink} target="_blank" rel="noreferrer">
-                  <MapPin size={20} />
-                  <span>{site.location}<small>Tap for Google Maps directions</small></span>
-                </a>
-                <div>
-                  <Clock size={20} />
-                  <span>{site.hours}</span>
-                </div>
-                {site.phones.map((phone) => (
-                  <a href={phone.href} key={phone.href}>
-                    <Phone size={20} />
-                    <span>{phone.label}</span>
+        <div className="container">
+          <ClinicLocationCards />
+
+          <div className="contact-grid">
+            <div className="contact-info">
+              <div className="visit-card">
+                <h2>Need help booking?</h2>
+                <p>Call, WhatsApp, or send the form and we will help you choose the right clinic.</p>
+                <div className="contact-items">
+                  <div>
+                    <Clock size={20} />
+                    <span>{site.hours}</span>
+                  </div>
+                  <a href={site.email.href}>
+                    <Mail size={20} />
+                    <span>{site.email.label}</span>
                   </a>
-                ))}
-                <a href={site.email.href}>
-                  <Mail size={20} />
-                  <span>{site.email.label}</span>
-                </a>
-              </div>
-              <div className="contact-actions">
-                <a className="button whatsapp" href={site.whatsapp.href} target="_blank" rel="noreferrer">
-                  <MessageCircle size={17} />
-                  WhatsApp
-                </a>
-                <a className="button outline" href={site.phones[0].href}>
-                  <Phone size={17} />
-                  Call
-                </a>
+                </div>
+                <div className="contact-actions">
+                  <a className="button whatsapp" href={site.whatsapp.href} target="_blank" rel="noreferrer">
+                    <MessageCircle size={17} />
+                    WhatsApp
+                  </a>
+                  <a className="button outline" href={site.phones[0].href}>
+                    <Phone size={17} />
+                    Call
+                  </a>
+                </div>
               </div>
             </div>
 
-            <div className="map-frame">
-              <iframe
-                src={site.mapEmbed}
-                title="Dantam Dental Care map"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
+            <ContactForm />
           </div>
-
-          <ContactForm />
         </div>
       </section>
     </>

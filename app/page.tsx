@@ -1,6 +1,7 @@
 import { ArrowRight, Baby, Calendar, Phone, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ClinicLocationCards } from "@/components/clinic-location-cards";
 import { ServiceCard } from "@/components/service-card";
 import { services, site, stats, testimonials, team, whyChoose } from "@/lib/site";
 import "./home.css";
@@ -75,7 +76,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section-muted">
+      <section className="section">
         <div className="container split-section">
           <div className="doctor-visual">
             <Image src="/images/doctors-image.jpeg" alt="Dr. Blanch Gonsalves Modi and Dr. Krushnakumar Modi at Dantam Dental Care" fill sizes="(max-width: 900px) 100vw, 48vw" />
@@ -116,6 +117,22 @@ export default function Home() {
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="section section-muted">
+        <div className="container">
+          <div className="section-heading">
+            <div>
+              <div className="eyebrow">Our Clinics</div>
+              <h2 className="section-title">Choose the clinic closest to you.</h2>
+            </div>
+            <p className="lead">
+              Visit Dantam Dental Care and our associated clinics across Thane and Nalasopara
+              for complete dental care under one trusted team.
+            </p>
+          </div>
+          <ClinicLocationCards />
         </div>
       </section>
 

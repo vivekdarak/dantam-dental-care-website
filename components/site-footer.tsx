@@ -1,6 +1,6 @@
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
-import { services, site } from "@/lib/site";
+import { locations, services, site } from "@/lib/site";
 import { Brand } from "./brand";
 import "./site-footer.css";
 
@@ -51,24 +51,25 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4>Visit Us</h4>
+          <h4>Our Clinics</h4>
           <ul className="contact-list">
-            <li>
-              <MapPin size={17} />
-              <a href={site.mapLink} target="_blank" rel="noreferrer">
-                {site.location}
-              </a>
-            </li>
+            {locations.map((location) => (
+              <li key={location.name}>
+                <MapPin size={17} />
+                <a href={location.mapLink} target="_blank" rel="noreferrer">
+                  <strong>{location.area}</strong>
+                  <span>{location.name}</span>
+                </a>
+              </li>
+            ))}
             <li>
               <Clock size={17} />
               <span>{site.hours}</span>
             </li>
-            {site.phones.map((phone) => (
-              <li key={phone.href}>
-                <Phone size={17} />
-                <a href={phone.href}>{phone.label}</a>
-              </li>
-            ))}
+            <li>
+              <Phone size={17} />
+              <a href={site.phones[0].href}>{site.phones[0].label}</a>
+            </li>
             <li>
               <Mail size={17} />
               <a href={site.email.href}>{site.email.label}</a>
