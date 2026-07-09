@@ -3,15 +3,14 @@ import { Cormorant_Garamond, Dancing_Script, Work_Sans } from "next/font/google"
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { WhatsappFab } from "@/components/whatsapp-fab";
-import { openinaryUrl } from "@/lib/openinary";
 import { site } from "@/lib/site";
+import { socialMetadata } from "@/lib/social-metadata";
 import "./globals.css";
 
 const openinaryBaseUrl = process.env.NEXT_PUBLIC_OPENINARY_BASE_URL?.replace(/\/$/, "");
 const siteUrl = "https://dantamdentalcare.com";
 const siteDescription =
   "Modern dental care in Thane for implants, single-sitting root canals, aligners, braces and paediatric dentistry.";
-const socialImage = openinaryUrl("/images/photo4-cropped.jpg", "w_1200,h_630,c_fill,q_82,f_jpg");
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -50,29 +49,13 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
     shortcut: "/favicon.ico",
   },
-  openGraph: {
+  ...socialMetadata({
     title: `${site.name} | ${site.tagline}`,
     description: siteDescription,
-    url: siteUrl,
-    siteName: site.name,
-    images: [
-      {
-        url: socialImage,
-        width: 1200,
-        height: 630,
-        alt: "Dantam Dental Care clinic reception in Thane",
-        type: "image/jpeg",
-      },
-    ],
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${site.name} | ${site.tagline}`,
-    description: siteDescription,
-    images: [socialImage],
-  },
+    image: "/images/photo4-cropped.jpg",
+    imageAlt: "Dantam Dental Care clinic reception in Thane",
+    path: "",
+  }),
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

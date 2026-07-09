@@ -4,11 +4,22 @@ import { ClinicLocationCards } from "@/components/clinic-location-cards";
 import { ContactForm } from "@/components/contact-form";
 import { PageHero } from "@/components/page-hero";
 import { site } from "@/lib/site";
+import { socialMetadata } from "@/lib/social-metadata";
 import "./contact.css";
 
+const title = "Contact & Book";
+const description = "Book an appointment at Dantam Dental Care in Thane. Call, WhatsApp or fill the contact form.";
+
 export const metadata: Metadata = {
-  title: "Contact & Book",
-  description: "Book an appointment at Dantam Dental Care in Thane. Call, WhatsApp or fill the contact form.",
+  title,
+  description,
+  ...socialMetadata({
+    title: "Contact Dantam Dental Care",
+    description,
+    image: "/images/hero-clinic.jpg",
+    imageAlt: "Dantam Dental Care clinic in Thane",
+    path: "/contact",
+  }),
 };
 
 export default function ContactPage() {

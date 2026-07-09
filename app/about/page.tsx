@@ -3,11 +3,22 @@ import Link from "next/link";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { PageHero } from "@/components/page-hero";
 import { pillars, site } from "@/lib/site";
+import { socialMetadata } from "@/lib/social-metadata";
 import "./about.css";
 
+const title = "About";
+const description = "Learn about Dantam Dental Care in Thane, our story, philosophy, technology and dentist team.";
+
 export const metadata: Metadata = {
-  title: "About",
-  description: "Learn about Dantam Dental Care in Thane, our story, philosophy, technology and dentist team.",
+  title,
+  description,
+  ...socialMetadata({
+    title: "About Dantam Dental Care",
+    description,
+    image: "/images/dantam-reception-area.jpg",
+    imageAlt: "Dantam Dental Care reception area",
+    path: "/about",
+  }),
 };
 
 export default function AboutPage() {

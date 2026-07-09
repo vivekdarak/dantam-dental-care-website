@@ -3,11 +3,22 @@ import Link from "next/link";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { PageHero } from "@/components/page-hero";
 import { consultants, team } from "@/lib/site";
+import { socialMetadata } from "@/lib/social-metadata";
 import "./dentists.css";
 
+const title = "Our Dentists";
+const description = "Meet the resident dentists and visiting consultants at Dantam Dental Care, Thane.";
+
 export const metadata: Metadata = {
-  title: "Our Dentists",
-  description: "Meet the resident dentists and visiting consultants at Dantam Dental Care, Thane.",
+  title,
+  description,
+  ...socialMetadata({
+    title: "Our Dentists | Dantam Dental Care",
+    description,
+    image: "/images/doctors-image.jpeg",
+    imageAlt: "Dr. Blanch Gonsalves Modi and Dr. Krushnakumar Modi at Dantam Dental Care",
+    path: "/dentists",
+  }),
 };
 
 export default function DentistsPage() {

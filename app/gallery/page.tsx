@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
+import { socialMetadata } from "@/lib/social-metadata";
 import { GalleryClient } from "./gallery-client";
 import "./gallery.css";
 
+const title = "Gallery";
+const description =
+  "A look inside Dantam Dental Care in Thane, including clinic interiors, technology and patient care spaces.";
+
 export const metadata: Metadata = {
-  title: "Gallery",
-  description: "A look inside Dantam Dental Care in Thane, including clinic interiors, technology and patient care spaces.",
+  title,
+  description,
+  ...socialMetadata({
+    title: "Dantam Dental Care Gallery",
+    description,
+    image: "/images/dantam-dental-care-clinic-image-2.jpg",
+    imageAlt: "Dantam Dental Care operatory with dental chair",
+    path: "/gallery",
+  }),
 };
 
 const images = [

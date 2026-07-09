@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { serviceContent, services, site, type ServiceSlug } from "@/lib/site";
+import { socialMetadata } from "@/lib/social-metadata";
 import "./service-detail.css";
 
 type PageProps = {
@@ -22,9 +23,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const service = getService(slug);
   if (!service) return {};
+  const title = `${service.title} in Thane`;
+  const description = serviceContent[service.slug].hero;
+
   return {
-    title: `${service.title} in Thane`,
-    description: serviceContent[service.slug].hero,
+    title,
+    description,
+    ...socialMetadata({
+      title,
+      description,
+      image: service.image,
+      imageAlt: `${service.title} at Dantam Dental Care`,
+      path: `/services/${service.slug}`,
+    }),
   };
 }
 

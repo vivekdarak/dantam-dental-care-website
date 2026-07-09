@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
+import { socialMetadata } from "@/lib/social-metadata";
 import { TestimonialFilter } from "@/components/testimonial-filter";
 
+const title = "Testimonials";
+const description =
+  "Stories from patients at Dantam Dental Care in Thane covering implants, root canals, aligners, kids dentistry and more.";
+
 export const metadata: Metadata = {
-  title: "Testimonials",
-  description: "Stories from patients at Dantam Dental Care in Thane covering implants, root canals, aligners, kids dentistry and more.",
+  title,
+  description,
+  ...socialMetadata({
+    title: "Dantam Dental Care Testimonials",
+    description,
+    image: "/images/hero-clinic.jpg",
+    imageAlt: "Dantam Dental Care clinic interior in Thane",
+    path: "/testimonials",
+  }),
 };
 
 export default function TestimonialsPage() {

@@ -2,11 +2,23 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { ServiceCard } from "@/components/service-card";
 import { services } from "@/lib/site";
+import { socialMetadata } from "@/lib/social-metadata";
 import "./services.css";
 
+const title = "Dental Services in Thane";
+const description =
+  "Explore tooth extraction, root canal treatments, braces, aligners, implants, intraoral scanning, smile designing, child dental care, gum surgery, teeth whitening and dentures.";
+
 export const metadata: Metadata = {
-  title: "Dental Services in Thane",
-  description: "Explore tooth extraction, root canal treatments, braces, aligners, implants, intraoral scanning, smile designing, child dental care, gum surgery, teeth whitening and dentures.",
+  title,
+  description,
+  ...socialMetadata({
+    title,
+    description,
+    image: "/images/hero-clinic.jpg",
+    imageAlt: "Dantam Dental Care clinic interior in Thane",
+    path: "/services",
+  }),
 };
 
 export default function ServicesPage() {
