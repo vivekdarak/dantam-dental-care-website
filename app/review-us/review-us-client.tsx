@@ -39,6 +39,33 @@ function formatTime(seconds: number) {
   return `${minutes}:${remainder.toString().padStart(2, "0")}`;
 }
 
+async function copyTextToClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "0";
+    textarea.style.left = "0";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    textarea.setSelectionRange(0, textarea.value.length);
+
+    try {
+      return document.execCommand("copy");
+    } catch {
+      return false;
+    } finally {
+      textarea.remove();
+    }
+  }
+}
+
 export function ReviewUsClient() {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
@@ -213,14 +240,17 @@ export function ReviewUsClient() {
       return;
     }
 
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-    } catch {
+    const wasCopied = await copyTextToClipboard(text);
+    if (!wasCopied) {
       setCopied(false);
+      setError("We could not copy the text automatically. Please tap Copy, then continue to Google Review.");
+      return;
     }
 
-    window.location.href = GOOGLE_REVIEW_URL;
+    setCopied(true);
+    window.setTimeout(() => {
+      window.location.href = GOOGLE_REVIEW_URL;
+    }, 150);
   }
 
   async function copyDraft() {
@@ -232,7 +262,8 @@ export function ReviewUsClient() {
     }
 
     try {
-      await navigator.clipboard.writeText(text);
+      const wasCopied = await copyTextToClipboard(text);
+      if (!wasCopied) throw new Error("Clipboard copy failed");
       setCopied(true);
     } catch {
       setError("We could not copy the text automatically. Please select and copy it manually.");
