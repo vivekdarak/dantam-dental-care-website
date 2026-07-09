@@ -5,6 +5,8 @@ import { WhatsappFab } from "@/components/whatsapp-fab";
 import { site } from "@/lib/site";
 import "./globals.css";
 
+const openinaryBaseUrl = process.env.NEXT_PUBLIC_OPENINARY_BASE_URL?.replace(/\/$/, "");
+
 export const metadata: Metadata = {
   title: {
     default: `${site.name} | ${site.tagline}`,
@@ -16,6 +18,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        {openinaryBaseUrl && (
+          <>
+            <link rel="preconnect" href={openinaryBaseUrl} crossOrigin="" />
+            <link rel="dns-prefetch" href={openinaryBaseUrl} />
+          </>
+        )}
+      </head>
       <body>
         <div className="site-shell">
           <SiteHeader />
