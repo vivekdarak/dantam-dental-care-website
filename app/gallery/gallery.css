@@ -5,19 +5,27 @@
   gap: 16px;
 }
 
-.gallery-grid figure {
+.gallery-tile {
   position: relative;
   margin: 0;
+  padding: 0;
+  border: 0;
   border-radius: 20px;
   overflow: hidden;
   background: var(--primary-soft);
+  cursor: zoom-in;
 }
 
-.gallery-grid figure.tall {
+.gallery-tile:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.gallery-tile.tall {
   grid-row: span 2;
 }
 
-.gallery-grid figure.wide {
+.gallery-tile.wide {
   grid-column: span 2;
 }
 
@@ -26,8 +34,88 @@
   transition: transform 400ms ease;
 }
 
-.gallery-grid figure:hover img {
+.gallery-tile:hover img {
   transform: scale(1.045);
+}
+
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(12, 20, 18, 0.9);
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-out;
+}
+
+.lightbox-image-wrap {
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 1180px);
+  height: min(86vh, 900px);
+  touch-action: pan-y;
+}
+
+.lightbox-image-wrap img {
+  object-fit: contain;
+}
+
+.lightbox-close,
+.lightbox-nav {
+  position: fixed;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightbox-close:focus-visible,
+.lightbox-nav:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.lightbox-close {
+  top: 24px;
+  right: 24px;
+}
+
+.lightbox-nav.previous {
+  left: 24px;
+}
+
+.lightbox-nav.next {
+  right: 24px;
+}
+
+.lightbox-count {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 2;
+  transform: translateX(-50%);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 @media (max-width: 900px) {
@@ -42,9 +130,32 @@
     grid-auto-rows: 230px;
   }
 
-  .gallery-grid figure.tall,
-  .gallery-grid figure.wide {
+  .gallery-tile.tall,
+  .gallery-tile.wide {
     grid-row: span 1;
     grid-column: span 1;
+  }
+
+  .lightbox-image-wrap {
+    width: 100vw;
+    height: 78vh;
+  }
+
+  .lightbox-close {
+    top: 14px;
+    right: 14px;
+  }
+
+  .lightbox-nav {
+    width: 42px;
+    height: 42px;
+  }
+
+  .lightbox-nav.previous {
+    left: 12px;
+  }
+
+  .lightbox-nav.next {
+    right: 12px;
   }
 }

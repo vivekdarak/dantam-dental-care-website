@@ -13,11 +13,11 @@ export default function Home() {
         <div className="container hero-grid">
           <div className="hero-copy">
             <h1>
-              Smile for a <span>lifetime.</span>
+              Smile for <span>lifetime.</span>
             </h1>
             <p className="lead">
-              Modern implantology, single-sitting root canals and cosmetic dentistry,
-              delivered with warmth by Dr. Krushnakumar Modi and Dr. Blanch Gonsalves Modi.
+              Modern Implantology, Single-Sitting Root Canals, Cosmetic Dentistry, Children Dental Care,
+              Braces and Aligners delivered with warmth by Dr. Krushnakumar Modi and Dr. Blanch Gonsalves Modi.
             </p>
             <div className="hero-actions">
               <Link className="button primary" href="/contact">

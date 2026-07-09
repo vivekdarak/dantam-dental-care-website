@@ -25,6 +25,32 @@
   line-height: 1.75;
 }
 
+.patient-first {
+  margin-top: 0;
+}
+
+.patient-first h3 {
+  color: var(--primary);
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.patient-first p {
+  margin-top: 10px;
+}
+
+.patient-first ul {
+  margin-top: 14px;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.patient-first li::marker {
+  color: var(--gold);
+}
+
 .compact {
   max-width: 720px;
   margin-top: 12px;

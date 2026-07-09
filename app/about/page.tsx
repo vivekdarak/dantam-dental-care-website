@@ -22,25 +22,41 @@ export default function AboutPage() {
       <section className="section">
         <div className="container about-story">
           <div className="story-image">
-            <Image src="/images/gallery-5.jpg" alt="Dantam Dental Care reception area" fill sizes="(max-width: 900px) 100vw, 50vw" />
+            <Image src="/images/dantam-reception-area.JPG" alt="Dantam Dental Care reception area" fill sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
           <div>
-            <div className="eyebrow">Our Story</div>
             <h2 className="section-title">A practice built on trust, technology and time.</h2>
             <div className="story-copy">
-              <p>
-                Founded by Dr. Krushnakumar Modi and Dr. Blanch Gonsalves Modi, Dantam brings together over a decade of
-                clinical experience in implantology, cosmetic dentistry and paediatric care.
-              </p>
-              <p>
-                Our name, Dantam, is Sanskrit for tooth, and our promise is simple: to help you smile for a lifetime.
-                Whether it is your child's first check-up or a full-mouth rehabilitation, you receive honest advice,
-                transparent pricing and calm attention.
-              </p>
-              <p>
-                We invest continuously in technology, from intraoral 3D scanning to rotary endodontics and digital
-                implant planning, so outcomes are precise, comfortable and long-lasting.
-              </p>
+              <div className="patient-first">
+                <h3>Patient First</h3>
+                <p>
+                  We understand that healthcare is a significant investment. Our goal is not to be the cheapest option,
+                  but to be the safest and most reliable. By maintaining high standards of hygiene and quality, we help
+                  protect your health and make your results last as long as possible.
+                </p>
+                <ul>
+                  <li>
+                    Our fees reflect a commitment to a zero-risk environment, with advanced sterilization protocols so
+                    your safety is never a variable.
+                  </li>
+                  <li>
+                    Our materials, including composites, implants and ceramics, are selected for clinical evidence and
+                    long-term durability rather than cost alone.
+                  </li>
+                  <li>
+                    We use advanced, digitally precise equipment for patient procedures at our state-of-the-art clinical
+                    facility.
+                  </li>
+                  <li>
+                    We work with elite technicians and labs instead of mass-production facilities to ensure custom,
+                    high-precision fits.
+                  </li>
+                  <li>
+                    We believe in doing it once and doing it right, which helps prevent the higher cost of fixing failed
+                    treatments later.
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

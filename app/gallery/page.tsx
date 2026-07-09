@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "@/components/page-hero";
+import { GalleryClient } from "./gallery-client";
 import "./gallery.css";
 
 export const metadata: Metadata = {
@@ -9,13 +9,15 @@ export const metadata: Metadata = {
 };
 
 const images = [
-  { src: "/images/gallery-1.jpg", alt: "Warm dental clinic waiting area", className: "tall" },
-  { src: "/images/hero-clinic.jpg", alt: "Modern dental operatory", className: "" },
-  { src: "/images/gallery-3.jpg", alt: "Sterilised dental instruments", className: "" },
-  { src: "/images/gallery-5.jpg", alt: "Reception area with plants", className: "tall" },
-  { src: "/images/gallery-6.jpg", alt: "Dental care moment", className: "" },
-  { src: "/images/gallery-2.jpg", alt: "Dental chair with natural light", className: "" },
-  { src: "/images/gallery-4.jpg", alt: "Patient with confident bright smile", className: "wide" },
+  { src: "/images/dantam-dental-care-clinic-image-2.JPG", alt: "Dantam Dental Care operatory with dental chair", className: "tall" },
+  { src: "/images/dantam-dental-care-clinic-image-3.JPG", alt: "Dantam Dental Care clinic interior", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-4.JPG", alt: "Dantam Dental Care treatment room", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-5.JPG", alt: "Dantam Dental Care reception and clinic space", className: "tall" },
+  { src: "/images/dantam-dental-care-clinic-image-6.JPG", alt: "Dantam Dental Care consultation area", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-7.JPG", alt: "Dantam Dental Care dental equipment", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-8.JPG", alt: "Dantam Dental Care clinic room", className: "wide" },
+  { src: "/images/dantam-dental-care-clinic-image-9.JPG", alt: "Dantam Dental Care interior details", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-10.JPG", alt: "Dantam Dental Care consultation room", className: "" },
 ];
 
 export default function GalleryPage() {
@@ -27,13 +29,7 @@ export default function GalleryPage() {
         subtitle="A calm, welcoming clinic designed to make dental visits feel restful, not clinical."
       />
       <section className="section">
-        <div className="container gallery-grid">
-          {images.map((image) => (
-            <figure className={image.className} key={image.src}>
-              <Image src={image.src} alt={image.alt} fill sizes="(max-width: 760px) 100vw, 25vw" />
-            </figure>
-          ))}
-        </div>
+        <GalleryClient images={images} />
       </section>
     </>
   );
