@@ -114,7 +114,7 @@
   border-radius: 50%;
   background: var(--primary);
   color: var(--gold);
-  font: 700 1.25rem "Cormorant Garamond", serif;
+  font: 700 1.25rem var(--font-cormorant), serif;
 }
 
 .step-list h3 {

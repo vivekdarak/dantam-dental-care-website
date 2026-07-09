@@ -20,7 +20,7 @@
 .hero-copy h1 span {
   display: block;
   color: var(--gold);
-  font-family: "Dancing Script", cursive;
+  font-family: var(--font-dancing), cursive;
   font-size: 1.18em;
 }
 
@@ -113,7 +113,7 @@
 
 .stats-grid strong {
   color: var(--gold);
-  font: 700 2.4rem "Cormorant Garamond", serif;
+  font: 700 2.4rem var(--font-cormorant), serif;
 }
 
 .stats-grid span {
