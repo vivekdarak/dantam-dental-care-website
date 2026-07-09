@@ -203,7 +203,7 @@ textarea {
   overflow: hidden;
   background:
     linear-gradient(135deg, rgb(244 239 223 / 92%), rgb(231 241 235 / 90%)),
-    url("/images/hero-clinic.jpg") center / cover;
+    var(--page-hero-image) center / cover;
   border-bottom: 1px solid var(--border);
 }
 

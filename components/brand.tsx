@@ -10,6 +10,7 @@ export function Brand({ compact = false }: { compact?: boolean }) {
         width={420}
         height={132}
         priority={!compact}
+        unoptimized
       />
     </Link>
   );

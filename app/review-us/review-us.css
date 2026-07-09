@@ -3,7 +3,7 @@
   padding-block: 56px;
   background:
     linear-gradient(135deg, rgb(251 250 244 / 94%), rgb(231 241 235 / 9%)),
-    url("/images/photo4-cropped.JPG") center / cover;
+    var(--review-page-image) center / cover;
 }
 
 .review-grid {

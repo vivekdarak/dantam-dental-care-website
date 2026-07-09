@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { OpeninaryImage } from "@/components/openinary-image";
 import { PageHero } from "@/components/page-hero";
 import { consultants, team } from "@/lib/site";
 import "./dentists.css";
@@ -31,7 +31,14 @@ export default function DentistsPage() {
             {team.map((doctor) => (
               <article className="card doctor-card" key={doctor.name}>
                 <div className="doctor-portrait">
-                  <Image src={doctor.image} alt={`${doctor.name} at Dantam Dental Care`} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                  <OpeninaryImage
+                    src={doctor.image}
+                    alt={`${doctor.name} at Dantam Dental Care`}
+                    fill
+                    sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                    aspectRatio="4:5"
+                    cropMode="fill"
+                  />
                 </div>
                 <div className="doctor-card-body">
                   <h3>{doctor.name}</h3>
@@ -58,7 +65,14 @@ export default function DentistsPage() {
             {consultants.map((doctor) => (
               <article className="card doctor-card" key={doctor.name}>
                 <div className="doctor-portrait">
-                  <Image src={doctor.image} alt={`${doctor.name} at Dantam Dental Care`} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                  <OpeninaryImage
+                    src={doctor.image}
+                    alt={`${doctor.name} at Dantam Dental Care`}
+                    fill
+                    sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                    aspectRatio="4:5"
+                    cropMode="fill"
+                  />
                 </div>
                 <div className="doctor-card-body">
                   <h3>{doctor.name}</h3>

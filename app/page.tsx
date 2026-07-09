@@ -1,7 +1,7 @@
 import { ArrowRight, Baby, Calendar, Phone, Star } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { ClinicLocationCards } from "@/components/clinic-location-cards";
+import { OpeninaryImage } from "@/components/openinary-image";
 import { ServiceCard } from "@/components/service-card";
 import { services, site, stats, testimonials, team, whyChoose } from "@/lib/site";
 import "./home.css";
@@ -40,7 +40,7 @@ export default function Home() {
           </div>
 
           <div className="hero-media">
-            <Image src="/images/photo4-cropped.JPG" alt="Entrance and reception wall at Dantam Dental Care in Thane" fill priority sizes="(max-width: 900px) 100vw, 50vw" />
+            <OpeninaryImage src="/images/photo4-cropped.jpg" alt="Entrance and reception wall at Dantam Dental Care in Thane" fill priority sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
         </div>
       </section>
@@ -79,7 +79,7 @@ export default function Home() {
       <section className="section">
         <div className="container split-section">
           <div className="doctor-visual">
-            <Image src="/images/doctors-image.jpeg" alt="Dr. Blanch Gonsalves Modi and Dr. Krushnakumar Modi at Dantam Dental Care" fill sizes="(max-width: 900px) 100vw, 48vw" />
+            <OpeninaryImage src="/images/doctors-image.jpeg" alt="Dr. Blanch Gonsalves Modi and Dr. Krushnakumar Modi at Dantam Dental Care" fill sizes="(max-width: 900px) 100vw, 48vw" />
           </div>
           <div>
             <div className="eyebrow">Meet Your Dentists</div>

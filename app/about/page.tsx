@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { OpeninaryImage } from "@/components/openinary-image";
 import { PageHero } from "@/components/page-hero";
 import { pillars, site } from "@/lib/site";
 import "./about.css";
@@ -22,7 +22,7 @@ export default function AboutPage() {
       <section className="section">
         <div className="container about-story">
           <div className="story-image">
-            <Image src="/images/dantam-reception-area.JPG" alt="Dantam Dental Care reception area" fill sizes="(max-width: 900px) 100vw, 50vw" />
+            <OpeninaryImage src="/images/dantam-reception-area.jpg" alt="Dantam Dental Care reception area" fill sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
           <div>
             <h2 className="section-title">A practice built on trust, technology and time.</h2>

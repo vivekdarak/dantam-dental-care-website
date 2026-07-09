@@ -1,8 +1,8 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { OpeninaryImage } from "@/components/openinary-image";
 
 type GalleryImage = {
   src: string;
@@ -81,7 +81,7 @@ export function GalleryClient({ images }: GalleryClientProps) {
             onClick={() => setActiveIndex(index)}
             aria-label={`Open image ${index + 1} of ${images.length}`}
           >
-            <Image src={image.src} alt={image.alt} fill sizes="(max-width: 760px) 100vw, 25vw" />
+            <OpeninaryImage src={image.src} alt={image.alt} fill sizes="(max-width: 760px) 100vw, 25vw" />
           </button>
         ))}
       </div>
@@ -100,7 +100,7 @@ export function GalleryClient({ images }: GalleryClientProps) {
             onTouchStart={(event) => setTouchStartX(event.changedTouches[0].clientX)}
             onTouchEnd={(event) => handleTouchEnd(event.changedTouches[0].clientX)}
           >
-            <Image
+            <OpeninaryImage
               src={activeImage.src}
               alt={activeImage.alt}
               fill

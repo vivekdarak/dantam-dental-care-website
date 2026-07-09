@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { OpeninaryImage } from "@/components/openinary-image";
 import { services } from "@/lib/site";
 
 type Service = (typeof services)[number];
@@ -9,7 +9,14 @@ export function ServiceCard({ service }: { service: Service }) {
   return (
     <Link className="service-card card" href={`/services/${service.slug}`}>
       <div className="service-card-image">
-        <Image src={service.image} alt={service.title} fill sizes="(max-width: 760px) 100vw, 33vw" />
+        <OpeninaryImage
+          src={service.image}
+          alt={service.title}
+          fill
+          sizes="(max-width: 760px) 100vw, 33vw"
+          aspectRatio="4:3"
+          cropMode="fill"
+        />
       </div>
       <div className="service-card-body">
         <h3>{service.title}</h3>

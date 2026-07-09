@@ -1,8 +1,9 @@
 "use client";
 
 import { CheckCircle2, Clipboard, Copy, ExternalLink, Loader2, Mic, Send, Square, Star, Trash2 } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import { OpeninaryImage } from "@/components/openinary-image";
+import { openinaryUrl } from "@/lib/openinary";
 import "./review-us.css";
 
 const GOOGLE_REVIEW_URL = "https://g.page/r/CZTqDEbf8-hXEBM/review";
@@ -324,7 +325,10 @@ export function ReviewUsClient() {
 
   if (submitted) {
     return (
-      <section className="review-page review-success">
+    <section
+      className="review-page review-success"
+      style={{ "--review-page-image": `url("${openinaryUrl("/images/photo4-cropped.jpg", "w_1600,q_75,f_webp")}")` } as CSSProperties}
+    >
         <div className="container review-success-card">
           <CheckCircle2 size={54} />
           <h1>Thank you for helping us improve.</h1>
@@ -342,11 +346,14 @@ export function ReviewUsClient() {
   }
 
   return (
-    <section className="review-page">
+    <section
+      className="review-page"
+      style={{ "--review-page-image": `url("${openinaryUrl("/images/photo4-cropped.jpg", "w_1600,q_75,f_webp")}")` } as CSSProperties}
+    >
       <div className="container review-grid">
         <div className="review-intro">
           <div className="intro-image">
-            <Image
+            <OpeninaryImage
               src="/images/doctors-image.jpeg"
               alt="Doctors at Dantam Dental Care"
               fill

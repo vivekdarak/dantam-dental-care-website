@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { ArrowLeft, ArrowRight, Calendar, Check, Phone } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { OpeninaryImage } from "@/components/openinary-image";
 import { serviceContent, services, site, type ServiceSlug } from "@/lib/site";
 import "./service-detail.css";
 
@@ -57,7 +57,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             </div>
           </div>
           <div className="service-hero-image">
-            <Image src={service.image} alt={service.title} fill priority sizes="(max-width: 900px) 100vw, 50vw" />
+            <OpeninaryImage src={service.image} alt={service.title} fill priority sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
         </div>
       </section>

@@ -9,15 +9,15 @@ export const metadata: Metadata = {
 };
 
 const images = [
-  { src: "/images/dantam-dental-care-clinic-image-2.JPG", alt: "Dantam Dental Care operatory with dental chair", className: "tall" },
-  { src: "/images/dantam-dental-care-clinic-image-3.JPG", alt: "Dantam Dental Care clinic interior", className: "" },
-  { src: "/images/dantam-dental-care-clinic-image-4.JPG", alt: "Dantam Dental Care treatment room", className: "" },
-  { src: "/images/dantam-dental-care-clinic-image-5.JPG", alt: "Dantam Dental Care reception and clinic space", className: "tall" },
-  { src: "/images/dantam-dental-care-clinic-image-6.JPG", alt: "Dantam Dental Care consultation area", className: "" },
-  { src: "/images/dantam-dental-care-clinic-image-7.JPG", alt: "Dantam Dental Care dental equipment", className: "" },
-  { src: "/images/dantam-dental-care-clinic-image-8.JPG", alt: "Dantam Dental Care clinic room", className: "wide" },
-  { src: "/images/dantam-dental-care-clinic-image-9.JPG", alt: "Dantam Dental Care interior details", className: "" },
-  { src: "/images/dantam-dental-care-clinic-image-10.JPG", alt: "Dantam Dental Care consultation room", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-2.jpg", alt: "Dantam Dental Care operatory with dental chair", className: "tall" },
+  { src: "/images/dantam-dental-care-clinic-image-3.jpg", alt: "Dantam Dental Care clinic interior", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-4.jpg", alt: "Dantam Dental Care treatment room", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-5.jpg", alt: "Dantam Dental Care reception and clinic space", className: "tall" },
+  { src: "/images/dantam-dental-care-clinic-image-6.jpg", alt: "Dantam Dental Care consultation area", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-7.jpg", alt: "Dantam Dental Care dental equipment", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-8.jpg", alt: "Dantam Dental Care clinic room", className: "wide" },
+  { src: "/images/dantam-dental-care-clinic-image-9.jpg", alt: "Dantam Dental Care interior details", className: "" },
+  { src: "/images/dantam-dental-care-clinic-image-10.jpg", alt: "Dantam Dental Care consultation room", className: "" },
 ];
 
 export default function GalleryPage() {
