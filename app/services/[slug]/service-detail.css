@@ -44,6 +44,15 @@
   object-fit: cover;
 }
 
+.service-hero-image-contain {
+  background: #fff;
+}
+
+.service-hero-image-contain img {
+  object-fit: contain;
+  padding: 48px;
+}
+
 .service-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;

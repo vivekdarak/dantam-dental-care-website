@@ -44,6 +44,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const service = getService(slug);
   if (!service) notFound();
   const detail = serviceContent[service.slug as ServiceSlug];
+  const isContainedImage = "imageFit" in service && service.imageFit === "contain";
 
   return (
     <>
@@ -67,7 +68,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
               </a>
             </div>
           </div>
-          <div className="service-hero-image">
+          <div className={`service-hero-image${isContainedImage ? " service-hero-image-contain" : ""}`}>
             <OpeninaryImage src={service.image} alt={service.title} fill priority sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
         </div>

@@ -164,6 +164,15 @@ textarea {
   object-fit: cover;
 }
 
+.service-card-image-contain {
+  background: #fff;
+}
+
+.service-card-image-contain img {
+  object-fit: contain;
+  padding: 28px;
+}
+
 .service-card-body {
   padding: 22px;
 }

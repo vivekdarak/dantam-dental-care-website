@@ -6,16 +6,17 @@ import { services } from "@/lib/site";
 type Service = (typeof services)[number];
 
 export function ServiceCard({ service }: { service: Service }) {
+  const isContainedImage = "imageFit" in service && service.imageFit === "contain";
+
   return (
     <Link className="service-card card" href={`/services/${service.slug}`}>
-      <div className="service-card-image">
+      <div className={`service-card-image${isContainedImage ? " service-card-image-contain" : ""}`}>
         <OpeninaryImage
           src={service.image}
           alt={service.title}
           fill
           sizes="(max-width: 760px) 100vw, 33vw"
-          aspectRatio="4:3"
-          cropMode="fill"
+          {...(!isContainedImage && { aspectRatio: "4:3" as const, cropMode: "fill" as const })}
         />
       </div>
       <div className="service-card-body">
