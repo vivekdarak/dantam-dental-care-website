@@ -1,0 +1,146 @@
+.patient-contact-strip {
+  background: var(--primary);
+  color: #fff;
+}
+
+.patient-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.patient-contact-grid a,
+.patient-contact-grid div {
+  min-height: 86px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 1px solid rgb(255 255 255 / 12%);
+  padding: 18px;
+  color: rgb(255 255 255 / 88%);
+  line-height: 1.45;
+}
+
+.patient-contact-grid a:last-child {
+  border-right: 1px solid rgb(255 255 255 / 12%);
+}
+
+.patient-contact-grid svg {
+  flex: 0 0 auto;
+  color: var(--gold);
+}
+
+.patient-instructions {
+  background: var(--background);
+}
+
+.instruction-stack {
+  display: grid;
+  gap: 34px;
+}
+
+.instruction-section {
+  display: grid;
+  gap: 18px;
+}
+
+.instruction-section h2 {
+  color: var(--primary);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.instruction-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.instruction-column {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  padding: 24px;
+  box-shadow: 0 8px 28px rgb(23 51 42 / 5%);
+}
+
+.instruction-column h3 {
+  color: var(--accent);
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.instruction-column ol {
+  margin: 18px 0 0;
+  padding-left: 1.35rem;
+  color: var(--muted);
+}
+
+.instruction-column li {
+  padding-left: 0.25rem;
+  line-height: 1.68;
+}
+
+.instruction-column li + li {
+  margin-top: 10px;
+}
+
+.instruction-column[lang="mr"] {
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+}
+
+.patient-help-band {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+}
+
+.patient-help-band .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  padding-block: 52px;
+}
+
+.patient-help-band h2 {
+  margin-top: 10px;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+}
+
+.patient-help-band p {
+  margin-top: 12px;
+  max-width: 660px;
+  color: rgb(255 255 255 / 78%);
+  line-height: 1.7;
+}
+
+.patient-help-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 940px) {
+  .patient-contact-grid,
+  .instruction-columns,
+  .patient-help-band .container {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-contact-grid a,
+  .patient-contact-grid div {
+    min-height: auto;
+    border-right: 1px solid rgb(255 255 255 / 12%);
+  }
+}
+
+@media (max-width: 620px) {
+  .instruction-column {
+    padding: 18px;
+  }
+
+  .patient-help-actions {
+    width: 100%;
+  }
+}

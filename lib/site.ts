@@ -44,7 +44,8 @@ export const locations = [
     shortAddress: "Shreenagar Market Complex, Wagle Estate, Thane West",
     phone: { label: "95949 07908", href: "tel:+919594907908" },
     mapLink: "https://maps.app.goo.gl/b3V331zvNXHi83SC9",
-    mapEmbed: "https://www.google.com/maps?q=Modi+Dental+Clinic+Shreenagar+Thane&output=embed",
+    mapEmbed:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.129666153241!2d72.9419403348877!3d19.189538100000018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b90749c3cec7%3A0x9e5e7ac2f4e6d9a4!2sMODI%20DENTAL%20CLINIC%20(%20Dantam%20Dental%20Care)!5e0!3m2!1sen!2sin!4v1783928615227!5m2!1sen!2sin",
   },
   {
     area: "Nalasopara",
@@ -53,8 +54,9 @@ export const locations = [
       "Shop no. 6, Omkar Niwas, Samelpada, in front of Little Flower High School, Nalasopara (W) - 401 203.",
     shortAddress: "Samelpada, near Little Flower High School, Nalasopara West",
     phone: { label: "83900 79324", href: "tel:+918390079324" },
-    mapLink: "https://maps.app.goo.gl/DfGco8rQLrkFNNK49",
-    mapEmbed: "https://www.google.com/maps?q=Gonsalves+Dental+Care+Nalasopara+West&output=embed",
+    mapLink: "https://maps.app.goo.gl/mPCPqaXUpaFS9A5n8",
+    mapEmbed:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.647057389532!2d72.8252261!3d19.427649799999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ab02b2d09497%3A0x707fad55c569a3c2!2sGonsalves%20Dental%20care!5e0!3m2!1sen!2sin!4v1783928545190!5m2!1sen!2sin",
   },
 ] as const;
 

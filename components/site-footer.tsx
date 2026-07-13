@@ -4,13 +4,17 @@ import { locations, services, site } from "@/lib/site";
 import { Brand } from "./brand";
 import "./site-footer.css";
 
-const links = [
+const exploreLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
   { href: "/dentists", label: "Our Dentists" },
   { href: "/gallery", label: "Gallery" },
+];
+
+const patientResourceLinks = [
+  { href: "/patient-instructions", label: "Patient Instructions" },
   { href: "/testimonials", label: "Testimonials" },
+  { href: "/review-us", label: "Review Us" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -31,7 +35,15 @@ export function SiteFooter() {
         <div>
           <h4>Explore</h4>
           <ul>
-            {links.map((link) => (
+            {exploreLinks.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href}>{link.label}</Link>
+              </li>
+            ))}
+          </ul>
+          <h4 className="footer-subheading">Patient Resources</h4>
+          <ul>
+            {patientResourceLinks.map((link) => (
               <li key={link.href}>
                 <Link href={link.href}>{link.label}</Link>
               </li>
