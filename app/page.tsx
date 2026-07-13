@@ -1,8 +1,10 @@
 import { ArrowRight, Baby, Calendar, Phone, Star } from "lucide-react";
 import Link from "next/link";
 import { ClinicLocationCards } from "@/components/clinic-location-cards";
+import { FaqSection } from "@/components/faq-section";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { ServiceCard } from "@/components/service-card";
+import { homepageFaqs } from "@/lib/faqs";
 import { services, site, stats, testimonials, team, whyChoose } from "@/lib/site";
 import "./home.css";
 
@@ -163,6 +165,12 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      <FaqSection
+        items={homepageFaqs}
+        title="Frequently asked questions."
+        lead="Everything patients commonly ask before visiting Dantam Dental Care, from routine check-ups to implants, whitening, emergencies, and booking appointments."
+      />
 
       <section className="cta-band">
         <div className="container">
