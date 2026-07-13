@@ -1,0 +1,40 @@
+# Dantam Dental Care
+
+Website: https://dantamdentalcare.com
+
+Dantam Dental Care is a dental care clinic group serving patients across Thane and Nalasopara, Maharashtra, India. The clinic offers dental implants, root canal treatments, aligners, braces, child dental care, tooth extraction, intraoral scanning, smile designing, teeth whitening, dentures and related dental services.
+
+## Key Pages
+
+- Home: https://dantamdentalcare.com/
+- About: https://dantamdentalcare.com/about
+- Dentists: https://dantamdentalcare.com/dentists
+- Services: https://dantamdentalcare.com/services
+- Locations: https://dantamdentalcare.com/locations
+- Contact: https://dantamdentalcare.com/contact
+- Patient Instructions: https://dantamdentalcare.com/patient-instructions
+
+## Clinic Locations
+
+- Dantam Dental Care, Majiwada: https://dantamdentalcare.com/locations/majiwada
+- Modi Dental Clinic, Shreenagar: https://dantamdentalcare.com/locations/shreenagar
+- Gonsalves Dental Care, Nalasopara: https://dantamdentalcare.com/locations/nalasopara
+
+## Services
+
+- Child Dental Care: https://dantamdentalcare.com/services/child-dental-care
+- Aligners: https://dantamdentalcare.com/services/aligners
+- Braces: https://dantamdentalcare.com/services/braces
+- Implants: https://dantamdentalcare.com/services/implants
+- Tooth Extraction: https://dantamdentalcare.com/services/tooth-extraction
+- Root Canal Treatments: https://dantamdentalcare.com/services/root-canal-treatments
+- Intraoral Scanner: https://dantamdentalcare.com/services/intraoral-scanner
+- Smile Designing: https://dantamdentalcare.com/services/smile-designing
+- Full Mouth Rehabilitation: https://dantamdentalcare.com/services/full-mouth-rehabilitation
+- Teeth Whitening: https://dantamdentalcare.com/services/teeth-whitening
+- Dentures: https://dantamdentalcare.com/services/dentures
+
+## Discovery
+
+- Sitemap: https://dantamdentalcare.com/sitemap.xml
+- Robots: https://dantamdentalcare.com/robots.txt

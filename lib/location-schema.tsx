@@ -32,7 +32,6 @@ function locationPostalCode(location: Location) {
 
 export function dentistLocationSchema(location: Location) {
   return {
-    "@context": "https://schema.org",
     "@type": "Dentist",
     "@id": `${locationUrl(location)}#dentist`,
     name: location.name,
@@ -111,9 +110,12 @@ export function locationsItemListSchema() {
           "@type": "ListItem",
           position: index + 1,
           name: `${location.name}, ${location.area}`,
-          url: locationUrl(location),
+          item: {
+            "@id": `${locationUrl(location)}#dentist`,
+          },
         })),
       },
+      ...locations.map(dentistLocationSchema),
     ],
   };
 }
