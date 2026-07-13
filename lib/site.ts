@@ -12,7 +12,7 @@ import {
 
 export const site = {
   name: "Dantam Dental Care",
-  tagline: "Smile for a lifetime",
+  tagline: "Smile for lifetime",
   location: "Thane, Maharashtra, India",
   phones: [
     { label: "+91 84840 92077", href: "tel:+918484092077" },
@@ -27,34 +27,46 @@ export const site = {
 
 export const locations = [
   {
+    slug: "majiwada",
     area: "Majiwada",
     name: "Dantam Dental Care",
+    manager: "Dr. Krushnakumar Modi and Dr. Blanch Gonsalves Modi",
+    managerDescription: "Managed by both resident dentists for complete family dental care, implantology, cosmetic dentistry and single-sitting root canal treatments.",
     address:
       "Office No. 3, 2nd floor (P3), I Wing Retail, Rustomjee Azziano, above Wellness Forever Medical, near Rustomjee Cambridge School, Rustomjee Urbania, Majiwada, Thane (W) - 400 601.",
     shortAddress: "Rustomjee Urbania, Majiwada, Thane West",
     phone: { label: "84840 92077", href: "tel:+918484092077" },
     mapLink: "https://maps.app.goo.gl/XVmRwdNM6yts4t626",
+    googleBusinessProfile: "https://share.google/JfPt9jyEREYWqRf97",
     mapEmbed: "https://www.google.com/maps?q=Dantam+Dental+Care+Majiwada+Thane&output=embed",
   },
   {
+    slug: "shreenagar",
     area: "Shreenagar",
     name: "Modi Dental Clinic",
+    manager: "Dr. Krushnakumar Modi",
+    managerDescription: "Managed by Dr. Krushnakumar Modi, with a focus on dental implants, full-mouth prosthetic restorations and complete dental care.",
     address:
       "Shop no. 31, Shreenagar Market Complex, below TJSB Bank, Ashram Road, Shreenagar, Wagle Estate, Thane (W) - 400 604.",
     shortAddress: "Shreenagar Market Complex, Wagle Estate, Thane West",
     phone: { label: "95949 07908", href: "tel:+919594907908" },
     mapLink: "https://maps.app.goo.gl/b3V331zvNXHi83SC9",
+    googleBusinessProfile: "https://share.google/AdppB5Niujylqavzn",
     mapEmbed:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.129666153241!2d72.9419403348877!3d19.189538100000018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b90749c3cec7%3A0x9e5e7ac2f4e6d9a4!2sMODI%20DENTAL%20CLINIC%20(%20Dantam%20Dental%20Care)!5e0!3m2!1sen!2sin!4v1783928615227!5m2!1sen!2sin",
   },
   {
+    slug: "nalasopara",
     area: "Nalasopara",
     name: "Gonsalves Dental Care",
+    manager: "Dr. Blanch Gonsalves Modi",
+    managerDescription: "Managed by Dr. Blanch Gonsalves Modi, with a focus on gentle diagnosis, single-sitting root canal treatments, cosmetic dentistry and family dental care.",
     address:
       "Shop no. 6, Omkar Niwas, Samelpada, in front of Little Flower High School, Nalasopara (W) - 401 203.",
     shortAddress: "Samelpada, near Little Flower High School, Nalasopara West",
     phone: { label: "83900 79324", href: "tel:+918390079324" },
     mapLink: "https://maps.app.goo.gl/mPCPqaXUpaFS9A5n8",
+    googleBusinessProfile: "https://share.google/cRINf3ag3A0T2ekUX",
     mapEmbed:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.647057389532!2d72.8252261!3d19.427649799999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ab02b2d09497%3A0x707fad55c569a3c2!2sGonsalves%20Dental%20care!5e0!3m2!1sen!2sin!4v1783928545190!5m2!1sen!2sin",
   },

@@ -8,6 +8,7 @@ const exploreLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/dentists", label: "Our Dentists" },
+  { href: "/locations", label: "Locations" },
   { href: "/gallery", label: "Gallery" },
 ];
 
@@ -27,8 +28,9 @@ export function SiteFooter() {
             <Brand compact />
           </div>
           <p>
-            A modern dental practice in Thane offering implantology, cosmetic dentistry,
-            single-sitting root canals and paediatric care under one calm roof.
+            A modern dental practice founded by Dr. Krushnakumar Modi and Dr. Blanch Gonsalves Modi,
+            offering implantology, cosmetic dentistry, single-sitting root canal treatments, aligners,
+            braces and paediatric dental care across Thane and Nalasopara.
           </p>
         </div>
 
@@ -92,7 +94,7 @@ export function SiteFooter() {
       <div className="footer-bottom">
         <div className="container">
           <span>© {new Date().getFullYear()} Dantam Dental Care. All rights reserved.</span>
-          <span>Smile for a lifetime.</span>
+          <span>Smile for lifetime.</span>
         </div>
       </div>
     </footer>

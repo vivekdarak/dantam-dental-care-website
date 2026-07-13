@@ -46,6 +46,10 @@
   font-size: 1.6rem;
 }
 
+.location-card h3 a:hover {
+  color: var(--accent);
+}
+
 .location-card p {
   margin-top: 7px;
   min-height: 118px;
@@ -75,6 +79,7 @@
   margin-top: 20px;
   padding: 0 22px 22px;
   display: grid;
+  gap: 10px;
 }
 
 @media (max-width: 1040px) {

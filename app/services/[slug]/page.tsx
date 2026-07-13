@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { ArrowLeft, ArrowRight, Calendar, Check, Phone } from "lucide-react";
+import { ArrowRight, Calendar, Check, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { OpeninaryImage } from "@/components/openinary-image";
-import { serviceContent, services, site, type ServiceSlug } from "@/lib/site";
-import { socialMetadata } from "@/lib/social-metadata";
+import { FaqJsonLd } from "@/lib/faq-schema";
+import { seoMetadata } from "@/lib/seo-metadata";
+import { JsonLd, serviceDetailSchema } from "@/lib/service-schema";
+import { locations, serviceContent, services, site, type ServiceSlug } from "@/lib/site";
 import "./service-detail.css";
 
 type PageProps = {
@@ -26,17 +29,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${service.title} in Thane`;
   const description = serviceContent[service.slug].hero;
 
-  return {
+  return seoMetadata({
     title,
     description,
-    ...socialMetadata({
-      title,
-      description,
-      image: service.image,
-      imageAlt: `${service.title} at Dantam Dental Care`,
-      path: `/services/${service.slug}`,
-    }),
-  };
+    image: service.image,
+    imageAlt: `${service.title} at Dantam Dental Care`,
+    path: `/services/${service.slug}`,
+  });
 }
 
 export default async function ServiceDetailPage({ params }: PageProps) {
@@ -48,28 +47,33 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
   return (
     <>
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Services", href: "/services" },
+          { label: service.title, href: `/services/${service.slug}` },
+        ]}
+      />
+      <JsonLd data={serviceDetailSchema(service)} />
+      <FaqJsonLd items={detail.faqs.map((faq) => ({ question: faq.q, answer: faq.a }))} />
       <section className="service-hero">
         <div className="container service-hero-grid">
-          <div>
-            <Link className="back-link" href="/services">
-              <ArrowLeft size={15} />
-              All Services
-            </Link>
+          <div className="service-hero-copy">
             <h1>{service.title}</h1>
             <p className="lead">{detail.hero}</p>
-            <div className="hero-actions">
-              <Link className="button primary" href="/contact">
-                <Calendar size={17} />
-                Book Consultation
-              </Link>
-              <a className="button outline" href={site.phones[0].href}>
-                <Phone size={17} />
-                Call clinic
-              </a>
-            </div>
           </div>
           <div className={`service-hero-image${isContainedImage ? " service-hero-image-contain" : ""}`}>
             <OpeninaryImage src={service.image} alt={service.title} fill priority sizes="(max-width: 900px) 100vw, 50vw" />
+          </div>
+          <div className="hero-actions service-hero-actions">
+            <Link className="button primary" href="/contact">
+              <Calendar size={17} />
+              Book Consultation
+            </Link>
+            <a className="button outline" href={site.phones[0].href}>
+              <Phone size={17} />
+              Call clinic
+            </a>
           </div>
         </div>
       </section>
@@ -129,6 +133,24 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     <summary>{faq.q}</summary>
                     <p>{faq.a}</p>
                   </details>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <h2>Available at our clinics</h2>
+              <p>
+                Choose a clinic location for consultation and appointment support for this service.
+              </p>
+              <div className="service-location-links">
+                {locations.map((location) => (
+                  <Link key={location.slug} href={`/locations/${location.slug}`}>
+                    <MapPin size={18} />
+                    <span>
+                      <strong>{location.name}</strong>
+                      {location.area}
+                    </span>
+                  </Link>
                 ))}
               </div>
             </section>

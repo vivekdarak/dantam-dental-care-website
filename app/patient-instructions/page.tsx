@@ -1,30 +1,30 @@
 import type { Metadata } from "next";
 import { Clock, Mail, MessageCircle, Phone } from "lucide-react";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PageHero } from "@/components/page-hero";
 import { patientInstructionSections, type InstructionSection } from "@/lib/patient-instructions";
+import { seoMetadata } from "@/lib/seo-metadata";
 import { site } from "@/lib/site";
-import { socialMetadata } from "@/lib/social-metadata";
 import "./patient-instructions.css";
 
 const title = "Patient Instructions";
 const description =
   "Post-treatment dental instructions in English and Marathi from Dantam Dental Care, including extraction, surgery, root canal and general patient guidance.";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  ...socialMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return seoMetadata({
     title: "Patient Instructions | Dantam Dental Care",
     description,
     image: "/images/hero-clinic.jpg",
     imageAlt: "Dantam Dental Care clinic in Thane",
     path: "/patient-instructions",
-  }),
-};
+  });
+}
 
 export default function PatientInstructionsPage() {
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Patient Instructions", href: "/patient-instructions" }]} />
       <PageHero
         eyebrow="Patient Care"
         title="Patient Instructions"

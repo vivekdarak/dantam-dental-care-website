@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import "./site-header.css";
 const nav = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
+  { href: "/locations", label: "Locations" },
   { href: "/about", label: "About" },
   { href: "/dentists", label: "Our Dentists" },
   { href: "/gallery", label: "Gallery" },
@@ -49,10 +50,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="header-actions">
-          <a className="phone-link" href={site.phones[0].href}>
-            <Phone size={17} />
-            {site.phones[0].label}
-          </a>
           <Link className="button primary book-link" href="/contact">
             Book Appointment
           </Link>

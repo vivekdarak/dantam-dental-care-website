@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PageHero } from "@/components/page-hero";
-import { socialMetadata } from "@/lib/social-metadata";
+import { seoMetadata } from "@/lib/seo-metadata";
 import { GalleryClient } from "./gallery-client";
 import "./gallery.css";
 
@@ -8,17 +9,15 @@ const title = "Gallery";
 const description =
   "A look inside Dantam Dental Care in Thane, including clinic interiors, technology and patient care spaces.";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  ...socialMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return seoMetadata({
     title: "Dantam Dental Care Gallery",
     description,
     image: "/images/dantam-dental-care-clinic-image-2.jpg",
     imageAlt: "Dantam Dental Care operatory with dental chair",
     path: "/gallery",
-  }),
-};
+  });
+}
 
 const images = [
   { src: "/images/dantam-dental-care-clinic-image-2.jpg", alt: "Dantam Dental Care operatory with dental chair", className: "tall" },
@@ -35,6 +34,7 @@ const images = [
 export default function GalleryPage() {
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Gallery", href: "/gallery" }]} />
       <PageHero
         eyebrow="Gallery"
         title="Step inside Dantam."

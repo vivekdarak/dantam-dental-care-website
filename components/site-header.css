@@ -76,15 +76,6 @@
   flex: 0 0 auto;
 }
 
-.phone-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  color: var(--primary);
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
 .menu-button {
   display: none;
   width: 44px;
@@ -107,7 +98,6 @@
 
 @media (max-width: 1060px) {
   .desktop-nav,
-  .header-actions .phone-link,
   .header-actions .book-link {
     display: none;
   }

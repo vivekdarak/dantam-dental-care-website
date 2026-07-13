@@ -1,8 +1,9 @@
 import { MapPin, Navigation, Phone } from "lucide-react";
+import Link from "next/link";
 import { locations } from "@/lib/site";
 import "./clinic-location-cards.css";
 
-export function ClinicLocationCards() {
+export function ClinicLocationCards({ showDetailsLink = false }: { showDetailsLink?: boolean }) {
   return (
     <div className="locations-grid">
       {locations.map((location) => (
@@ -19,7 +20,13 @@ export function ClinicLocationCards() {
             <MapPin size={16} />
             {location.area}
           </span>
-          <h3>{location.name}</h3>
+          <h3>
+            {showDetailsLink ? (
+              <Link href={`/locations/${location.slug}`}>{location.name}</Link>
+            ) : (
+              location.name
+            )}
+          </h3>
           <p>{location.address}</p>
           <div className="location-phone-list">
             <a className="location-phone" href={location.phone.href}>
@@ -28,6 +35,11 @@ export function ClinicLocationCards() {
             </a>
           </div>
           <div className="location-actions">
+            {showDetailsLink && (
+              <Link className="button outline" href={`/locations/${location.slug}`}>
+                View clinic
+              </Link>
+            )}
             <a className="button dark" href={location.mapLink} target="_blank" rel="noreferrer">
               <Navigation size={16} />
               Directions

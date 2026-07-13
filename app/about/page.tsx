@@ -1,29 +1,29 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { PageHero } from "@/components/page-hero";
+import { seoMetadata } from "@/lib/seo-metadata";
 import { pillars, site } from "@/lib/site";
-import { socialMetadata } from "@/lib/social-metadata";
 import "./about.css";
 
 const title = "About";
 const description = "Learn about Dantam Dental Care in Thane, our story, philosophy, technology and dentist team.";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  ...socialMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return seoMetadata({
     title: "About Dantam Dental Care",
     description,
     image: "/images/dantam-reception-area.jpg",
     imageAlt: "Dantam Dental Care reception area",
     path: "/about",
-  }),
-};
+  });
+}
 
 export default function AboutPage() {
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }]} />
       <PageHero
         eyebrow="About Us"
         title="Dentistry, reimagined for your family."

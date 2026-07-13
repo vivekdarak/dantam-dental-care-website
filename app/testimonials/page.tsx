@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PageHero } from "@/components/page-hero";
-import { socialMetadata } from "@/lib/social-metadata";
+import { seoMetadata } from "@/lib/seo-metadata";
 import { TestimonialFilter } from "@/components/testimonial-filter";
 
 const title = "Testimonials";
 const description =
   "Stories from patients at Dantam Dental Care in Thane covering implants, root canals, aligners, kids dentistry and more.";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  ...socialMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return seoMetadata({
     title: "Dantam Dental Care Testimonials",
     description,
     image: "/images/hero-clinic.jpg",
     imageAlt: "Dantam Dental Care clinic interior in Thane",
     path: "/testimonials",
-  }),
-};
+  });
+}
 
 export default function TestimonialsPage() {
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Testimonials", href: "/testimonials" }]} />
       <PageHero
         eyebrow="Kind Words"
         title="Stories from smiles we have cared for."

@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Dancing_Script, Work_Sans } from "next/font/google"
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { WhatsappFab } from "@/components/whatsapp-fab";
+import { OrganizationJsonLd } from "@/lib/organization-schema";
 import { site } from "@/lib/site";
 import { socialMetadata } from "@/lib/social-metadata";
 import "./globals.css";
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
+        <OrganizationJsonLd />
         {openinaryBaseUrl && (
           <>
             <link rel="preconnect" href={openinaryBaseUrl} crossOrigin="" />

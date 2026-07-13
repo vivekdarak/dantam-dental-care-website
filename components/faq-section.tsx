@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import type { FaqItem } from "@/lib/faqs";
+import { FaqJsonLd } from "@/lib/faq-schema";
 import "./faq-section.css";
 
 type FaqSectionProps = {
@@ -21,31 +22,34 @@ export function FaqSection({
   const sectionClassName = ["section", "faq-section", className].filter(Boolean).join(" ");
 
   return (
-    <section className={sectionClassName}>
-      <div className="container">
-        <div className="section-heading faq-heading">
-          <div>
-            <div className="eyebrow">{eyebrow}</div>
-            <h2 className="section-title">{title}</h2>
+    <>
+      <FaqJsonLd items={items} />
+      <section className={sectionClassName}>
+        <div className="container">
+          <div className="section-heading faq-heading">
+            <div>
+              <div className="eyebrow">{eyebrow}</div>
+              <h2 className="section-title">{title}</h2>
+            </div>
+            {lead ? <p className="lead">{lead}</p> : null}
           </div>
-          {lead ? <p className="lead">{lead}</p> : null}
-        </div>
 
-        <div className="faq-list">
-          {items.map((item, index) => (
-            <details className="faq-item" key={item.question} open={index === 0}>
-              <summary>
-                <span>{item.question}</span>
-                <ChevronDown aria-hidden="true" size={20} />
-              </summary>
-              <div className="faq-answer">
-                <p>{renderAnswer(item.answer)}</p>
-              </div>
-            </details>
-          ))}
+          <div className="faq-list">
+            {items.map((item, index) => (
+              <details className="faq-item" key={item.question} open={index === 0}>
+                <summary>
+                  <span>{item.question}</span>
+                  <ChevronDown aria-hidden="true" size={20} />
+                </summary>
+                <div className="faq-answer">
+                  <p>{renderAnswer(item.answer)}</p>
+                </div>
+              </details>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ArrowRight, Baby, Calendar, Phone, Star } from "lucide-react";
 import Link from "next/link";
 import { ClinicLocationCards } from "@/components/clinic-location-cards";
@@ -5,8 +6,20 @@ import { FaqSection } from "@/components/faq-section";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { ServiceCard } from "@/components/service-card";
 import { homepageFaqs } from "@/lib/faqs";
+import { seoMetadata } from "@/lib/seo-metadata";
 import { services, site, stats, testimonials, whyChoose } from "@/lib/site";
 import "./home.css";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return seoMetadata({
+    title: `${site.name} | ${site.tagline}`,
+    description:
+      "Modern dental care in Thane for implants, single-sitting root canals, aligners, braces and paediatric dentistry.",
+    image: "/images/photo4-cropped.jpg",
+    imageAlt: "Dantam Dental Care clinic reception in Thane",
+    path: "/",
+  });
+}
 
 export default function Home() {
   return (

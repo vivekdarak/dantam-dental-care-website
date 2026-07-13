@@ -1,29 +1,31 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { PageHero } from "@/components/page-hero";
+import { DentistsPageJsonLd, doctorAnchorId } from "@/lib/person-schema";
+import { seoMetadata } from "@/lib/seo-metadata";
 import { consultants, team } from "@/lib/site";
-import { socialMetadata } from "@/lib/social-metadata";
 import "./dentists.css";
 
 const title = "Our Dentists";
 const description = "Meet the resident dentists and visiting consultants at Dantam Dental Care, Thane.";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  ...socialMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return seoMetadata({
     title: "Our Dentists | Dantam Dental Care",
     description,
     image: "/images/doctors-image.jpeg",
     imageAlt: "Dr. Blanch Gonsalves Modi and Dr. Krushnakumar Modi at Dantam Dental Care",
     path: "/dentists",
-  }),
-};
+  });
+}
 
 export default function DentistsPage() {
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Our Dentists", href: "/dentists" }]} />
+      <DentistsPageJsonLd />
       <PageHero
         eyebrow="Meet the Team"
         title="Experienced doctors for complete dental care."
@@ -40,7 +42,7 @@ export default function DentistsPage() {
           </div>
           <div className="doctor-grid">
             {team.map((doctor) => (
-              <article className="card doctor-card" key={doctor.name}>
+              <article className="card doctor-card" id={doctorAnchorId(doctor.name)} key={doctor.name}>
                 <div className="doctor-portrait">
                   <OpeninaryImage
                     src={doctor.image}
@@ -74,7 +76,7 @@ export default function DentistsPage() {
           <h2 className="section-title compact">Our Specialist</h2>
           <div className="doctor-grid visiting-doctor-grid">
             {consultants.map((doctor) => (
-              <article className="card doctor-card" key={doctor.name}>
+              <article className="card doctor-card" id={doctorAnchorId(doctor.name)} key={doctor.name}>
                 <div className="doctor-portrait">
                   <OpeninaryImage
                     src={doctor.image}
