@@ -69,8 +69,7 @@ export const services = [
     slug: "aligners",
     title: "Aligners",
     short: "Clear, removable aligners for a discreet smile transformation.",
-    image: "/images/invisaligners-dantam.png",
-    imageFit: "contain",
+    image: "/images/invisalign-provider.png",
   },
   {
     slug: "braces",
@@ -109,22 +108,22 @@ export const services = [
     image: "/images/service-smile-designing-new.jpg",
   },
   {
-    slug: "periodontal-gum-surgery",
-    title: "Periodontal Gum Surgery",
+    slug: "full-mouth-rehabilitation",
+    title: "Full Mouth Rehabilitation",
     short: "Focused gum treatment for healthier foundations and cleaner smiles.",
-    image: "/images/full-mouth-rehabilitation-2.png",
+    image: "/images/full-mouth-rehabilitation-3.png",
   },
   {
     slug: "teeth-whitening",
     title: "Teeth Whitening",
     short: "Professional teeth bleaching to brighten stains safely.",
-    image: "/images/service-teeth-whitening-new.jpg",
+    image: "/images/teeth-whitening-2.png",
   },
   {
     slug: "dentures",
     title: "Dentures",
     short: "Comfortable removable teeth replacement for daily function.",
-    image: "/images/service-dentures-new.jpg",
+    image: "/images/dentures-1.png",
   },
 ] as const;
 
@@ -264,7 +263,7 @@ export const serviceContent: Record<ServiceSlug, ServiceContent> = {
       { q: "Will my smile look artificial?", a: "Our goal is a natural smile that suits your face, not an overdone or one-size-fits-all result." },
     ],
   },
-  "periodontal-gum-surgery": {
+  "full-mouth-rehabilitation": {
     hero: "Specialised gum care for healthier teeth and stronger foundations.",
     what: "Periodontal gum surgery treats gum disease, deep infection, gum pockets and supporting tissue problems when regular cleaning is not enough. The aim is to control disease, protect teeth and restore healthier gums.",
     who: ["Bleeding or swollen gums", "Loose teeth due to gum disease", "Deep gum pockets or tartar below the gum line", "Patients advised advanced periodontal treatment"],
@@ -353,6 +352,15 @@ export const team = [
 
 export const consultants = [
   {
+    name: "Dr. Arpit Chanchad",
+    role: "Visiting Consultant",
+    credentials: "Consultant Doctor",
+    image: "/images/dr-danesh-nair.jpg",
+    bio: "A visiting consultant supporting Dantam Dental Care with specialist-led treatment planning and clinical care.",
+    special: ["Braces", "Aligners", "Orthodontist", "Invisalign Specialist"],
+    icon: GraduationCap,
+  },
+  {
     name: "Dr. Sanika Palan",
     role: "Children Dental & Preventive Dentistry Specialist",
     credentials: "M.D.S (Pedodontist)",
@@ -376,16 +384,7 @@ export const consultants = [
     credentials: "Consultant Doctor",
     image: "/images/dr-arpit-chanchad.jpg",
     bio: "A visiting consultant supporting Dantam Dental Care with specialist-led treatment planning and clinical care.",
-    special: ["Specialist consultation", "Treatment planning", "Clinical care"],
-    icon: GraduationCap,
-  },
-  {
-    name: "Dr. Arpit Chanchad",
-    role: "Visiting Consultant",
-    credentials: "Consultant Doctor",
-    image: "/images/dr-danesh-nair.jpg",
-    bio: "A visiting consultant supporting Dantam Dental Care with specialist-led treatment planning and clinical care.",
-    special: ["Specialist consultation", "Treatment planning", "Clinical care"],
+    special: ["Gum Care", "Periodontal Surgeries", "Oral Rehabilitation"],
     icon: GraduationCap,
   },
 ];

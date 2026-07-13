@@ -71,7 +71,7 @@ export default function DentistsPage() {
       <section className="section section-muted">
         <div className="container">
           <div className="eyebrow">Visiting consultants</div>
-          <h2 className="section-title compact">Specialists who join us for complex cases.</h2>
+          <h2 className="section-title compact">Our Specialist</h2>
           <div className="doctor-grid visiting-doctor-grid">
             {consultants.map((doctor) => (
               <article className="card doctor-card" key={doctor.name}>
