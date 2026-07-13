@@ -5,7 +5,7 @@ import { FaqSection } from "@/components/faq-section";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { ServiceCard } from "@/components/service-card";
 import { homepageFaqs } from "@/lib/faqs";
-import { services, site, stats, testimonials, team, whyChoose } from "@/lib/site";
+import { services, site, stats, testimonials, whyChoose } from "@/lib/site";
 import "./home.css";
 
 export default function Home() {
@@ -79,22 +79,56 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <div className="container split-section">
-          <div className="doctor-visual">
-            <OpeninaryImage src="/images/doctors-image.jpeg" alt="Dr. Blanch Gonsalves Modi and Dr. Krushnakumar Modi at Dantam Dental Care" fill sizes="(max-width: 900px) 100vw, 48vw" />
-          </div>
-          <div>
+        <div className="container doctor-story-section">
+          <div className="doctor-story-header">
             <div className="eyebrow">Meet Your Dentists</div>
-            <h2 className="section-title">A husband-and-wife team behind every smile.</h2>
-            <div className="doctor-list">
-              {team.map((doctor) => (
-                <article key={doctor.name}>
-                  <h3>{doctor.name}</h3>
-                  <span>{doctor.role} | {doctor.credentials}</span>
-                  <p>{doctor.bio}</p>
-                </article>
-              ))}
+            <h2 className="doctor-names">Dr. Krushnakumar Modi & Dr. Blanch Gonsalves Modi</h2>
+          </div>
+
+          <div className="doctor-story">
+            <h3>The Heart Behind Dantam Dental Care</h3>
+            <div className="doctor-inline-image">
+              <OpeninaryImage src="/images/doctors-image.jpeg" alt="Dr. Blanch Gonsalves Modi and Dr. Krushnakumar Modi at Dantam Dental Care" fill sizes="(max-width: 760px) 100vw, 36vw" />
             </div>
+                <p>
+                  Every smile has a story. Ours began more than 13 years ago, when we started our individual journeys as
+                  young dentists with a shared belief: dentistry should always be honest, thoughtful, and centred around
+                  the person - not just the problem. We built our practices one patient at a time, and along the way, we
+                  learned that relieving pain, calming fear, and helping someone smile confidently again can change far
+                  more than their teeth. These experiences shaped the kind of dentists we wanted to become.
+                </p>
+                <p>
+                  Even before we became life partners, we shared the same philosophy. Patients deserve to be heard,
+                  respected, and guided towards what is genuinely best for them - without unnecessary treatments or
+                  added financial pressure. When we got married, our personal and professional journeys naturally came
+                  together, and Dantam Dental Care was born from that shared dream: to create a modern dental clinic
+                  where people feel comfortable, informed, and confident about their treatment.
+                </p>
+                <p>
+                  Building the clinic from the ground up was not easy, but every patient who chose us gave our journey
+                  greater meaning. Their faith encouraged us to keep learning, adopt newer technology, improve our
+                  skills, and uphold the standards we believed in from the beginning. Today, we measure our journey not
+                  only through years of practice, but through the thousands of smiles we have restored and the families
+                  who continue to return to us.
+                </p>
+                <p>
+                  We have cared for children during their first dental visit, adults seeking relief from pain, seniors
+                  hoping to eat and smile comfortably again, and people from every walk of life. Whatever their
+                  background, every patient receives the same attention, respect, and commitment. For us, dentistry is
+                  about more than fixing teeth. It is about restoring confidence, easing anxiety, and helping people
+                  feel like themselves again. Every treatment begins with a conversation, a clear plan, and an honest
+                  recommendation.
+                </p>
+                <p>
+                  More than a decade later, our purpose remains unchanged: to practise dentistry with integrity,
+                  compassion, and clinical excellence. When you visit Dantam Dental Care, we make you one simple promise
+                  - we will treat you with the same sincerity and dedication that we would want for our own family.
+                </p>
+                <p>
+                  Because dentistry is not simply our profession. It is the work we have chosen to build our lives
+                  around.
+                </p>
+                <p>Welcome to Dantam Dental Care - where every smile is personal.</p>
             <Link className="button dark" href="/dentists">
               Meet the team <ArrowRight size={17} />
             </Link>
