@@ -355,8 +355,8 @@ export const team = [
 export const consultants = [
   {
     name: "Dr. Arpit Chanchad",
-    role: "Visiting Consultant",
-    credentials: "Consultant Doctor",
+    role: "Braces and Invisalign specialist",
+    credentials: "MDS (Orthodontics)",
     image: "/images/dr-danesh-nair.jpg",
     bio: "A visiting consultant supporting Dantam Dental Care with specialist-led treatment planning and clinical care.",
     special: ["Braces", "Aligners", "Orthodontist", "Invisalign Specialist"],
@@ -373,7 +373,7 @@ export const consultants = [
   },
   {
     name: "Dr. Prasad Bhange",
-    role: "Oral & Maxillofacial Surgeon (Visiting)",
+    role: "Consulting oral and Maxillofacial Surgeon",
     credentials: "KEM Hospital, Parel | 20+ years",
     image: "/images/dr-prasad-bhange.jpg",
     bio: "A visiting oral and maxillofacial surgeon associated with King Edward Memorial Hospital, Parel, supporting Dantam on complex surgical cases.",
@@ -382,7 +382,7 @@ export const consultants = [
   },
   {
     name: "Dr. Danesh Nair",
-    role: "Visiting Consultant",
+    role: "Gum care specialist and Consulting Implantologist",
     credentials: "Consultant Doctor",
     image: "/images/dr-arpit-chanchad.jpg",
     bio: "A visiting consultant supporting Dantam Dental Care with specialist-led treatment planning and clinical care.",
