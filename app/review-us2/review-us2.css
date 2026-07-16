@@ -322,6 +322,14 @@
   transform: none;
 }
 
+.feedback-actions .button svg {
+  flex: 0 0 auto;
+}
+
+.feedback-actions .button:disabled svg {
+  animation: spin 1s linear infinite;
+}
+
 .feedback-mode-tabs {
   position: absolute;
   top: 12px;
@@ -488,25 +496,69 @@
   color: var(--accent);
 }
 
-.summary-ratings {
+.summary-review-preview {
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #fbfaf4;
+  color: var(--primary);
+  padding: 16px;
+  font-size: 1rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.private-name-field {
   margin-top: 18px;
   display: grid;
   gap: 8px;
-  border-radius: 15px;
-  background: var(--primary-soft);
+}
+
+.private-name-field span {
   color: var(--primary);
-  padding: 14px 16px;
-  font-size: 0.9rem;
+  font-size: 0.94rem;
   font-weight: 800;
 }
 
-.summary-edit {
-  margin-top: 18px;
-  display: grid;
-  gap: 8px;
+.private-name-field small {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.private-name-field input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fbfaf4;
+  color: var(--foreground);
+  padding: 0 14px;
+  font: inherit;
+  outline: none;
+}
+
+.private-name-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgb(13 122 95 / 12%);
+}
+
+.anonymous-button {
+  justify-self: start;
+  min-height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
   color: var(--primary);
-  font-size: 0.9rem;
+  padding: 0 13px;
+  font-size: 0.84rem;
   font-weight: 800;
+  cursor: pointer;
+}
+
+.anonymous-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 @keyframes pulse-record {

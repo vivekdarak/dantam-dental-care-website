@@ -17,7 +17,8 @@ import "./review-us2.css";
 
 const GOOGLE_REVIEW_URL = "https://g.page/r/CZTqDEbf8-hXEBM/review";
 const TRANSLATION_WEBHOOK_PATH = "/webhook/dantam-translation";
-const FEEDBACK_WEBHOOK_PATH = "/webhook/dantam-review-feedback";
+const FEEDBACK_WEBHOOK_PATH = "/webhook/dantam-evaluate-review";
+const FORM_VERSION = "review-us2-v1";
 const ATTEMPT_COOKIE = "dantam_review2_attempts";
 const MAX_ATTEMPTS = 5;
 const MAX_RECORDING_SECONDS = 120;
@@ -98,11 +99,13 @@ const copy = {
     progress: "Question",
     skip: "Skip & continue",
     continue: "Continue",
+    evaluating: "Submitting your feedback... please wait",
     back: "Back",
     ratingLabels: ["Very poor", "Poor", "Okay", "Good", "Excellent"],
     feedbackTitle: "Tell us about your visit",
     feedbackHelp: "Type your feedback or use voice to text. Your words stay editable before anything is copied.",
     feedbackRequired: "Please type your feedback or use voice to text before continuing.",
+    feedbackWordCount: "Please write more than 6 words about your visit.",
     typeManually: "Type Manually",
     voiceToText: "Use Voice to Text",
     placeholder: "Share what you liked, how the doctors and staff helped, or anything we should improve.",
@@ -118,6 +121,11 @@ const copy = {
     positiveText: "Copy your feedback and open Google Reviews. Paste it there to share your experience publicly.",
     privateTitle: "Thank you for sharing this with us.",
     privateText: "Your feedback has been received by the clinic team and will be reviewed carefully.",
+    privateNameTitle: "Please share your name",
+    privateNameHelp: "Please share your name or use Anonymous to submit the feedback.",
+    privateNamePlaceholder: "Your name",
+    anonymous: "Use Anonymous",
+    privateNameRequired: "Please enter your name before submitting.",
     copyGoogle: "Copy & Open Google Review",
     submitPrivate: "Submit Feedback",
     done: "Done",
@@ -135,11 +143,13 @@ const copy = {
     progress: "प्रश्न",
     skip: "स्किप करा आणि पुढे जा",
     continue: "पुढे जा",
+    evaluating: "तुमचा अभिप्राय सबमिट करत आहे... कृपया थांबा",
     back: "मागे",
     ratingLabels: ["खूप खराब", "खराब", "ठीक", "चांगले", "उत्कृष्ट"],
     feedbackTitle: "तुमच्या भेटीबद्दल सांगा",
     feedbackHelp: "टाइप करा किंवा आवाज वापरा. कॉपी करण्यापूर्वी शब्द बदलता येतील.",
     feedbackRequired: "पुढे जाण्यापूर्वी अभिप्राय टाइप करा किंवा आवाजातून टेक्स्ट वापरा.",
+    feedbackWordCount: "कृपया तुमच्या भेटीबद्दल 6 पेक्षा जास्त शब्द लिहा.",
     typeManually: "स्वतः टाइप करा",
     voiceToText: "आवाजातून टेक्स्ट",
     placeholder: "काय आवडले, डॉक्टर/स्टाफने कशी मदत केली, किंवा काय सुधारावे ते लिहा.",
@@ -155,6 +165,11 @@ const copy = {
     positiveText: "तुमचा अभिप्राय कॉपी करा आणि Google Reviews उघडा. तिथे पेस्ट करून अनुभव शेअर करा.",
     privateTitle: "तुमचा प्रामाणिक अभिप्राय दिल्याबद्दल धन्यवाद.",
     privateText: "तुमचा अभिप्राय क्लिनिक टीमला मिळाला आहे आणि काळजीपूर्वक पाहिला जाईल.",
+    privateNameTitle: "कृपया तुमचे नाव सांगा",
+    privateNameHelp: "कृपया तुमचे नाव लिहा किंवा Anonymous वापरून अभिप्राय सबमिट करा.",
+    privateNamePlaceholder: "तुमचे नाव",
+    anonymous: "Anonymous वापरा",
+    privateNameRequired: "सबमिट करण्यापूर्वी कृपया तुमचे नाव लिहा.",
     copyGoogle: "कॉपी करा आणि Google Review उघडा",
     submitPrivate: "अभिप्राय पाठवा",
     done: "पूर्ण",
@@ -172,11 +187,13 @@ const copy = {
     progress: "प्रश्न",
     skip: "स्किप करके आगे बढ़ें",
     continue: "आगे बढ़ें",
+    evaluating: "आपकी प्रतिक्रिया सबमिट हो रही है... कृपया प्रतीक्षा करें",
     back: "पीछे",
     ratingLabels: ["बहुत खराब", "खराब", "ठीक", "अच्छा", "उत्कृष्ट"],
     feedbackTitle: "अपनी विजिट के बारे में बताएं",
     feedbackHelp: "टाइप करें या वॉइस टू टेक्स्ट इस्तेमाल करें। कॉपी करने से पहले शब्द बदले जा सकते हैं।",
     feedbackRequired: "आगे बढ़ने से पहले प्रतिक्रिया टाइप करें या वॉइस टू टेक्स्ट इस्तेमाल करें.",
+    feedbackWordCount: "कृपया अपनी विजिट के बारे में 6 से अधिक शब्द लिखें.",
     typeManually: "खुद टाइप करें",
     voiceToText: "वॉइस टू टेक्स्ट",
     placeholder: "क्या अच्छा लगा, डॉक्टर/स्टाफ ने कैसे मदद की, या क्या सुधारना चाहिए, लिखें.",
@@ -192,6 +209,11 @@ const copy = {
     positiveText: "अपनी प्रतिक्रिया कॉपी करें और Google Reviews खोलें। वहां पेस्ट करके अनुभव साझा करें।",
     privateTitle: "ईमानदार प्रतिक्रिया देने के लिए धन्यवाद.",
     privateText: "आपकी प्रतिक्रिया क्लिनिक टीम को मिल गई है और ध्यान से देखी जाएगी.",
+    privateNameTitle: "कृपया अपना नाम बताएं",
+    privateNameHelp: "कृपया अपना नाम लिखें या Anonymous का उपयोग करके प्रतिक्रिया सबमिट करें.",
+    privateNamePlaceholder: "आपका नाम",
+    anonymous: "Anonymous इस्तेमाल करें",
+    privateNameRequired: "सबमिट करने से पहले कृपया अपना नाम लिखें.",
     copyGoogle: "कॉपी करें और Google Review खोलें",
     submitPrivate: "प्रतिक्रिया भेजें",
     done: "Done",
@@ -264,6 +286,10 @@ function isGoogleEligible(data: N8nResponse) {
   return ["positive", "good", "google", "eligible", "googleeligible"].includes(value);
 }
 
+function countWords(text: string) {
+  return text.trim().split(/\s+/).filter(Boolean).length;
+}
+
 export function ReviewUs2Client() {
   const [language, setLanguage] = useState<Language>("en");
   const [step, setStep] = useState(0);
@@ -274,9 +300,11 @@ export function ReviewUs2Client() {
   const [submitted, setSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
+  const [patientName, setPatientName] = useState("");
   const [recordingState, setRecordingState] = useState<RecordingState>("idle");
   const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [attempts, setAttempts] = useState(0);
+  const [isEvaluating, setIsEvaluating] = useState(false);
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -288,9 +316,10 @@ export function ReviewUs2Client() {
   const feedbackWebhookUrl = useMemo(() => buildWebhookUrl(FEEDBACK_WEBHOOK_PATH), []);
   const attemptsLeft = Math.max(0, MAX_ATTEMPTS - attempts);
   const content = copy[language];
+  const feedbackWordCount = countWords(feedbackText);
+  const hasEnoughFeedbackWords = feedbackWordCount > 6;
   const isFeedbackStep = step === questions.length;
   const isSummaryStep = step > questions.length;
-  const answeredCount = Object.keys(ratings).length;
 
   useEffect(() => {
     const savedAttempts = Number.parseInt(getCookieValue(ATTEMPT_COOKIE), 10);
@@ -453,9 +482,17 @@ export function ReviewUs2Client() {
   }
 
   function payload() {
+    const ratingAnswers = questions.map((question) => ({
+      questionId: question.key,
+      question: question.labels[language],
+      rating: ratings[question.key] ?? null,
+    }));
+
     return {
+      formVersion: FORM_VERSION,
       language,
       ratings,
+      ratingAnswers,
       feedbackText: feedbackText.trim(),
       source: "dantam-review-us2",
       submittedAt: new Date().toISOString(),
@@ -472,12 +509,18 @@ export function ReviewUs2Client() {
       return;
     }
 
+    if (countWords(text) <= 6) {
+      setError(content.feedbackWordCount);
+      return;
+    }
+
     if (!feedbackWebhookUrl) {
       setError("The n8n base URL is not configured. Please add NEXT_PUBLIC_N8N_BASE_URL.");
       return;
     }
 
     try {
+      setIsEvaluating(true);
       const response = await fetch(feedbackWebhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -492,28 +535,23 @@ export function ReviewUs2Client() {
       const returnedText = (data.reviewText || data.text || "").trim();
       if (returnedText) setFeedbackText(returnedText);
       setSummaryStatus(isGoogleEligible(data) ? "positive" : "private");
-      setSubmitted(true);
+      setSubmitted(false);
       setStep(questions.length + 1);
     } catch (err) {
       console.error(err);
       setError("We could not submit your feedback right now. Please try again.");
+    } finally {
+      setIsEvaluating(false);
     }
   }
 
   async function submitBlankPrivateFeedback() {
     setError("");
-    setSubmitted(true);
-    if (!feedbackWebhookUrl) return;
-
-    try {
-      await fetch(feedbackWebhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload()),
-      });
-    } catch (err) {
-      console.error(err);
+    if (!patientName.trim()) {
+      setError(content.privateNameRequired);
+      return;
     }
+    setSubmitted(true);
   }
 
   async function copyAndOpenGoogle() {
@@ -704,12 +742,19 @@ export function ReviewUs2Client() {
         </label>
 
         {error && <div className="review-error">{error}</div>}
+        {feedbackText.trim() && !hasEnoughFeedbackWords && !error && <div className="review-error">{content.feedbackWordCount}</div>}
+        {isEvaluating && <div className="notice">{content.evaluating}</div>}
 
         {renderFormTop()}
         <div className="feedback-actions">
-          <button className="button primary" type="button" onClick={continueFromFeedback} disabled={recordingState !== "idle" || !feedbackText.trim()}>
-            {recordingState === "uploading" ? <Loader2 size={18} /> : <Send size={18} />}
-            {content.continue}
+          <button
+            className="button primary"
+            type="button"
+            onClick={continueFromFeedback}
+            disabled={recordingState !== "idle" || !hasEnoughFeedbackWords || isEvaluating}
+          >
+            {recordingState === "uploading" || isEvaluating ? <Loader2 size={18} /> : <Send size={18} />}
+            {isEvaluating ? content.evaluating : content.continue}
           </button>
         </div>
       </div>
@@ -719,6 +764,7 @@ export function ReviewUs2Client() {
   function renderSummaryStep() {
     const hasText = feedbackText.trim().length > 0;
     const isPositive = summaryStatus === "positive" && hasText;
+    const isPrivate = !isPositive;
 
     return (
       <div className="feedback-card summary-card">
@@ -726,15 +772,26 @@ export function ReviewUs2Client() {
         <h2>{isPositive ? content.positiveTitle : hasText ? content.privateTitle : content.blankSummaryTitle}</h2>
         <p>{isPositive ? content.positiveText : hasText ? content.privateText : content.blankSummaryText}</p>
 
-        <div className="summary-ratings">
-          <span>{answeredCount} / {questions.length} ratings answered</span>
-          <span>{content.private}</span>
-        </div>
-
         {hasText && (
-          <label className="summary-edit">
-            {content.edit}
-            <textarea value={feedbackText} onChange={(event) => setFeedbackText(event.target.value)} rows={6} />
+          <div className="summary-review-preview">{feedbackText}</div>
+        )}
+
+        {isPrivate && !submitted && (
+          <label className="private-name-field">
+            <span>{content.privateNameTitle}</span>
+            <small>{content.privateNameHelp}</small>
+            <input
+              type="text"
+              value={patientName}
+              onChange={(event) => {
+                setPatientName(event.target.value);
+                setError("");
+              }}
+              placeholder={content.privateNamePlaceholder}
+            />
+            <button className="anonymous-button" type="button" onClick={() => setPatientName("Anonymous")}>
+              {content.anonymous}
+            </button>
           </label>
         )}
 
@@ -744,10 +801,6 @@ export function ReviewUs2Client() {
 
         {renderFormTop()}
         <div className="feedback-actions">
-          <button className="button ghost" type="button" onClick={() => setStep(questions.length)}>
-            <ChevronLeft size={18} />
-            {content.edit}
-          </button>
           {isPositive ? (
             <button className="button primary" type="button" onClick={copyAndOpenGoogle}>
               <Clipboard size={18} />
@@ -755,7 +808,12 @@ export function ReviewUs2Client() {
               <ExternalLink size={17} />
             </button>
           ) : (
-            <button className="button primary" type="button" onClick={hasText ? () => setSubmitted(true) : submitBlankPrivateFeedback}>
+            <button
+              className="button primary"
+              type="button"
+              onClick={submitBlankPrivateFeedback}
+              disabled={!submitted && !patientName.trim()}
+            >
               <Send size={18} />
               {submitted ? content.done : content.submitPrivate}
             </button>
