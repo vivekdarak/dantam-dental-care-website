@@ -101,15 +101,10 @@
   gap: 0;
 }
 
-.form-top-controls {
-  position: sticky;
-  top: 10px;
-  z-index: 5;
+.form-progress {
   display: grid;
-  margin: 0 0 14px;
-  padding: 10px 0;
-  background: rgb(250 249 243 / 92%);
-  backdrop-filter: blur(10px);
+  margin-top: auto;
+  padding-top: 26px;
 }
 
 .timeline {
@@ -195,6 +190,34 @@
   font-size: 3.6rem;
 }
 
+.smile-rating:not(.has-rating) .smile-face {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.rating-prompt {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  gap: 7px;
+  justify-content: center;
+  align-items: center;
+}
+
+.rating-prompt span {
+  filter: grayscale(1);
+  opacity: 0.45;
+  font-size: 1.45rem;
+}
+
+.rating-prompt strong {
+  grid-column: 1 / -1;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
 .smile-rating input[type="range"] {
   width: 100%;
   height: 18px;
@@ -205,6 +228,10 @@
     linear-gradient(90deg, #c54b39 0%, #d99a36 28%, #e6c75d 50%, #9ccc35 74%, var(--accent) 100%);
   box-shadow: inset 0 0 0 1px rgb(23 51 42 / 10%);
   cursor: pointer;
+}
+
+.smile-rating:not(.has-rating) input[type="range"] {
+  opacity: 0.55;
 }
 
 .smile-rating input[type="range"]::-webkit-slider-thumb {
@@ -264,8 +291,8 @@
 }
 
 .feedback-actions {
-  margin-top: auto;
-  padding-top: 28px;
+  margin-top: 14px;
+  padding-top: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -542,13 +569,9 @@
     border-radius: 20px;
   }
 
-  .form-top-controls {
-    top: 0;
-    margin: 0 0 14px;
-    padding: 10px 0;
-    border-bottom: 0;
-    border-radius: 0;
-    box-shadow: none;
+  .form-progress {
+    margin-top: auto;
+    padding-top: 22px;
   }
 
   .rating-options {
@@ -576,7 +599,7 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: 8px;
-    margin-top: auto;
+    margin-top: 12px;
     padding: 0;
     border-top: 0;
     background: transparent;

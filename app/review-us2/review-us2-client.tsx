@@ -539,7 +539,7 @@ export function ReviewUs2Client() {
 
   function renderFormTop() {
     return (
-      <div className="form-top-controls">
+      <div className="form-progress">
         <div className="timeline" aria-hidden="true">
           {Array.from({ length: questions.length + 1 }).map((_, index) => (
             <span key={index} className={index <= Math.min(step, questions.length) ? "active" : ""} />
@@ -552,7 +552,7 @@ export function ReviewUs2Client() {
   function renderRatingStep() {
     const question = questions[step];
     const value = ratings[question.key] || 0;
-    const face = value <= 1 ? "🙁" : value === 2 ? "😕" : value === 3 ? "😐" : value === 4 ? "🙂" : "😊";
+    const face = value === 1 ? "🙁" : value === 2 ? "😕" : value === 3 ? "😐" : value === 4 ? "🙂" : value === 5 ? "😊" : "🙂";
 
     return (
       <div className="feedback-card">
@@ -571,9 +571,20 @@ export function ReviewUs2Client() {
         </div>
         <h2>{question.labels[language]}</h2>
 
-        <div className="smile-rating" style={{ "--rating": value || 3 } as CSSProperties}>
+        <div className={`smile-rating ${value ? "has-rating" : ""}`} style={{ "--rating": value || 3 } as CSSProperties}>
           <div className="smile-face" aria-hidden="true">
-            {face}
+            {value ? (
+              face
+            ) : (
+              <span className="rating-prompt">
+                <span>🙁</span>
+                <span>😕</span>
+                <span>😐</span>
+                <span>🙂</span>
+                <span>😊</span>
+                <strong>Choose a rating</strong>
+              </span>
+            )}
           </div>
           <input
             type="range"
@@ -599,8 +610,9 @@ export function ReviewUs2Client() {
           </div>
         </div>
 
+        {renderFormTop()}
         <div className="feedback-actions">
-          <button className="button primary" type="button" onClick={continueFromRating}>
+          <button className="button primary" type="button" onClick={continueFromRating} disabled={!value}>
             {content.continue}
           </button>
         </div>
@@ -693,6 +705,7 @@ export function ReviewUs2Client() {
 
         {error && <div className="review-error">{error}</div>}
 
+        {renderFormTop()}
         <div className="feedback-actions">
           <button className="button primary" type="button" onClick={continueFromFeedback} disabled={recordingState !== "idle" || !feedbackText.trim()}>
             {recordingState === "uploading" ? <Loader2 size={18} /> : <Send size={18} />}
@@ -729,6 +742,7 @@ export function ReviewUs2Client() {
         {copied && <div className="notice">{content.copied}</div>}
         {submitted && !isPositive && <div className="notice">{content.saved}</div>}
 
+        {renderFormTop()}
         <div className="feedback-actions">
           <button className="button ghost" type="button" onClick={() => setStep(questions.length)}>
             <ChevronLeft size={18} />
@@ -780,8 +794,6 @@ export function ReviewUs2Client() {
               </button>
             ))}
           </div>
-
-          {renderFormTop()}
 
           {!isFeedbackStep && !isSummaryStep && renderRatingStep()}
           {isFeedbackStep && renderFeedbackStep()}
