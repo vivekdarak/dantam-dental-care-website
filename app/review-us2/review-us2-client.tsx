@@ -556,7 +556,6 @@ export function ReviewUs2Client() {
 
     return (
       <div className="feedback-card">
-        {renderFormTop()}
         <div className="feedback-step-top">
           {step > 0 ? (
             <button className="step-back-button" type="button" onClick={goBack} aria-label={content.back}>
@@ -612,7 +611,6 @@ export function ReviewUs2Client() {
   function renderFeedbackStep() {
     return (
       <div className="feedback-card">
-        {renderFormTop()}
         <div className="feedback-step-top">
           <button className="step-back-button" type="button" onClick={goBack} aria-label={content.back}>
             <ChevronLeft size={17} />
@@ -711,7 +709,6 @@ export function ReviewUs2Client() {
 
     return (
       <div className="feedback-card summary-card">
-        {renderFormTop()}
         <CheckCircle2 size={44} />
         <h2>{isPositive ? content.positiveTitle : hasText ? content.privateTitle : content.blankSummaryTitle}</h2>
         <p>{isPositive ? content.positiveText : hasText ? content.privateText : content.blankSummaryText}</p>
@@ -783,6 +780,8 @@ export function ReviewUs2Client() {
               </button>
             ))}
           </div>
+
+          {renderFormTop()}
 
           {!isFeedbackStep && !isSummaryStep && renderRatingStep()}
           {isFeedbackStep && renderFeedbackStep()}

@@ -106,11 +106,9 @@
   top: 10px;
   z-index: 5;
   display: grid;
-  margin: calc(clamp(24px, 4.5vw, 44px) * -1) calc(clamp(24px, 4.5vw, 44px) * -1) 24px;
-  padding: clamp(18px, 3vw, 24px) clamp(24px, 4.5vw, 44px) 16px;
-  border-bottom: 1px solid rgb(219 230 221 / 74%);
-  border-radius: 24px 24px 0 0;
-  background: rgb(255 255 255 / 97%);
+  margin: 0 0 14px;
+  padding: 10px 0;
+  background: rgb(250 249 243 / 92%);
   backdrop-filter: blur(10px);
 }
 
@@ -536,14 +534,15 @@
 
   .feedback-card {
     border-radius: 20px;
-    padding-bottom: 110px;
   }
 
   .form-top-controls {
     top: 0;
-    margin: -20px -20px 20px;
-    padding: 14px 20px 12px;
-    border-radius: 20px 20px 0 0;
+    margin: 0 0 14px;
+    padding: 10px 0;
+    border-bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .rating-options {
@@ -561,20 +560,17 @@
   }
 
   .feedback-actions {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 20;
-    display: grid;
-    grid-template-columns: 1fr;
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     gap: 8px;
-    margin: 0;
-    padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
-    border-top: 1px solid rgb(219 230 221 / 90%);
-    background: rgb(255 255 255 / 96%);
-    box-shadow: 0 -12px 28px rgb(23 51 42 / 10%);
-    backdrop-filter: blur(12px);
+    margin-top: 28px;
+    padding: 0;
+    border-top: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
   }
 
   .feedback-actions .button {
