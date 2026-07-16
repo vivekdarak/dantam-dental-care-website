@@ -183,6 +183,11 @@
   cursor: pointer;
 }
 
+.step-back-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .feedback-card h2 {
   margin-top: 12px;
   color: var(--primary);

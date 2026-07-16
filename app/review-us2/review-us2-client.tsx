@@ -395,6 +395,7 @@ export function ReviewUs2Client() {
   }
 
   function handleTouchStart(event: TouchEvent<HTMLElement>) {
+    if (isSummaryStep || isEvaluating) return;
     const touch = event.touches[0];
     touchStartRef.current = { x: touch.clientX, y: touch.clientY };
   }
@@ -409,6 +410,8 @@ export function ReviewUs2Client() {
     const deltaY = touch.clientY - start.y;
 
     if (Math.abs(deltaX) < 55 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
+
+    if (isSummaryStep || isEvaluating) return;
 
     if (deltaX > 0) {
       goBack();
@@ -689,7 +692,7 @@ export function ReviewUs2Client() {
     return (
       <div key={`feedback-${transitionDirection}`} className={`feedback-card step-card slide-${transitionDirection}`}>
         <div className="feedback-step-top">
-          <button className="step-back-button" type="button" onClick={goBack} aria-label={content.back}>
+          <button className="step-back-button" type="button" onClick={goBack} aria-label={content.back} disabled={isEvaluating}>
             <ChevronLeft size={17} />
             {content.back}
           </button>
