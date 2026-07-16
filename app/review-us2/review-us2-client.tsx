@@ -621,7 +621,6 @@ export function ReviewUs2Client() {
           </div>
         </div>
         <h2>{content.feedbackTitle}</h2>
-        <p>{content.feedbackHelp}</p>
 
         <label className="feedback-textarea">
           <span className="feedback-textarea-box">
@@ -661,7 +660,9 @@ export function ReviewUs2Client() {
                   ? content.requesting
                 : recordingState === "uploading"
                   ? content.converting
-                  : `${content.attempts}: ${attempts}/${MAX_ATTEMPTS}`}
+                  : attemptsLeft === 0
+                    ? `${content.attempts}: ${attempts}/${MAX_ATTEMPTS}. You have used all recording attempts. You can still type your feedback.`
+                    : `${content.attempts}: ${attempts}/${MAX_ATTEMPTS}`}
             </span>
             <span className="feedback-record-controls">
               {recordingState === "recording" ? (
@@ -690,7 +691,6 @@ export function ReviewUs2Client() {
           </span>
         </label>
 
-        {attemptsLeft === 0 && <div className="notice">You have used all recording attempts. You can still type your feedback.</div>}
         {error && <div className="review-error">{error}</div>}
 
         <div className="feedback-actions">
