@@ -11,7 +11,7 @@ import {
   Square,
   Trash2,
 } from "lucide-react";
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import { type TouchEvent, useEffect, useMemo, useRef, useState } from "react";
 import { OpeninaryImage } from "@/components/openinary-image";
 import "./review-us2.css";
 
@@ -22,11 +22,13 @@ const FORM_VERSION = "review-us2-v1";
 const ATTEMPT_COOKIE = "dantam_review2_attempts";
 const MAX_ATTEMPTS = 5;
 const MAX_RECORDING_SECONDS = 120;
+const AUTO_ADVANCE_MS = 500;
 
 type Language = "en" | "mr" | "hi";
 type RecordingState = "idle" | "requesting" | "recording" | "uploading";
 type FeedbackMode = "manual" | "voice";
 type SummaryStatus = "positive" | "private";
+type TransitionDirection = "forward" | "backward";
 
 type RatingKey = "overallExperience" | "dentistCare" | "appointmentExperience" | "cleanliness" | "recommendation";
 
@@ -305,11 +307,14 @@ export function ReviewUs2Client() {
   const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [isEvaluating, setIsEvaluating] = useState(false);
+  const [transitionDirection, setTransitionDirection] = useState<TransitionDirection>("forward");
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
   const timerRef = useRef<number | null>(null);
+  const advanceTimerRef = useRef<number | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const discardRecordingRef = useRef(false);
 
   const translationWebhookUrl = useMemo(() => buildWebhookUrl(TRANSLATION_WEBHOOK_PATH), []);
@@ -329,6 +334,7 @@ export function ReviewUs2Client() {
 
     return () => {
       stopTimer();
+      clearAdvanceTimer();
       stopStream();
     };
   }, []);
@@ -353,22 +359,69 @@ export function ReviewUs2Client() {
     });
   }
 
-  function setRating(key: RatingKey, value: number) {
+  function clearAdvanceTimer() {
+    if (advanceTimerRef.current) {
+      window.clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+  }
+
+  function selectRating(key: RatingKey, value: number) {
+    clearAdvanceTimer();
     setRatings((current) => ({ ...current, [key]: value }));
     setError("");
+
+    advanceTimerRef.current = window.setTimeout(() => {
+      setTransitionDirection("forward");
+      setStep((current) => Math.min(current + 1, questions.length));
+      advanceTimerRef.current = null;
+    }, AUTO_ADVANCE_MS);
   }
 
   function continueFromRating() {
     setError("");
+    setTransitionDirection("forward");
     setStep((current) => Math.min(current + 1, questions.length));
   }
 
   function goBack() {
+    clearAdvanceTimer();
     setError("");
     setCopied(false);
     setSummaryStatus(null);
     setSubmitted(false);
+    setTransitionDirection("backward");
     setStep((current) => Math.max(0, current - 1));
+  }
+
+  function handleTouchStart(event: TouchEvent<HTMLElement>) {
+    const touch = event.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  }
+
+  function handleTouchEnd(event: TouchEvent<HTMLElement>) {
+    const start = touchStartRef.current;
+    touchStartRef.current = null;
+    if (!start) return;
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - start.x;
+    const deltaY = touch.clientY - start.y;
+
+    if (Math.abs(deltaX) < 55 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
+
+    if (deltaX > 0) {
+      goBack();
+      return;
+    }
+
+    if (!isFeedbackStep && !isSummaryStep) {
+      const currentQuestion = questions[step];
+      if (ratings[currentQuestion.key]) {
+        clearAdvanceTimer();
+        continueFromRating();
+      }
+    }
   }
 
   async function startRecording() {
@@ -536,6 +589,7 @@ export function ReviewUs2Client() {
       if (returnedText) setFeedbackText(returnedText);
       setSummaryStatus(isGoogleEligible(data) ? "positive" : "private");
       setSubmitted(false);
+      setTransitionDirection("forward");
       setStep(questions.length + 1);
     } catch (err) {
       console.error(err);
@@ -590,10 +644,10 @@ export function ReviewUs2Client() {
   function renderRatingStep() {
     const question = questions[step];
     const value = ratings[question.key] || 0;
-    const face = value === 1 ? "🙁" : value === 2 ? "😕" : value === 3 ? "😐" : value === 4 ? "🙂" : value === 5 ? "😊" : "🙂";
+    const ratingFaces = ["🙁", "😕", "😐", "🙂", "😊"];
 
     return (
-      <div className="feedback-card">
+      <div key={`rating-${step}-${transitionDirection}`} className={`feedback-card rating-card step-card slide-${transitionDirection}`}>
         <div className="feedback-step-top">
           {step > 0 ? (
             <button className="step-back-button" type="button" onClick={goBack} aria-label={content.back}>
@@ -609,39 +663,17 @@ export function ReviewUs2Client() {
         </div>
         <h2>{question.labels[language]}</h2>
 
-        <div className={`smile-rating ${value ? "has-rating" : ""}`} style={{ "--rating": value || 3 } as CSSProperties}>
-          <div className="smile-face" aria-hidden="true">
-            {value ? (
-              face
-            ) : (
-              <span className="rating-prompt">
-                <span>🙁</span>
-                <span>😕</span>
-                <span>😐</span>
-                <span>🙂</span>
-                <span>😊</span>
-                <strong>Choose a rating</strong>
-              </span>
-            )}
-          </div>
-          <input
-            type="range"
-            min="1"
-            max="5"
-            step="1"
-            value={value || 3}
-            aria-label={question.labels[language]}
-            onChange={(event) => setRating(question.key, Number(event.target.value))}
-          />
-          <div className="rating-options" aria-hidden="true">
+        <div className={`emoji-rating ${value ? "has-rating" : ""}`}>
+          <div className="rating-options">
             {content.ratingLabels.map((label, index) => (
               <button
                 key={label}
                 type="button"
                 className={value === index + 1 ? "active" : ""}
-                onClick={() => setRating(question.key, index + 1)}
+                onClick={() => selectRating(question.key, index + 1)}
+                aria-label={`${label}, ${index + 1} out of 5`}
               >
-                <span>{index + 1}</span>
+                <span aria-hidden="true">{ratingFaces[index]}</span>
                 <small>{label}</small>
               </button>
             ))}
@@ -649,18 +681,13 @@ export function ReviewUs2Client() {
         </div>
 
         {renderFormTop()}
-        <div className="feedback-actions">
-          <button className="button primary" type="button" onClick={continueFromRating} disabled={!value}>
-            {content.continue}
-          </button>
-        </div>
       </div>
     );
   }
 
   function renderFeedbackStep() {
     return (
-      <div className="feedback-card">
+      <div key={`feedback-${transitionDirection}`} className={`feedback-card step-card slide-${transitionDirection}`}>
         <div className="feedback-step-top">
           <button className="step-back-button" type="button" onClick={goBack} aria-label={content.back}>
             <ChevronLeft size={17} />
@@ -767,7 +794,7 @@ export function ReviewUs2Client() {
     const isPrivate = !isPositive;
 
     return (
-      <div className="feedback-card summary-card">
+      <div key={`summary-${transitionDirection}`} className={`feedback-card summary-card step-card slide-${transitionDirection}`}>
         <CheckCircle2 size={44} />
         <h2>{isPositive ? content.positiveTitle : hasText ? content.privateTitle : content.blankSummaryTitle}</h2>
         <p>{isPositive ? content.positiveText : hasText ? content.privateText : content.blankSummaryText}</p>
@@ -824,7 +851,7 @@ export function ReviewUs2Client() {
   }
 
   return (
-    <section className={`review2-page lang-${language}`}>
+    <section className={`review2-page lang-${language}`} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <div className="container review2-shell">
         <div className="review2-hero">
           <div className="review2-doctors">

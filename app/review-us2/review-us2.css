@@ -132,6 +132,27 @@
   padding: clamp(24px, 4.5vw, 44px);
 }
 
+.rating-card h2 {
+  margin-bottom: 0;
+}
+
+.rating-card .emoji-rating {
+  margin-block: auto;
+  padding-block: 18px;
+}
+
+.step-card {
+  will-change: transform, opacity;
+}
+
+.step-card.slide-forward {
+  animation: step-slide-forward 240ms ease both;
+}
+
+.step-card.slide-backward {
+  animation: step-slide-backward 240ms ease both;
+}
+
 .feedback-step-top {
   display: flex;
   align-items: center;
@@ -175,82 +196,10 @@
   font-weight: 500;
 }
 
-.smile-rating {
-  --rating: 3;
+.emoji-rating {
   margin-top: 30px;
   display: grid;
-  gap: 22px;
-}
-
-.smile-face {
-  min-height: 82px;
-  display: grid;
-  place-items: center;
-  justify-self: center;
-  font-size: 3.6rem;
-}
-
-.smile-rating:not(.has-rating) .smile-face {
-  color: var(--muted);
-  font-size: 1rem;
-}
-
-.rating-prompt {
-  display: grid;
-  grid-template-columns: repeat(5, auto);
-  gap: 7px;
-  justify-content: center;
-  align-items: center;
-}
-
-.rating-prompt span {
-  filter: grayscale(1);
-  opacity: 0.45;
-  font-size: 1.45rem;
-}
-
-.rating-prompt strong {
-  grid-column: 1 / -1;
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-.smile-rating input[type="range"] {
-  width: 100%;
-  height: 18px;
-  border-radius: 999px;
-  outline: none;
-  appearance: none;
-  background:
-    linear-gradient(90deg, #c54b39 0%, #d99a36 28%, #e6c75d 50%, #9ccc35 74%, var(--accent) 100%);
-  box-shadow: inset 0 0 0 1px rgb(23 51 42 / 10%);
-  cursor: pointer;
-}
-
-.smile-rating:not(.has-rating) input[type="range"] {
-  opacity: 0.55;
-}
-
-.smile-rating input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 34px;
-  height: 34px;
-  border: 4px solid #fff;
-  border-radius: 50%;
-  background: var(--primary);
-  box-shadow: 0 8px 18px rgb(11 79 63 / 28%);
-}
-
-.smile-rating input[type="range"]::-moz-range-thumb {
-  width: 28px;
-  height: 28px;
-  border: 4px solid #fff;
-  border-radius: 50%;
-  background: var(--primary);
-  box-shadow: 0 8px 18px rgb(11 79 63 / 28%);
+  gap: 14px;
 }
 
 .rating-options {
@@ -260,34 +209,39 @@
 }
 
 .rating-options button {
-  min-height: 68px;
+  min-height: 108px;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 18px;
   display: grid;
-  gap: 4px;
+  gap: 9px;
   justify-items: center;
   align-content: center;
   background: #fff;
   color: var(--muted);
   cursor: pointer;
-  transition: 160ms ease;
+  padding: 12px 8px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease, background 160ms ease;
 }
 
 .rating-options button.active {
   border-color: var(--accent);
   background: var(--primary-soft);
   color: var(--primary);
+  box-shadow: 0 0 0 4px rgb(13 122 95 / 12%), 0 16px 30px rgb(23 51 42 / 12%);
+  animation: rating-pop 500ms ease;
 }
 
 .rating-options span {
-  font-size: 1.1rem;
-  font-weight: 900;
+  font-size: 2.25rem;
+  line-height: 1;
 }
 
 .rating-options small {
-  font-size: 0.72rem;
+  color: inherit;
+  font-size: 0.78rem;
   font-weight: 700;
   line-height: 1.15;
+  text-align: center;
 }
 
 .feedback-actions {
@@ -578,6 +532,53 @@
   }
 }
 
+@keyframes rating-pop {
+  0% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes step-slide-forward {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes step-slide-backward {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step-card.slide-forward,
+  .step-card.slide-backward,
+  .rating-options button.active,
+  .record-pill.stop {
+    animation: none;
+  }
+}
+
 @media (max-width: 980px) {
   .review2-shell {
     grid-template-columns: 1fr;
@@ -632,8 +633,14 @@
   }
 
   .rating-options button {
-    min-height: 62px;
-    padding-inline: 4px;
+    min-height: 82px;
+    border-radius: 14px;
+    gap: 6px;
+    padding: 8px 4px;
+  }
+
+  .rating-options span {
+    font-size: 1.75rem;
   }
 
   .rating-options small {
