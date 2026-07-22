@@ -3,6 +3,7 @@
 import { Send } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
 import { locations, services } from "@/lib/site";
+import { SelectPicker } from "./select-picker";
 import "./contact-form.css";
 
 const defaultClinic = `${locations[0].name} - ${locations[0].area}`;
@@ -20,6 +21,15 @@ const initialForm = {
 export function ContactForm() {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<"idle" | "error" | "sent">("idle");
+  const clinicOptions = useMemo(
+    () =>
+      locations.map((location) => ({
+        value: `${location.name} - ${location.area}`,
+        label: `${location.name} - ${location.area}`,
+        description: location.shortAddress,
+      })),
+    [],
+  );
 
   const message = useMemo(() => {
     const clinic = `Clinic: ${form.clinic}%0A`;
@@ -76,19 +86,12 @@ export function ContactForm() {
             onChange={(event) => setForm({ ...form, date: event.target.value })}
           />
         </label>
-        <label>
-          Preferred clinic
-          <select
-            value={form.clinic}
-            onChange={(event) => setForm({ ...form, clinic: event.target.value })}
-          >
-            {locations.map((location) => (
-              <option key={location.name} value={`${location.name} - ${location.area}`}>
-                {location.name} - {location.area}
-              </option>
-            ))}
-          </select>
-        </label>
+        <SelectPicker
+          label="Preferred clinic"
+          value={form.clinic}
+          options={clinicOptions}
+          onChange={(clinic) => setForm({ ...form, clinic })}
+        />
         <label>
           Service
           <select

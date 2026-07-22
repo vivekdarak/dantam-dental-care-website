@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 export default async function InternalReviewRequestPage() {
   const authenticated = await hasInternalReviewSession();
   const branchOptions = locations.map((location) => ({
-    slug: location.slug,
+    value: location.slug,
     label: `${location.name} - ${location.area}`,
+    description: location.shortAddress,
   }));
 
   return <InternalReviewRequestClient authenticated={authenticated} branches={branchOptions} />;
 }
-

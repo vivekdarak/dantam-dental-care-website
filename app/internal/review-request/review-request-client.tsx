@@ -1,14 +1,10 @@
 "use client";
 
-import { AlertTriangle, CheckCircle2, Clock, LogOut, Search, Send } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Clock, LogOut, Search, Send, X } from "lucide-react";
 import type { FormEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-
-type BranchOption = {
-  slug: string;
-  label: string;
-};
+import { SelectPicker, type SelectPickerOption } from "@/components/select-picker";
 
 type ReviewRequestLog = {
   id: number;
@@ -42,18 +38,19 @@ export function InternalReviewRequestClient({
   branches,
 }: {
   authenticated: boolean;
-  branches: BranchOption[];
+  branches: SelectPickerOption[];
 }) {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
 
-  const [branchSlug, setBranchSlug] = useState(branches[0]?.slug || "");
+  const [branchSlug, setBranchSlug] = useState(branches[0]?.value || "");
   const [patientName, setPatientName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [confirmDuplicate, setConfirmDuplicate] = useState(false);
   const [duplicateLogs, setDuplicateLogs] = useState<ReviewRequestLog[]>([]);
+  const [duplicateModalOpen, setDuplicateModalOpen] = useState(false);
   const [sendError, setSendError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [sending, setSending] = useState(false);
@@ -90,6 +87,7 @@ export function InternalReviewRequestClient({
   function resetDuplicateState() {
     setConfirmDuplicate(false);
     setDuplicateLogs([]);
+    setDuplicateModalOpen(false);
   }
 
   async function login(event: FormEvent<HTMLFormElement>) {
@@ -151,6 +149,10 @@ export function InternalReviewRequestClient({
 
   async function sendReviewRequest(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    await submitReviewRequest(false);
+  }
+
+  async function submitReviewRequest(forceDuplicateSend: boolean) {
     if (!canSubmit) return;
 
     setSending(true);
@@ -165,7 +167,7 @@ export function InternalReviewRequestClient({
           branchSlug,
           patientName,
           phoneNumber,
-          confirmDuplicate,
+          confirmDuplicate: forceDuplicateSend || confirmDuplicate,
         }),
       });
 
@@ -174,6 +176,7 @@ export function InternalReviewRequestClient({
       if (data.duplicate) {
         setDuplicateLogs(data.previousRequests || []);
         setConfirmDuplicate(true);
+        setDuplicateModalOpen(true);
         setSendError("");
         return;
       }
@@ -200,6 +203,11 @@ export function InternalReviewRequestClient({
 
   function handlePhoneChange(value: string) {
     setPhoneNumber(value.replace(/\D/g, "").slice(0, 10));
+    resetDuplicateState();
+  }
+
+  function handlePatientNameChange(value: string) {
+    setPatientName(value.replace(/(^|\s)([a-z])/g, (match) => match.toUpperCase()));
     resetDuplicateState();
   }
 
@@ -244,26 +252,14 @@ export function InternalReviewRequestClient({
         </header>
 
         <form className="internal-review-form" onSubmit={sendReviewRequest}>
-          <label>
-            Branch
-            <select value={branchSlug} onChange={(event) => setBranchSlug(event.target.value)}>
-              {branches.map((branch) => (
-                <option key={branch.slug} value={branch.slug}>
-                  {branch.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          <SelectPicker label="Branch" value={branchSlug} options={branches} onChange={setBranchSlug} />
 
           <label>
             Patient name
             <input
               type="text"
               value={patientName}
-              onChange={(event) => {
-                setPatientName(event.target.value);
-                resetDuplicateState();
-              }}
+              onChange={(event) => handlePatientNameChange(event.target.value)}
               placeholder="Enter patient name"
               autoComplete="name"
               required
@@ -286,20 +282,6 @@ export function InternalReviewRequestClient({
               />
             </span>
           </label>
-
-          {duplicateLogs.length > 0 && (
-            <div className="internal-review-duplicate">
-              <div className="internal-review-alert-title">
-                <AlertTriangle size={18} />
-                Previous requests found
-              </div>
-              <div className="internal-review-log-list">
-                {duplicateLogs.map((log) => (
-                  <HistoryItem key={log.id} log={log} compact />
-                ))}
-              </div>
-            </div>
-          )}
 
           {sendError && <div className="internal-review-error">{sendError}</div>}
           {successMessage && (
@@ -368,6 +350,36 @@ export function InternalReviewRequestClient({
           )}
         </section>
       </div>
+
+      {duplicateModalOpen && (
+        <div className="internal-review-modal-backdrop" role="presentation">
+          <div className="internal-review-modal" role="dialog" aria-modal="true" aria-labelledby="duplicate-review-title">
+            <button className="internal-review-modal-close" type="button" onClick={() => setDuplicateModalOpen(false)} aria-label="Close">
+              <X size={18} />
+            </button>
+            <div className="internal-review-alert-title">
+              <AlertTriangle size={20} />
+              <span id="duplicate-review-title">Previous requests found</span>
+            </div>
+            <p>
+              This mobile number already has review request history. Check the records below before sending again.
+            </p>
+            <div className="internal-review-modal-list">
+              {duplicateLogs.map((log) => (
+                <HistoryItem key={log.id} log={log} compact />
+              ))}
+            </div>
+            <div className="internal-review-modal-actions">
+              <button type="button" onClick={() => setDuplicateModalOpen(false)}>
+                Review form
+              </button>
+              <button className="danger" type="button" disabled={sending || cooldownSeconds > 0} onClick={() => submitReviewRequest(true)}>
+                {sending ? "Sending..." : "Send anyway"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
