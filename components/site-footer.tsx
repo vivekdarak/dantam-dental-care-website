@@ -10,6 +10,7 @@ const exploreLinks = [
   { href: "/dentists", label: "Our Dentists" },
   { href: "/locations", label: "Locations" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/internal/review-request", label: "Staff Login" },
 ];
 
 const patientResourceLinks = [

@@ -320,6 +320,7 @@ export function ReviewUs2Client() {
   const translationWebhookUrl = useMemo(() => buildWebhookUrl(TRANSLATION_WEBHOOK_PATH), []);
   const feedbackWebhookUrl = useMemo(() => buildWebhookUrl(FEEDBACK_WEBHOOK_PATH), []);
   const attemptsLeft = Math.max(0, MAX_ATTEMPTS - attempts);
+  const pageContent = copy.en;
   const content = copy[language];
   const feedbackWordCount = countWords(feedbackText);
   const hasEnoughFeedbackWords = feedbackWordCount > 6;
@@ -867,10 +868,10 @@ export function ReviewUs2Client() {
             />
           </div>
           <div className="review2-copy">
-            <div className="eyebrow">{content.eyebrow}</div>
-            <h1>{content.title}</h1>
-            <p>{content.intro}</p>
-            <div className="private-note">{content.private}</div>
+            <div className="eyebrow">{pageContent.eyebrow}</div>
+            <h1>{pageContent.title}</h1>
+            <p>{pageContent.intro}</p>
+            <div className="private-note">{pageContent.private}</div>
           </div>
         </div>
 
