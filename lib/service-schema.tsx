@@ -1,4 +1,4 @@
-import { locations, serviceContent, services, site, type ServiceSlug } from "@/lib/site";
+import { serviceContent, services, site, type ServiceSlug } from "@/lib/site";
 
 const siteUrl = "https://dantamdentalcare.com";
 
@@ -26,7 +26,10 @@ export function serviceDetailSchema(service: Service) {
     image: serviceImage(service),
     serviceType: service.title,
     provider: {
+      "@type": "Organization",
       "@id": `${siteUrl}/#organization`,
+      name: site.name,
+      url: siteUrl,
     },
     areaServed: [
       { "@type": "City", name: "Thane" },
@@ -34,9 +37,6 @@ export function serviceDetailSchema(service: Service) {
       { "@type": "AdministrativeArea", name: "Maharashtra" },
     ],
     providerMobility: "static",
-    availableAtOrFrom: locations.map((location) => ({
-      "@id": `${siteUrl}/locations/${location.slug}#dentist`,
-    })),
     availableChannel: [
       {
         "@type": "ServiceChannel",
