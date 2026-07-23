@@ -1,4 +1,4 @@
-import { locations, site } from "@/lib/site";
+import { site } from "@/lib/site";
 
 const siteUrl = "https://dantamdentalcare.com";
 
@@ -44,12 +44,6 @@ export function organizationSchema() {
       availableLanguage: ["English", "Hindi", "Marathi"],
     },
     knowsAbout: serviceNames,
-    department: locations.map((location) => ({
-      "@type": "Dentist",
-      "@id": `${siteUrl}/locations/${location.slug}#dentist`,
-      name: location.name,
-      url: `${siteUrl}/locations/${location.slug}`,
-    })),
   };
 }
 

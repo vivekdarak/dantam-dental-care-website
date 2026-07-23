@@ -12,6 +12,10 @@ export function locationImage() {
   return `${siteUrl}/images/hero-clinic.jpg`;
 }
 
+export function locationSchemaName(location: Location) {
+  return `${location.name}, ${location.area}`;
+}
+
 function locationManagers(location: Location) {
   if (location.slug === "majiwada") {
     return ["Dr. Krushnakumar Modi", "Dr. Blanch Gonsalves Modi"];
@@ -32,9 +36,10 @@ function locationPostalCode(location: Location) {
 
 export function dentistLocationSchema(location: Location) {
   return {
+    "@context": "https://schema.org",
     "@type": "Dentist",
     "@id": `${locationUrl(location)}#dentist`,
-    name: location.name,
+    name: locationSchemaName(location),
     url: locationUrl(location),
     image: locationImage(),
     sameAs: [location.googleBusinessProfile],
@@ -59,9 +64,7 @@ export function dentistLocationSchema(location: Location) {
     hasMap: location.mapLink,
     parentOrganization: {
       "@type": "Organization",
-      name: site.name,
-      url: siteUrl,
-      logo: `${siteUrl}/images/dantam-logo.png`,
+      "@id": `${siteUrl}/#organization`,
     },
     employee: locationManagers(location).map((name) => ({
       "@type": "Person",
@@ -109,7 +112,7 @@ export function locationsItemListSchema() {
         itemListElement: locations.map((location, index) => ({
           "@type": "ListItem",
           position: index + 1,
-          name: `${location.name}, ${location.area}`,
+          name: locationSchemaName(location),
           item: {
             "@id": `${locationUrl(location)}#dentist`,
           },
