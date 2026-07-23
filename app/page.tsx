@@ -6,6 +6,7 @@ import { FaqSection } from "@/components/faq-section";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { ServiceCard } from "@/components/service-card";
 import { homepageFaqs } from "@/lib/faqs";
+import { OrganizationJsonLd, WebsiteJsonLd } from "@/lib/organization-schema";
 import { seoMetadata } from "@/lib/seo-metadata";
 import { services, site, stats, testimonials, whyChoose } from "@/lib/site";
 import "./home.css";
@@ -24,6 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Home() {
   return (
     <>
+      <OrganizationJsonLd />
+      <WebsiteJsonLd />
       <section className="home-hero">
         <div className="container hero-grid">
           <div className="hero-copy">

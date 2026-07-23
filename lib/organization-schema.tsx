@@ -47,11 +47,32 @@ export function organizationSchema() {
   };
 }
 
-export function OrganizationJsonLd() {
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
+    name: site.name,
+    url: siteUrl,
+    publisher: {
+      "@id": `${siteUrl}/#organization`,
+    },
+  };
+}
+
+function JsonLd({ data }: { data: unknown }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()).replace(/</g, "\\u003c") }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
+}
+
+export function OrganizationJsonLd() {
+  return <JsonLd data={organizationSchema()} />;
+}
+
+export function WebsiteJsonLd() {
+  return <JsonLd data={websiteSchema()} />;
 }
