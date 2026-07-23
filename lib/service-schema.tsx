@@ -12,15 +12,6 @@ function serviceImage(service: Service) {
   return `${siteUrl}${service.image}`;
 }
 
-function locationReference(location: (typeof locations)[number]) {
-  return {
-    "@type": "Dentist",
-    "@id": `${siteUrl}/locations/${location.slug}#dentist`,
-    name: location.name,
-    url: `${siteUrl}/locations/${location.slug}`,
-  };
-}
-
 export function serviceDetailSchema(service: Service) {
   const detail = serviceContent[service.slug as ServiceSlug];
 
@@ -35,17 +26,17 @@ export function serviceDetailSchema(service: Service) {
     image: serviceImage(service),
     serviceType: service.title,
     provider: {
-      "@type": "Organization",
       "@id": `${siteUrl}/#organization`,
-      name: site.name,
-      url: siteUrl,
     },
     areaServed: [
       { "@type": "City", name: "Thane" },
       { "@type": "City", name: "Nalasopara" },
       { "@type": "AdministrativeArea", name: "Maharashtra" },
     ],
-    availableAtOrFrom: locations.map(locationReference),
+    providerMobility: "static",
+    availableAtOrFrom: locations.map((location) => ({
+      "@id": `${siteUrl}/locations/${location.slug}#dentist`,
+    })),
     availableChannel: [
       {
         "@type": "ServiceChannel",

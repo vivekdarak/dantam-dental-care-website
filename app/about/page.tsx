@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { PageHero } from "@/components/page-hero";
+import { OrganizationJsonLd } from "@/lib/organization-schema";
 import { seoMetadata } from "@/lib/seo-metadata";
 import { pillars, site } from "@/lib/site";
 import "./about.css";
@@ -24,6 +25,7 @@ export default function AboutPage() {
   return (
     <>
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }]} />
+      <OrganizationJsonLd />
       <PageHero
         eyebrow="About Us"
         title="Dentistry, reimagined for your family."
