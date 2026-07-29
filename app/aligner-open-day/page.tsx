@@ -129,6 +129,14 @@ export default function AlignerOpenDayPage() {
         <div className="container open-day-intro-grid">
           <div className="promise-card">
             <div className="eyebrow">The promise</div>
+            <div className="promise-inline-image">
+              <OpeninaryImage
+                src="/images/open-aligners-hero-image.png"
+                alt="Clear aligners consultation at Dantam Dental Care"
+                fill
+                sizes="(max-width: 900px) 100vw, 48vw"
+              />
+            </div>
             <h2>Find out if clear aligners are right for you without paying a consultation fee.</h2>
             <p>
               Open Day for Aligners is designed as a no-pressure discovery session. We check your smile, understand your

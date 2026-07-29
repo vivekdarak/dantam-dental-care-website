@@ -144,6 +144,10 @@
   padding: 34px;
 }
 
+.promise-inline-image {
+  display: none;
+}
+
 .promise-card h2 {
   margin-top: 12px;
   color: var(--primary);
@@ -553,6 +557,24 @@
   .aligner-hero-image {
     min-height: 340px;
     margin-top: 0;
+  }
+
+  .open-day-intro-grid > .aligner-hero-image {
+    display: none;
+  }
+
+  .promise-inline-image {
+    position: relative;
+    display: block;
+    min-height: 300px;
+    margin-top: 18px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .promise-inline-image img {
+    object-fit: cover;
   }
 }
 
