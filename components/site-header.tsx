@@ -3,8 +3,7 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { site } from "@/lib/site";
+import { useEffect, useState } from "react";
 import { Brand } from "./brand";
 import "./site-header.css";
 
@@ -19,24 +18,70 @@ const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
+const announcements = [
+  {
+    title: "Open Day for Aligners",
+    text: "Every 1st & 3rd Saturday, free consultation",
+    href: "/aligner-open-day",
+    cta: "Read More",
+  },
+];
+
+const announcementDismissedKey = "dantam-campaign-announcement-dismissed";
+
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
+  const [announcementDismissed, setAnnouncementDismissed] = useState(false);
+
+  useEffect(() => {
+    if (announcements.length <= 1) return;
+
+    const interval = window.setInterval(() => {
+      setAnnouncementIndex((current) => (current + 1) % announcements.length);
+    }, 5000);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    setAnnouncementDismissed(window.sessionStorage.getItem(announcementDismissedKey) === "true");
+  }, []);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+  const announcement = announcements[announcementIndex];
+  const showAnnouncement =
+    !announcementDismissed &&
+    !announcements.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
+
+  function dismissAnnouncement() {
+    window.sessionStorage.setItem(announcementDismissedKey, "true");
+    setAnnouncementDismissed(true);
+  }
 
   return (
     <header className="site-header">
-      <div className="topbar">
-        <div className="container topbar-inner">
-          <span>{site.hours}</span>
-          <div>
-            <a href={site.phones[0].href}>{site.phones[0].label}</a>
-            <a href={site.email.href}>{site.email.label}</a>
+      {showAnnouncement && (
+        <div className={`topbar${announcements.length > 1 ? " rotating" : ""}`}>
+          <div className="container topbar-inner">
+            <Link className="announcement-link" href={announcement.href}>
+              <span className="announcement-title">{announcement.title}</span>
+              <span className="announcement-text">{announcement.text}</span>
+              <span className="announcement-cta">{announcement.cta}</span>
+            </Link>
+            <button
+              className="announcement-dismiss"
+              type="button"
+              aria-label="Dismiss announcement"
+              onClick={dismissAnnouncement}
+            >
+              <X size={15} />
+            </button>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="container nav-row">
         <Brand />

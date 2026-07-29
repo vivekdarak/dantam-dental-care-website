@@ -14,6 +14,7 @@ const exploreLinks = [
 ];
 
 const patientResourceLinks = [
+  { href: "/aligner-open-day", label: "Open Day for Aligners" },
   { href: "/patient-instructions", label: "Patient Instructions" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/review-us", label: "Review Us" },

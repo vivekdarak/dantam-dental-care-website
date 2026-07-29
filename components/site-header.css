@@ -10,24 +10,102 @@
 .topbar {
   background: var(--primary);
   color: #fff;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
+  overflow: hidden;
 }
 
 .topbar-inner {
-  min-height: 34px;
+  min-height: 38px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.announcement-link {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  line-height: 1.35;
 }
 
-.topbar-inner div {
-  display: flex;
-  gap: 1.25rem;
+.announcement-dismiss {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 10%);
+  color: rgb(255 255 255 / 82%);
+  cursor: pointer;
 }
 
-.topbar a:hover {
+.announcement-dismiss:hover {
+  background: rgb(255 255 255 / 18%);
+  color: #fff;
+}
+
+.announcement-title {
+  color: #fff;
+  font-weight: 800;
+}
+
+.announcement-text {
+  color: rgb(255 255 255 / 80%);
+}
+
+.announcement-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #2b250d;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.topbar.rotating .announcement-link {
+  animation: announcement-slide 5000ms ease-in-out infinite;
+}
+
+.topbar:hover .announcement-link,
+.topbar:focus-within .announcement-link {
+  animation-play-state: paused;
+}
+
+.topbar a:hover .announcement-title,
+.topbar a:hover .announcement-text {
   color: var(--gold);
+}
+
+@keyframes announcement-slide {
+  0%,
+  82% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  92% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+
+  93% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .nav-row {
@@ -128,8 +206,29 @@
 }
 
 @media (max-width: 760px) {
-  .topbar {
-    display: none;
+  .topbar-inner {
+    min-height: 52px;
+  }
+
+  .announcement-link {
+    display: grid;
+    gap: 0.18rem;
+    padding-block: 0.45rem;
+    text-align: left;
+  }
+
+  .announcement-text {
+    font-size: 0.76rem;
+  }
+
+  .announcement-cta {
+    justify-self: start;
+    margin-top: 0.1rem;
+  }
+
+  .announcement-dismiss {
+    width: 34px;
+    height: 34px;
   }
 
   .nav-row {
@@ -138,5 +237,11 @@
 
   .brand img {
     width: clamp(126px, 40vw, 150px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topbar.rotating .announcement-link {
+    animation: none;
   }
 }
