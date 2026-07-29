@@ -17,21 +17,25 @@ const audience = [
     icon: Camera,
     title: "Before weddings",
     desc: "Plan your smile before engagement photos, wedding events, and family celebrations.",
+    image: "/images/aligners-for-bride.png",
   },
   {
     icon: BriefcaseBusiness,
     title: "Corporate professionals",
     desc: "Explore discreet smile correction for meetings, presentations, and client-facing work.",
+    image: "/images/aligners-for-corporate.png",
   },
   {
     icon: Smile,
     title: "Old braces relapse",
     desc: "If your teeth shifted after earlier braces, understand whether aligners can help.",
+    image: "/images/old-braces-relapse.png",
   },
   {
     icon: HeartHandshake,
     title: "Adults and teens",
     desc: "Compare aligners and braces before choosing a treatment path for your lifestyle.",
+    image: "/images/adult-and-teens-aligners.png",
   },
 ];
 
@@ -82,7 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return seoMetadata({
     title,
     description,
-    image: "/images/service-aligners.jpg",
+    image: "/images/open-aligners-hero-image.png",
     imageAlt: "Clear aligners consultation at Dantam Dental Care",
     path: "/aligner-open-day",
   });
@@ -142,7 +146,7 @@ export default function AlignerOpenDayPage() {
           </div>
           <div className="aligner-hero-image">
             <OpeninaryImage
-              src="/images/service-aligners.jpg"
+              src="/images/open-aligners-hero-image.png"
               alt="Clear aligners for smile correction"
               fill
               priority
@@ -189,9 +193,22 @@ export default function AlignerOpenDayPage() {
 
               return (
                 <article className="audience-card" key={item.title}>
-                  <Icon size={24} />
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
+                  {"image" in item && item.image ? (
+                    <div className="audience-card-image">
+                      <OpeninaryImage
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 760px) 100vw, 50vw"
+                      />
+                    </div>
+                  ) : (
+                    <Icon size={24} />
+                  )}
+                  <div className="audience-card-body">
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+                  </div>
                 </article>
               );
             })}
