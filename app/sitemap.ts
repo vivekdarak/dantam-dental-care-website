@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     route("/about", 0.7, "monthly"),
     route("/dentists", 0.8, "monthly"),
     route("/services", 0.9, "weekly"),
+    route("/aligner-open-day", 0.8, "weekly"),
     route("/locations", 0.9, "weekly"),
     route("/gallery", 0.5, "monthly"),
     route("/testimonials", 0.5, "monthly"),
