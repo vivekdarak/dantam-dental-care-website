@@ -20,6 +20,12 @@ const nav = [
 
 const announcements = [
   {
+    title: "Free Pediatric Consultation",
+    text: "26 Sep - 3 Oct, Majiwada only",
+    href: "/pedo-dentist-free-consultation",
+    cta: "Register",
+  },
+  {
     title: "Open Day for Aligners",
     text: "Every 1st & 3rd Saturday, free consultation",
     href: "/aligner-open-day",
