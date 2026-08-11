@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     loader: "custom",
     loaderFile: "./lib/openinary-loader.ts",
+    qualities: [75, 85],
   },
   async redirects() {
     return [
