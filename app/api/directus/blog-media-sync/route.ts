@@ -151,8 +151,7 @@ async function uploadDirectusFileToOpeninary(file: DirectusFile, openinaryPath: 
   }
 
   const formData = new FormData();
-  formData.set("file", await assetResponse.blob(), file.filename_download || `${file.id}.jpg`);
-  formData.set("path", openinaryPath);
+  formData.set("files", await assetResponse.blob(), openinaryPath);
   formData.set("overwrite", "true");
 
   const uploadResponse = await fetch(`${openinaryBaseUrl}/api/upload`, {

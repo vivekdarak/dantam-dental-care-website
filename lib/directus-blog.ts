@@ -208,9 +208,9 @@ export function directusAssetUrl(fileId: string) {
   return `${directusUrl}/assets/${fileId}`;
 }
 
-export function blogFileOpeninaryPath(slug: string, file: DirectusFile) {
+export function blogFileOpeninaryPath(_slug: string, file: DirectusFile) {
   const filename = safeFilename(file.filename_download || file.title || file.id, file.type);
-  return `${OPENINARY_FOLDER}/blog/${slug}/${file.id}-${filename}`;
+  return `${OPENINARY_FOLDER}/${file.id}-${filename}`;
 }
 
 export function blogFeaturedImagePath(post: BlogPost) {
