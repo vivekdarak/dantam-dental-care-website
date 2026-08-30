@@ -7,6 +7,10 @@ type LoaderParams = {
 };
 
 export default function openinaryLoader({ src, width, quality }: LoaderParams) {
+  if (src.startsWith("http://") || src.startsWith("https://")) {
+    return src;
+  }
+
   const [path, query = ""] = src.split("?");
   const params = new URLSearchParams(query);
   const transforms = [`w_${width}`, `q_${quality ?? params.get("q") ?? 75}`, `f_${params.get("f") ?? "webp"}`];

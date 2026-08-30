@@ -6,7 +6,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { OpeninaryImage } from "@/components/openinary-image";
 import {
   blogDescription,
-  blogFeaturedImagePath,
+  blogFeaturedImageSrc,
   blogFeaturedImageUrl,
   blogPostUrl,
   getPublishedBlogPost,
@@ -75,7 +75,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
   const post = await getPublishedBlogPost(slug);
   if (!post) notFound();
 
-  const imagePath = blogFeaturedImagePath(post) ?? "/images/hero-clinic.jpg";
+  const imagePath = blogFeaturedImageSrc(post) ?? "/images/hero-clinic.jpg";
   const html = transformBlogHtmlImages(post.content_html ?? "", post.media_sync);
   const faqs = post.faq_items?.filter((faq) => faq.question && faq.answer) ?? [];
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { PageHero } from "@/components/page-hero";
-import { blogDescription, blogFeaturedImagePath, getPublishedBlogPosts } from "@/lib/directus-blog";
+import { blogDescription, blogFeaturedImageSrc, getPublishedBlogPosts } from "@/lib/directus-blog";
 import { seoMetadata } from "@/lib/seo-metadata";
 import "./blog.css";
 
@@ -37,7 +37,7 @@ export default async function BlogPage() {
           {posts.length ? (
             <div className="blog-list">
               {posts.map((post) => {
-                const imagePath = blogFeaturedImagePath(post) ?? "/images/hero-clinic.jpg";
+                const imagePath = blogFeaturedImageSrc(post) ?? "/images/hero-clinic.jpg";
 
                 return (
                   <Link className="blog-card card" href={`/blog/${post.slug}`} key={post.id}>

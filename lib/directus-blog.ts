@@ -1,7 +1,7 @@
 import { openinaryUrl, OPENINARY_FOLDER } from "@/lib/openinary";
 
 const siteUrl = "https://dantamdentalcare.com";
-const directusUrl = process.env.DIRECTUS_URL?.replace(/\/$/, "") ?? "";
+export const directusUrl = process.env.DIRECTUS_URL?.replace(/\/$/, "") ?? "";
 const directusToken = process.env.DIRECTUS_TOKEN;
 
 export type DirectusFile = {
@@ -214,12 +214,21 @@ export function blogFileOpeninaryPath(slug: string, file: DirectusFile) {
 }
 
 export function blogFeaturedImagePath(post: BlogPost) {
-  return post.media_sync?.featured_image?.openinary_path ?? (post.featured_image ? blogFileOpeninaryPath(post.slug, post.featured_image) : null);
+  return post.media_sync?.featured_image?.openinary_path ?? null;
+}
+
+export function blogFeaturedImageSrc(post: BlogPost) {
+  const syncedPath = blogFeaturedImagePath(post);
+  if (syncedPath) return syncedPath;
+  if (post.featured_image) return directusAssetUrl(post.featured_image.id);
+  return "/images/hero-clinic.jpg";
 }
 
 export function blogFeaturedImageUrl(post: BlogPost, transforms = "w_1200,h_630,c_fill,q_82,f_jpg") {
   const path = blogFeaturedImagePath(post);
-  return path ? openinaryUrl(path, transforms) : openinaryUrl("/images/hero-clinic.jpg", transforms);
+  if (path) return openinaryUrl(path, transforms);
+  if (post.featured_image) return directusAssetUrl(post.featured_image.id);
+  return openinaryUrl("/images/hero-clinic.jpg", transforms);
 }
 
 export function transformBlogHtmlImages(html: string, mediaSync?: BlogMediaSync | null) {
