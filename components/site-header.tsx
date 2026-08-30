@@ -13,6 +13,7 @@ const nav = [
   { href: "/locations", label: "Locations" },
   { href: "/about", label: "About" },
   { href: "/dentists", label: "Our Dentists" },
+  { href: "/blog", label: "Blog" },
   { href: "/gallery", label: "Gallery" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/contact", label: "Contact" },

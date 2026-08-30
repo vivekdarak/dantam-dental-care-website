@@ -8,6 +8,7 @@ const exploreLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/dentists", label: "Our Dentists" },
+  { href: "/blog", label: "Blog" },
   { href: "/locations", label: "Locations" },
   { href: "/gallery", label: "Gallery" },
   { href: "/internal/review-request", label: "Staff Login" },

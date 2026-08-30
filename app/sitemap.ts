@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getPublishedBlogPosts } from "@/lib/directus-blog";
 import { locations, services } from "@/lib/site";
 
 const siteUrl = "https://dantamdentalcare.com";
@@ -12,12 +13,13 @@ function route(url: string, priority: number, changeFrequency: MetadataRoute.Sit
   };
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     route("/", 1, "weekly"),
     route("/about", 0.7, "monthly"),
     route("/dentists", 0.8, "monthly"),
     route("/services", 0.9, "weekly"),
+    route("/blog", 0.7, "weekly"),
     route("/aligner-open-day", 0.8, "weekly"),
     route("/pedo-dentist-free-consultation", 0.8, "weekly"),
     route("/locations", 0.9, "weekly"),
@@ -29,6 +31,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const serviceRoutes = services.map((service) => route(`/services/${service.slug}`, 0.85, "monthly"));
   const locationRoutes = locations.map((location) => route(`/locations/${location.slug}`, 0.85, "monthly"));
+  const blogPosts = await getPublishedBlogPosts(100);
+  const blogRoutes = blogPosts.map((post) => ({
+    url: `${siteUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date_updated || post.published_at || post.date_created || Date.now()),
+    changeFrequency: "monthly" as const,
+    priority: 0.65,
+  }));
 
-  return [...staticRoutes, ...serviceRoutes, ...locationRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...locationRoutes, ...blogRoutes];
 }
