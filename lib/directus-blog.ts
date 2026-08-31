@@ -154,12 +154,21 @@ export async function getPublishedBlogPost(slug: string) {
   return payload?.data?.[0] ?? null;
 }
 
+function cleanLookupValue(value?: string) {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === "undefined" || trimmed === "null") return undefined;
+  return trimmed;
+}
+
 export async function getBlogPostForSync({ id, slug }: { id?: string; slug?: string }) {
-  if (!id && !slug) return null;
+  const cleanId = cleanLookupValue(id);
+  const cleanSlug = cleanLookupValue(slug);
+
+  if (!cleanId && !cleanSlug) return null;
 
   const params = new URLSearchParams();
-  if (id) params.set("filter[id][_eq]", id);
-  if (slug) params.set("filter[slug][_eq]", slug);
+  if (cleanId) params.set("filter[id][_eq]", cleanId);
+  else if (cleanSlug) params.set("filter[slug][_eq]", cleanSlug);
   params.set("fields", postFields);
   params.set("limit", "1");
 
