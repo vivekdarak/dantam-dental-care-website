@@ -38,6 +38,7 @@ export default async function BlogPage() {
             <div className="blog-list">
               {posts.map((post) => {
                 const imagePath = blogFeaturedImageSrc(post) ?? "/images/hero-clinic.jpg";
+                const metaItems = blogCardMetaItems(post);
 
                 return (
                   <Link className="blog-card card" href={`/blog/${post.slug}`} key={post.id}>
@@ -52,10 +53,19 @@ export default async function BlogPage() {
                       />
                     </div>
                     <div className="blog-card-body">
-                      <div className="blog-meta">
-                        {post.category?.title && <span>{post.category.title}</span>}
-                        {post.published_at && <time dateTime={post.published_at}>{formatDate(post.published_at)}</time>}
-                      </div>
+                      {metaItems.length > 0 && (
+                        <div className="blog-meta">
+                          {metaItems.map((item) =>
+                            item.dateTime ? (
+                              <time dateTime={item.dateTime} key={item.label}>
+                                {item.label}
+                              </time>
+                            ) : (
+                              <span key={item.label}>{item.label}</span>
+                            ),
+                          )}
+                        </div>
+                      )}
                       <h2>{post.title}</h2>
                       <p>{blogDescription(post)}</p>
                       <span className="blog-card-cta">
@@ -75,6 +85,13 @@ export default async function BlogPage() {
   );
 }
 
+function blogCardMetaItems(post: Awaited<ReturnType<typeof getPublishedBlogPosts>>[number]) {
+  return [
+    post.category?.title ? { label: post.category.title } : null,
+    post.author?.name ? { label: post.author.name } : null,
+    post.published_at ? { label: formatDate(post.published_at), dateTime: post.published_at } : null,
+  ].filter((item): item is { label: string; dateTime?: string } => Boolean(item));
+}
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-IN", {
     day: "numeric",
