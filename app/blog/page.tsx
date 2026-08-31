@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CalendarDays } from "lucide-react";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { OpeninaryImage } from "@/components/openinary-image";
@@ -38,7 +38,8 @@ export default async function BlogPage() {
             <div className="blog-list">
               {posts.map((post) => {
                 const imagePath = blogFeaturedImageSrc(post) ?? "/images/hero-clinic.jpg";
-                const metaItems = blogCardMetaItems(post);
+                const publishedAt = post.published_at ?? undefined;
+                const publishedDate = publishedAt ? formatDate(publishedAt) : null;
 
                 return (
                   <Link className="blog-card card" href={`/blog/${post.slug}`} key={post.id}>
@@ -53,21 +54,25 @@ export default async function BlogPage() {
                       />
                     </div>
                     <div className="blog-card-body">
-                      {metaItems.length > 0 && (
-                        <div className="blog-meta">
-                          {metaItems.map((item) =>
-                            item.dateTime ? (
-                              <time dateTime={item.dateTime} key={item.label}>
-                                {item.label}
-                              </time>
-                            ) : (
-                              <span key={item.label}>{item.label}</span>
-                            ),
+                      {post.category?.title && <span className="blog-card-category">{post.category.title}</span>}
+                      <h2>{post.title}</h2>
+                      <p>{blogDescription(post)}</p>
+                      {(post.author?.name || publishedDate) && (
+                        <div className="blog-card-meta">
+                          {post.author?.name && (
+                            <span className="blog-card-author">
+                              <span aria-hidden="true">{authorInitials(post.author.name)}</span>
+                              <span>{post.author.name}</span>
+                            </span>
+                          )}
+                          {publishedDate && (
+                            <time className="blog-card-date" dateTime={publishedAt}>
+                              <CalendarDays size={15} aria-hidden="true" />
+                              <span>{publishedDate}</span>
+                            </time>
                           )}
                         </div>
                       )}
-                      <h2>{post.title}</h2>
-                      <p>{blogDescription(post)}</p>
                       <span className="blog-card-cta">
                         Read article <ArrowRight size={16} />
                       </span>
@@ -85,13 +90,7 @@ export default async function BlogPage() {
   );
 }
 
-function blogCardMetaItems(post: Awaited<ReturnType<typeof getPublishedBlogPosts>>[number]) {
-  return [
-    post.category?.title ? { label: post.category.title } : null,
-    post.author?.name ? { label: post.author.name } : null,
-    post.published_at ? { label: formatDate(post.published_at), dateTime: post.published_at } : null,
-  ].filter((item): item is { label: string; dateTime?: string } => Boolean(item));
-}
+
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-IN", {
     day: "numeric",
@@ -99,4 +98,15 @@ function formatDate(value: string) {
     year: "numeric",
     timeZone: "Asia/Kolkata",
   }).format(new Date(value));
+}
+
+function authorInitials(name: string) {
+  const initials = name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("");
+
+  return initials || "D";
 }
