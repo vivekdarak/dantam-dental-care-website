@@ -55,8 +55,6 @@ export default async function BlogPage() {
                     </div>
                     <div className="blog-card-body">
                       {post.category?.title && <span className="blog-card-category">{post.category.title}</span>}
-                      <h2>{post.title}</h2>
-                      <p>{blogDescription(post)}</p>
                       {(post.author?.name || publishedDate) && (
                         <div className="blog-card-meta">
                           {post.author?.name && (
@@ -73,6 +71,8 @@ export default async function BlogPage() {
                           )}
                         </div>
                       )}
+                      <h2>{post.title}</h2>
+                      <p>{blogDescription(post)}</p>
                       <span className="blog-card-cta">
                         Read article <ArrowRight size={16} />
                       </span>

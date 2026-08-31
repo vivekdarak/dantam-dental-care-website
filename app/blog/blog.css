@@ -46,9 +46,9 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px 14px;
-  margin-top: 2px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
+  margin-top: -2px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
   color: var(--muted);
   font-size: 0.86rem;
   line-height: 1.2;
@@ -118,6 +118,7 @@
 
 .blog-card-cta {
   display: inline-flex;
+  justify-self: end;
   align-items: center;
   gap: 0.35rem;
   color: var(--accent);
