@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Dancing_Script, Work_Sans } from "next/font/google";
+import Script from "next/script";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { WhatsappFab } from "@/components/whatsapp-fab";
@@ -8,6 +9,7 @@ import { socialMetadata } from "@/lib/social-metadata";
 import "./globals.css";
 
 const openinaryBaseUrl = process.env.NEXT_PUBLIC_OPENINARY_BASE_URL?.replace(/\/$/, "");
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 const siteUrl = "https://dantamdentalcare.com";
 const siteDescription =
   "Modern dental care in Thane for implants, single-sitting root canals, aligners, braces and paediatric dentistry.";
@@ -68,8 +70,29 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <link rel="dns-prefetch" href={openinaryBaseUrl} />
           </>
         )}
+        {gtmId && (
+          <Script id="google-tag-manager" strategy="afterInteractive">
+            {`
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','${gtmId}');
+            `}
+          </Script>
+        )}
       </head>
       <body className={`${workSans.variable} ${cormorant.variable} ${dancing.variable}`}>
+        {gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
         <div className="site-shell">
           <SiteHeader />
           <main className="site-main">{children}</main>
