@@ -1,17 +1,28 @@
 "use client";
 
-import { CalendarCheck, Loader2, Send, Square, Trash2 } from "lucide-react";
+import { CalendarCheck, Loader2, Plus, Send, Square, Trash2 } from "lucide-react";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { SelectPicker } from "@/components/select-picker";
+
+declare global {
+  interface Window {
+    dataLayer?: Array<Record<string, unknown>>;
+  }
+}
+
+type ChildDetails = {
+  name: string;
+  age: string;
+};
 
 type FormState = {
   date: string;
   parentName: string;
   mobile: string;
-  childName: string;
-  childAge: string;
+  children: ChildDetails[];
   concern: string;
   otherConcern: string;
+  childNotPresent: boolean;
 };
 
 type CampaignDate = {
@@ -57,6 +68,28 @@ function formatTime(seconds: number) {
   const remainder = seconds % 60;
   return `${minutes}:${remainder.toString().padStart(2, "0")}`;
 }
+
+function trackPedoRegistration({
+  parentName,
+  mobile,
+  childCount,
+  preferredDate,
+}: {
+  parentName: string;
+  mobile: string;
+  childCount: number;
+  preferredDate: string;
+}) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "pedo-registration",
+    parent_name: parentName,
+    mobile_number: mobile,
+    child_count: childCount,
+    preferred_date: preferredDate,
+  });
+}
+
 type RecordingState = "idle" | "requesting" | "recording" | "uploading";
 type FeedbackMode = "manual" | "voice";
 
@@ -70,14 +103,17 @@ const concerns = [
   "Other concern",
 ];
 
+const childAgeOptions = Array.from({ length: 11 }, (_, index) => String(index + 2));
+const maxChildren = 3;
+
 const initialForm: FormState = {
   date: campaignDates[0].value,
   parentName: "",
   mobile: "",
-  childName: "",
-  childAge: "",
+  children: [{ name: "", age: "" }],
   concern: "",
   otherConcern: "",
+  childNotPresent: false,
 };
 
 export function PedoDentistCampaignForm() {
@@ -128,6 +164,30 @@ export function PedoDentistCampaignForm() {
       return next;
     });
   }
+
+  function updateChild(index: number, details: Partial<ChildDetails>) {
+    setForm((current) => ({
+      ...current,
+      children: current.children.map((child, childIndex) =>
+        childIndex === index ? { ...child, ...details } : child,
+      ),
+    }));
+  }
+
+  function addChild() {
+    setForm((current) => {
+      if (current.children.length >= maxChildren) return current;
+      return { ...current, children: [...current.children, { name: "", age: "" }] };
+    });
+  }
+
+  function removeChild(index: number) {
+    setForm((current) => {
+      if (current.children.length === 1) return current;
+      return { ...current, children: current.children.filter((_, childIndex) => childIndex !== index) };
+    });
+  }
+
   async function startRecording() {
     setVoiceError("");
     setFeedbackMode("voice");
@@ -239,7 +299,13 @@ export function PedoDentistCampaignForm() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!form.date || !form.parentName.trim() || !form.mobile.trim() || !form.childName.trim() || !form.childAge.trim() || !form.concern || (showOtherConcern && !form.otherConcern.trim())) {
+    const children = form.children.map((child) => ({
+      name: child.name.trim(),
+      age: child.age.trim(),
+    }));
+    const hasInvalidChild = children.some((child) => !child.name || !child.age);
+
+    if (!form.date || !form.parentName.trim() || !form.mobile.trim() || hasInvalidChild || (showOtherConcern && !form.otherConcern.trim())) {
       setStatus("error");
       return;
     }
@@ -252,6 +318,9 @@ export function PedoDentistCampaignForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
+          children,
+          childName: children[0]?.name || "",
+          childAge: children[0]?.age || "",
           campaign: "Pedo Dentist Free Consultation",
           selectedDateLabel: campaignDates.find((day) => day.value === form.date)?.label,
         }),
@@ -263,6 +332,14 @@ export function PedoDentistCampaignForm() {
       }
 
       const payload = (await response.json()) as { forwarded?: boolean };
+      if (payload.forwarded) {
+        trackPedoRegistration({
+          parentName: form.parentName.trim(),
+          mobile: form.mobile.trim(),
+          childCount: children.length,
+          preferredDate: form.date,
+        });
+      }
       setStatus(payload.forwarded ? "sent" : "preview");
       setForm(initialForm);
     } catch {
@@ -317,29 +394,60 @@ export function PedoDentistCampaignForm() {
             onChange={(event) => setForm({ ...form, mobile: event.target.value })}
           />
         </label>
-        <label>
-          Child name *
-          <input
-            required
-            autoComplete="off"
-            value={form.childName}
-            onChange={(event) => setForm({ ...form, childName: event.target.value })}
-          />
-        </label>
-        <label>
-          Child age *
-          <input
-            required
-            inputMode="numeric"
-            min="2"
-            max="12"
-            type="number"
-            value={form.childAge}
-            onChange={(event) => setForm({ ...form, childAge: event.target.value })}
-          />
-        </label>
+        <div className="pedo-child-fields">
+          {form.children.map((child, index) => (
+            <div className="pedo-child-row" key={index}>
+              <label>
+                {index === 0 ? "Child name *" : `Child ${index + 1} name *`}
+                <input
+                  required
+                  autoComplete="off"
+                  value={child.name}
+                  onChange={(event) => updateChild(index, { name: event.target.value })}
+                />
+              </label>
+              <label>
+                Age *
+                <select
+                  required
+                  value={child.age}
+                  onChange={(event) => updateChild(index, { age: event.target.value })}
+                >
+                  <option value="">Age</option>
+                  {childAgeOptions.map((age) => (
+                    <option key={age} value={age}>
+                      {age}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {index === 0 ? (
+                <button
+                  className="pedo-child-icon-button"
+                  type="button"
+                  onClick={addChild}
+                  disabled={form.children.length >= maxChildren}
+                  aria-label="Add another child"
+                  title="Add another child"
+                >
+                  <Plus size={18} />
+                </button>
+              ) : (
+                <button
+                  className="pedo-child-icon-button danger"
+                  type="button"
+                  onClick={() => removeChild(index)}
+                  aria-label={`Remove child ${index + 1}`}
+                  title={`Remove child ${index + 1}`}
+                >
+                  <Trash2 size={17} />
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
         <SelectPicker
-          label="Main concern *"
+          label="Main concern"
           value={form.concern}
           options={[
             { value: "", label: "Select main concern" },
@@ -415,6 +523,21 @@ export function PedoDentistCampaignForm() {
           </label>
         )}
       </div>
+
+      <label className="pedo-child-visit-check">
+        <input
+          type="checkbox"
+          checked={form.childNotPresent}
+          onChange={(event) => setForm({ ...form, childNotPresent: event.target.checked })}
+        />
+        <span>
+          <strong>My child will not be present for this visit</strong>
+          <small>
+            I understand this will be a parent guidance consultation based on the details I share. The dentist may
+            recommend bringing my child for an in-person check-up if needed.
+          </small>
+        </span>
+      </label>
 
       {status === "error" && <div className="form-status error">Please check the required fields and try again.</div>}
       {status === "sent" && <div className="form-status sent">Your registration details were sent successfully.</div>}
