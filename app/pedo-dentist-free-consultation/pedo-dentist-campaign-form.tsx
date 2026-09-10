@@ -582,6 +582,7 @@ export function PedoDentistCampaignForm() {
           <input
             required
             autoComplete="name"
+            autoCapitalize="words"
             value={form.parentName}
             onChange={(event) => setForm({ ...form, parentName: event.target.value })}
           />
@@ -594,6 +595,7 @@ export function PedoDentistCampaignForm() {
                 <input
                   required
                   autoComplete="off"
+                  autoCapitalize="words"
                   value={child.name}
                   onChange={(event) => updateChild(index, { name: event.target.value })}
                 />
@@ -650,12 +652,6 @@ export function PedoDentistCampaignForm() {
             setVoiceError("");
           }}
           className="pedo-concern-field"
-        />
-
-        <PhoneOtpField
-          key={phoneFieldKey}
-          disabled={status === "sending"}
-          onVerifiedPhoneChange={handleVerifiedPhoneChange}
         />
 
         {showOtherConcern && (
@@ -720,6 +716,12 @@ export function PedoDentistCampaignForm() {
             {voiceError && <span className="pedo-voice-error">{voiceError}</span>}
           </label>
         )}
+
+        <PhoneOtpField
+          key={phoneFieldKey}
+          disabled={status === "sending"}
+          onVerifiedPhoneChange={handleVerifiedPhoneChange}
+        />
       </div>
 
       <label className="pedo-child-visit-check">
