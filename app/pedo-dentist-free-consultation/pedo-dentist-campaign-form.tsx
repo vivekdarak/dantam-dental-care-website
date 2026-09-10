@@ -739,16 +739,16 @@ export function PedoDentistCampaignForm() {
         </span>
       </label>
 
+      <button className="button primary" type="submit" disabled={status === "sending"}>
+        <Send size={17} />
+        {status === "sending" ? "Sending..." : "Confirm free consultation"}
+      </button>
+
       {status === "error" && <div className="form-status error">{errorMessage || "Please check the required fields and try again."}</div>}
       {status === "sent" && <div className="form-status sent">Your registration details were sent successfully.</div>}
       {status === "preview" && (
         <div className="form-status sent">Local preview received. Add the pedo campaign webhook URL to forward these details.</div>
       )}
-
-      <button className="button primary" type="submit" disabled={status === "sending"}>
-        <Send size={17} />
-        {status === "sending" ? "Sending..." : "Confirm free consultation"}
-      </button>
     </form>
   );
 }

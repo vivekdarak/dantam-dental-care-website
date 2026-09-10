@@ -498,6 +498,12 @@
   width: 100%;
 }
 
+.pedo-campaign-form .form-status {
+  margin-top: 12px;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
 .pedo-campaign-form .button:disabled {
   opacity: 0.72;
   cursor: wait;
