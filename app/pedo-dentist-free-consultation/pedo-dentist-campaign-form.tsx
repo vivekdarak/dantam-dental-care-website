@@ -1,7 +1,7 @@
 "use client";
 
-import { CalendarCheck, Loader2, Plus, Send, Square, Trash2 } from "lucide-react";
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { CalendarCheck, CheckCircle2, Loader2, Plus, RotateCcw, Send, Square, Trash2 } from "lucide-react";
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SelectPicker } from "@/components/select-picker";
 
 declare global {
@@ -31,6 +31,8 @@ type CampaignDate = {
   shortLabel: string;
 };
 
+type PhoneOtpState = "idle" | "sent" | "verified";
+
 const campaignDates: CampaignDate[] = [
   { value: "2026-09-26", label: "Sat, 26 Sep 2026", shortLabel: "Sat, 26 Sep" },
   { value: "2026-09-27", label: "Sun, 27 Sep 2026", shortLabel: "Sun, 27 Sep" },
@@ -46,6 +48,7 @@ const TRANSLATION_WEBHOOK_PATH = "/webhook/dantam-translation";
 const MAX_RECORDING_SECONDS = 120;
 const MAX_ATTEMPTS = 5;
 const ATTEMPT_COOKIE = "dantam_review2_attempts";
+const PHONE_VERIFICATION_KEY = "dantamPedoConsultationPhoneVerification";
 
 function buildWebhookUrl(path: string) {
   const baseUrl = process.env.NEXT_PUBLIC_N8N_BASE_URL?.replace(/\/$/, "");
@@ -90,6 +93,192 @@ function trackPedoRegistration({
   });
 }
 
+function PhoneOtpField({
+  onVerifiedPhoneChange,
+  disabled,
+}: {
+  onVerifiedPhoneChange: (phoneNumber: string | null) => void;
+  disabled?: boolean;
+}) {
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpState, setOtpState] = useState<PhoneOtpState>("idle");
+  const [cooldown, setCooldown] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const phoneIsValid = /^\d{10}$/.test(phone);
+
+  useEffect(() => {
+    try {
+      const stored = window.sessionStorage.getItem(PHONE_VERIFICATION_KEY);
+      if (!stored) return;
+
+      const parsed = JSON.parse(stored) as { phoneNumber?: string; verifiedAt?: number };
+      const isFresh = parsed.verifiedAt && Date.now() - parsed.verifiedAt < 30 * 24 * 60 * 60 * 1000;
+      if (parsed.phoneNumber && /^\d{10}$/.test(parsed.phoneNumber) && isFresh) {
+        setPhone(parsed.phoneNumber);
+        setOtpState("verified");
+        onVerifiedPhoneChange(parsed.phoneNumber);
+      }
+    } catch {
+      window.sessionStorage.removeItem(PHONE_VERIFICATION_KEY);
+    }
+  }, [onVerifiedPhoneChange]);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = window.setTimeout(() => setCooldown((current) => Math.max(0, current - 1)), 1000);
+    return () => window.clearTimeout(timer);
+  }, [cooldown]);
+
+  function updatePhone(value: string) {
+    const nextPhone = value.replace(/\D/g, "").slice(0, 10);
+    setPhone(nextPhone);
+    setOtp("");
+    setOtpState("idle");
+    setMessage("");
+    onVerifiedPhoneChange(null);
+    window.sessionStorage.removeItem(PHONE_VERIFICATION_KEY);
+  }
+
+  async function sendOtp() {
+    if (!phoneIsValid || loading || disabled || cooldown > 0) return;
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch("/api/pedo-dentist-free-consultation/otp/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone }),
+      });
+      const payload = (await response.json()) as { ok?: boolean; error?: string; cooldownSeconds?: number };
+
+      if (!response.ok || !payload.ok) {
+        setMessage(payload.error || "Could not send OTP. Please try again.");
+        if (payload.cooldownSeconds) setCooldown(payload.cooldownSeconds);
+        return;
+      }
+
+      setOtpState("sent");
+      setCooldown(payload.cooldownSeconds || 60);
+      setMessage("OTP sent on WhatsApp.");
+    } catch {
+      setMessage("Could not send OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function verifyOtp() {
+    if (!phoneIsValid || !/^\d{6}$/.test(otp) || loading || disabled) return;
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch("/api/pedo-dentist-free-consultation/otp/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, otp }),
+      });
+      const payload = (await response.json()) as { ok?: boolean; error?: string };
+
+      if (!response.ok || !payload.ok) {
+        setMessage(payload.error || "Could not verify OTP. Please try again.");
+        return;
+      }
+
+      setOtpState("verified");
+      setOtp("");
+      setMessage("Mobile number verified.");
+      onVerifiedPhoneChange(phone);
+      window.sessionStorage.setItem(PHONE_VERIFICATION_KEY, JSON.stringify({ phoneNumber: phone, verifiedAt: Date.now() }));
+    } catch {
+      setMessage("Could not verify OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function changePhone() {
+    setPhone("");
+    setOtp("");
+    setOtpState("idle");
+    setMessage("");
+    onVerifiedPhoneChange(null);
+    window.sessionStorage.removeItem(PHONE_VERIFICATION_KEY);
+  }
+
+  return (
+    <div className="pedo-phone-otp-field">
+      <span className="pedo-phone-label">Mobile number *</span>
+      <div className={`pedo-phone-row ${otpState === "verified" ? "verified" : ""}`}>
+        <span className="pedo-phone-prefix" aria-label="India country code">
+          +91
+        </span>
+        <input
+          required
+          autoComplete="tel-national"
+          inputMode="numeric"
+          pattern="[0-9]{10}"
+          placeholder="10 digit number"
+          type="tel"
+          value={phone}
+          disabled={disabled || otpState === "verified"}
+          onChange={(event) => updatePhone(event.target.value)}
+        />
+        {otpState === "verified" ? (
+          <button type="button" className="pedo-otp-action verified" onClick={changePhone} disabled={disabled}>
+            <RotateCcw size={15} />
+            Change
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="pedo-otp-action"
+            onClick={sendOtp}
+            disabled={disabled || loading || !phoneIsValid || cooldown > 0}
+          >
+            {loading && otpState !== "sent" ? <Loader2 size={15} /> : null}
+            {cooldown > 0 && otpState === "sent" ? `${cooldown}s` : "Send OTP"}
+          </button>
+        )}
+      </div>
+
+      {otpState === "sent" && (
+        <div className="pedo-otp-row">
+          <input
+            autoComplete="one-time-code"
+            inputMode="numeric"
+            pattern="[0-9]{6}"
+            placeholder="6 digit OTP"
+            value={otp}
+            disabled={disabled}
+            onChange={(event) => setOtp(event.target.value.replace(/\D/g, "").slice(0, 6))}
+          />
+          <button
+            type="button"
+            className="pedo-otp-action"
+            onClick={verifyOtp}
+            disabled={disabled || loading || !/^\d{6}$/.test(otp)}
+          >
+            {loading ? <Loader2 size={15} /> : null}
+            Verify
+          </button>
+        </div>
+      )}
+
+      {otpState === "verified" && (
+        <span className="pedo-otp-success">
+          <CheckCircle2 size={15} />
+          Verified for WhatsApp: 91{phone}
+        </span>
+      )}
+      {message && <span className={otpState === "verified" ? "pedo-otp-message success" : "pedo-otp-message"}>{message}</span>}
+    </div>
+  );
+}
+
 type RecordingState = "idle" | "requesting" | "recording" | "uploading";
 type FeedbackMode = "manual" | "voice";
 
@@ -119,6 +308,9 @@ const initialForm: FormState = {
 export function PedoDentistCampaignForm() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [status, setStatus] = useState<"idle" | "error" | "sending" | "sent" | "preview">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
+  const [phoneFieldKey, setPhoneFieldKey] = useState(0);
   const [feedbackMode, setFeedbackMode] = useState<FeedbackMode>("manual");
   const [recordingState, setRecordingState] = useState<RecordingState>("idle");
   const [recordingSeconds, setRecordingSeconds] = useState(0);
@@ -132,6 +324,10 @@ export function PedoDentistCampaignForm() {
   const translationWebhookUrl = useMemo(() => buildWebhookUrl(TRANSLATION_WEBHOOK_PATH), []);
   const showOtherConcern = form.concern === "Other concern";
   const attemptsLeft = Math.max(0, MAX_ATTEMPTS - attempts);
+  const handleVerifiedPhoneChange = useCallback((phoneNumber: string | null) => {
+    setVerifiedPhone(phoneNumber);
+    setForm((current) => ({ ...current, mobile: phoneNumber || "" }));
+  }, []);
 
   useEffect(() => {
     const savedAttempts = Number.parseInt(getCookieValue(ATTEMPT_COOKIE), 10);
@@ -298,6 +494,7 @@ export function PedoDentistCampaignForm() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setErrorMessage("");
 
     const children = form.children.map((child) => ({
       name: child.name.trim(),
@@ -305,7 +502,8 @@ export function PedoDentistCampaignForm() {
     }));
     const hasInvalidChild = children.some((child) => !child.name || !child.age);
 
-    if (!form.date || !form.parentName.trim() || !form.mobile.trim() || hasInvalidChild || (showOtherConcern && !form.otherConcern.trim())) {
+    if (!form.date || !form.parentName.trim() || !verifiedPhone || hasInvalidChild || (showOtherConcern && !form.otherConcern.trim())) {
+      setErrorMessage(!verifiedPhone ? "Please verify your mobile number first." : "Please check the required fields and try again.");
       setStatus("error");
       return;
     }
@@ -318,6 +516,7 @@ export function PedoDentistCampaignForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
+          mobile: verifiedPhone,
           children,
           childName: children[0]?.name || "",
           childAge: children[0]?.age || "",
@@ -327,6 +526,8 @@ export function PedoDentistCampaignForm() {
       });
 
       if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        setErrorMessage(payload?.error || "Please check the required fields and try again.");
         setStatus("error");
         return;
       }
@@ -335,14 +536,17 @@ export function PedoDentistCampaignForm() {
       if (payload.forwarded) {
         trackPedoRegistration({
           parentName: form.parentName.trim(),
-          mobile: form.mobile.trim(),
+          mobile: verifiedPhone,
           childCount: children.length,
           preferredDate: form.date,
         });
       }
       setStatus(payload.forwarded ? "sent" : "preview");
       setForm(initialForm);
+      setVerifiedPhone(null);
+      setPhoneFieldKey((current) => current + 1);
     } catch {
+      setErrorMessage("We could not submit the form right now. Please try again.");
       setStatus("error");
     }
   }
@@ -373,25 +577,13 @@ export function PedoDentistCampaignForm() {
       />
 
       <div className="pedo-form-grid">
-        <label>
+        <label className="pedo-parent-field">
           Parent name *
           <input
             required
             autoComplete="name"
             value={form.parentName}
             onChange={(event) => setForm({ ...form, parentName: event.target.value })}
-          />
-        </label>
-        <label>
-          Mobile number *
-          <input
-            required
-            autoComplete="tel"
-            inputMode="tel"
-            placeholder="+91"
-            type="tel"
-            value={form.mobile}
-            onChange={(event) => setForm({ ...form, mobile: event.target.value })}
           />
         </label>
         <div className="pedo-child-fields">
@@ -458,6 +650,12 @@ export function PedoDentistCampaignForm() {
             setVoiceError("");
           }}
           className="pedo-concern-field"
+        />
+
+        <PhoneOtpField
+          key={phoneFieldKey}
+          disabled={status === "sending"}
+          onVerifiedPhoneChange={handleVerifiedPhoneChange}
         />
 
         {showOtherConcern && (
@@ -539,7 +737,7 @@ export function PedoDentistCampaignForm() {
         </span>
       </label>
 
-      {status === "error" && <div className="form-status error">Please check the required fields and try again.</div>}
+      {status === "error" && <div className="form-status error">{errorMessage || "Please check the required fields and try again."}</div>}
       {status === "sent" && <div className="form-status sent">Your registration details were sent successfully.</div>}
       {status === "preview" && (
         <div className="form-status sent">Local preview received. Add the pedo campaign webhook URL to forward these details.</div>
