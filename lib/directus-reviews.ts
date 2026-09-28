@@ -40,7 +40,7 @@ export async function getPublishedGoogleReviews({ homepageOnly = false } = {}) {
   try {
     const response = await fetch(`${directusUrl}/items/dantam_google_reviews?${params}`, {
       headers: directusToken ? { Authorization: `Bearer ${directusToken}` } : undefined,
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600, tags: ["dantam-google-reviews"] },
     });
 
     if (!response.ok) return [];
