@@ -51,28 +51,30 @@ export function GoogleReviewGrid({ reviews, homepage = false }: { reviews: Googl
 
         return (
           <article className="google-review-card card" key={review.id}>
-            <div className="google-review-stars" aria-label={`${rating} out of 5 stars`}>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <Star key={index} size={16} fill={index < rating ? "currentColor" : "none"} aria-hidden="true" />
-              ))}
-            </div>
+            <header className="google-review-header">
+              <div className="google-review-source">
+                <GoogleLogo />
+                <div className="google-review-attribution">
+                  <strong>{review.reviewer_name}</strong>
+                  <div className="google-review-stars" aria-label={`${rating} out of 5 stars`}>
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Star key={index} size={16} fill={index < rating ? "currentColor" : "none"} aria-hidden="true" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {relativeDate && <span className="google-review-date">{relativeDate}</span>}
+            </header>
             <blockquote>
               <p>“{review.review_text}”</p>
             </blockquote>
-            <footer>
-              <div className="google-review-author">
-                <strong>{review.reviewer_name}</strong>
-                <GoogleLogo />
-              </div>
-              <div className="google-review-meta">
-                {relativeDate && <span>{relativeDate}</span>}
-                {reviewUrl && (
-                  <a href={reviewUrl} target="_blank" rel="noreferrer">
-                    View on Google <ExternalLink size={13} aria-hidden="true" />
-                  </a>
-                )}
-              </div>
-            </footer>
+            {reviewUrl && (
+              <footer>
+                <a href={reviewUrl} target="_blank" rel="noreferrer">
+                  View on Google <ExternalLink size={13} aria-hidden="true" />
+                </a>
+              </footer>
+            )}
           </article>
         );
       })}
