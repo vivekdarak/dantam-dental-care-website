@@ -44,6 +44,22 @@ const campaignDates: CampaignDate[] = [
   { value: "2026-10-03", label: "Sat, 3 Oct 2026", shortLabel: "Sat, 3 Oct" },
 ];
 
+function getTodayInIndia() {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${value.year}-${value.month}-${value.day}`;
+}
+
+function getSelectableCampaignDates() {
+  const today = getTodayInIndia();
+  return campaignDates.filter((day) => day.value >= today);
+}
+
 const TRANSLATION_WEBHOOK_PATH = "/webhook/dantam-translation";
 const MAX_RECORDING_SECONDS = 120;
 const MAX_ATTEMPTS = 5;
@@ -295,18 +311,20 @@ const concerns = [
 const childAgeOptions = Array.from({ length: 11 }, (_, index) => String(index + 2));
 const maxChildren = 3;
 
-const initialForm: FormState = {
-  date: campaignDates[0].value,
-  parentName: "",
-  mobile: "",
-  children: [{ name: "", age: "" }],
-  concern: "",
-  otherConcern: "",
-  childNotPresent: false,
-};
+function createInitialForm(): FormState {
+  return {
+    date: getSelectableCampaignDates()[0]?.value || "",
+    parentName: "",
+    mobile: "",
+    children: [{ name: "", age: "" }],
+    concern: "",
+    otherConcern: "",
+    childNotPresent: false,
+  };
+}
 
 export function PedoDentistCampaignForm() {
-  const [form, setForm] = useState<FormState>(initialForm);
+  const [form, setForm] = useState<FormState>(createInitialForm);
   const [status, setStatus] = useState<"idle" | "error" | "sending" | "sent" | "preview">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
@@ -322,6 +340,7 @@ export function PedoDentistCampaignForm() {
   const timerRef = useRef<number | null>(null);
   const discardRecordingRef = useRef(false);
   const translationWebhookUrl = useMemo(() => buildWebhookUrl(TRANSLATION_WEBHOOK_PATH), []);
+  const selectableCampaignDates = getSelectableCampaignDates();
   const showOtherConcern = form.concern === "Other concern";
   const attemptsLeft = Math.max(0, MAX_ATTEMPTS - attempts);
   const handleVerifiedPhoneChange = useCallback((phoneNumber: string | null) => {
@@ -502,8 +521,16 @@ export function PedoDentistCampaignForm() {
     }));
     const hasInvalidChild = children.some((child) => !child.name || !child.age);
 
-    if (!form.date || !form.parentName.trim() || !verifiedPhone || hasInvalidChild || (showOtherConcern && !form.otherConcern.trim())) {
-      setErrorMessage(!verifiedPhone ? "Please verify your mobile number first." : "Please check the required fields and try again.");
+    const dateIsSelectable = selectableCampaignDates.some((day) => day.value === form.date);
+
+    if (!dateIsSelectable || !form.parentName.trim() || !verifiedPhone || hasInvalidChild || (showOtherConcern && !form.otherConcern.trim())) {
+      setErrorMessage(
+        !dateIsSelectable
+          ? "Please select an available date."
+          : !verifiedPhone
+            ? "Please verify your mobile number first."
+            : "Please check the required fields and try again.",
+      );
       setStatus("error");
       return;
     }
@@ -542,7 +569,7 @@ export function PedoDentistCampaignForm() {
         });
       }
       setStatus(payload.forwarded ? "sent" : "preview");
-      setForm(initialForm);
+      setForm(createInitialForm());
       setVerifiedPhone(null);
       setPhoneFieldKey((current) => current + 1);
     } catch {
@@ -567,7 +594,7 @@ export function PedoDentistCampaignForm() {
       <SelectPicker
         label="Select preferred date *"
         value={form.date}
-        options={campaignDates.map((day) => ({
+        options={selectableCampaignDates.map((day) => ({
           value: day.value,
           label: day.label,
           description: "Majiwada clinic",
