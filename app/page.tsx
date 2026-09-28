@@ -3,12 +3,14 @@ import { ArrowRight, Baby, Calendar, Phone, Star } from "lucide-react";
 import Link from "next/link";
 import { ClinicLocationCards } from "@/components/clinic-location-cards";
 import { FaqSection } from "@/components/faq-section";
+import { GoogleReviewGrid } from "@/components/google-review-grid";
 import { OpeninaryImage } from "@/components/openinary-image";
 import { ServiceCard } from "@/components/service-card";
 import { homepageFaqs } from "@/lib/faqs";
+import { getPublishedGoogleReviews } from "@/lib/directus-reviews";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/lib/organization-schema";
 import { seoMetadata } from "@/lib/seo-metadata";
-import { services, site, stats, testimonials, whyChoose } from "@/lib/site";
+import { services, site, stats, whyChoose } from "@/lib/site";
 import "./home.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,7 +24,9 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default function Home() {
+export default async function Home() {
+  const reviews = await getPublishedGoogleReviews({ homepageOnly: true });
+
   return (
     <>
       <OrganizationJsonLd />
@@ -196,20 +200,7 @@ export default function Home() {
               <h2 className="section-title">From smiles we have cared for.</h2>
             </div>
           </div>
-          <div className="home-testimonials">
-            {testimonials.slice(0, 3).map((item) => (
-              <article className="card" key={item.name}>
-                <div className="stars">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star key={index} size={15} fill="currentColor" />
-                  ))}
-                </div>
-                <p>"{item.quote}"</p>
-                <strong>{item.name}</strong>
-                <span>{item.service}</span>
-              </article>
-            ))}
-          </div>
+          <GoogleReviewGrid reviews={reviews} homepage />
           <Link className="button outline" href="/testimonials">
             Read more stories <ArrowRight size={17} />
           </Link>

@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PageHero } from "@/components/page-hero";
 import { seoMetadata } from "@/lib/seo-metadata";
-import { TestimonialFilter } from "@/components/testimonial-filter";
+import { GoogleReviewGrid } from "@/components/google-review-grid";
+import { getPublishedGoogleReviews } from "@/lib/directus-reviews";
 
 const title = "Testimonials";
 const description =
@@ -19,7 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default function TestimonialsPage() {
+export default async function TestimonialsPage() {
+  const reviews = await getPublishedGoogleReviews();
+
   return (
     <>
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Testimonials", href: "/testimonials" }]} />
@@ -30,7 +33,7 @@ export default function TestimonialsPage() {
       />
       <section className="section">
         <div className="container">
-          <TestimonialFilter />
+          <GoogleReviewGrid reviews={reviews} />
           <div style={{ marginTop: 56, textAlign: "center" }}>
             <p className="lead">Ready to write your own story?</p>
             <Link className="button primary" style={{ marginTop: 18 }} href="/contact">

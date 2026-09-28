@@ -403,18 +403,6 @@ export const consultants = [
   },
 ];
 
-export const testimonials = [
-  { name: "Anjali M.", city: "Thane West", service: "Root Canal", quote: "I got my root canal done in one sitting and it was completely painless. The clinic feels calm, nothing like the dentists I visited as a child." },
-  { name: "Rahul S.", city: "Ghodbunder", service: "Implants", quote: "Dr. Modi placed three implants for my 74-year-old father. Wonderful hands and an even better bedside manner. Highly recommend." },
-  { name: "Priya D.", city: "Kolshet", service: "Kids Dentistry", quote: "Took my 6-year-old here terrified of dentists. She now asks when we're going back. Grateful to the whole team." },
-  { name: "Neha K.", city: "Thane", service: "Aligners", quote: "Started my aligner journey with Dr. Blanch. The 3D scan preview convinced me, and my smile today matches what she showed me." },
-  { name: "Vikas T.", city: "Naupada", service: "Zirconia Cap", quote: "Got two zirconia crowns and honestly cannot tell them apart from my natural teeth. Fantastic work." },
-  { name: "Sneha R.", city: "Vartak Nagar", service: "Braces", quote: "24 months of braces done. The team was patient, transparent about timelines, and my bite is perfect now." },
-  { name: "Amit P.", city: "Thane East", service: "Wisdom Teeth", quote: "Had all four wisdom teeth removed in one go. Very little swelling and I was back to office in 2 days." },
-  { name: "Meera J.", city: "Manpada", service: "Implants", quote: "After years of a shaky bridge, my implant crown feels rock solid. The digital planning made everything predictable." },
-  { name: "Rohan G.", city: "Thane", service: "Root Canal", quote: "Walked in at 8pm with a killer toothache and walked out at 9:30pm with a sealed root canal. Life-savers." },
-];
-
 export const whyChoose = [
   { icon: ScanLine, title: "Digital 3D scanning", desc: "Precise, gag-free impressions and predictable outcomes." },
   { icon: ShieldCheck, title: "Single-sitting RCT", desc: "Root canals done comfortably in one visit." },
